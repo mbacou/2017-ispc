@@ -1,0 +1,28 @@
+# Tanzania
+
+```{r tza-nps, eval=FALSE}
+
+
+```
+
+```{r tza-save, eval=FALSE}
+
+
+```
+
+Relevant sources of household-level micro records for Ethiopia include the last 4 rounds of LSMS-ISA National Panel Surveys, 2007 National Sample Census of Agriculture, and 2012 Population and Housing Census:
+
+* **2007/2008 National Sample Census of Agriculture (NSCA)** -- small-holder questionnaire covers household information, land ownership/tenure, land use, crop production and marketing, use of credit for agricultural purposes, livestock, investment activities and services and core poverty indicators. The data were collected from a sample of 52,635 rural households (incl. mainland and Zanzibar).   
+* **2012 Population and Housing Census (PHC)** -- only summary report and tables are available
+* **2008/2009 NPS Panel, Wave 1** --  a sample of 3,280 households spanning all regions and all districts of Tanzania, both mainland and Zanzibar. The sample is sufficient to produce national estimates of poverty, agricultural production and other key indicators. It is also possible to produce estimates for 4 strata: 1) Dar es Salaam, 2) other urban areas on mainland Tanzania, 3) rural mainland Tanzania, and 4) Zanzibar, and/or across 7 zones (as used in the DHS). These are: North, Central, Eastern, South, Southern Highlands, West and Lake. Due to the limits of the sample size it is typically not possible to produce reliable statistics at the regional or district level.  
+* **2010-2011 NPS Panel, Wave 2** -- the sample design for the second round of the NPS revisits all the households interviewed in the first round, as well as tracking adult split-off household members. The original sample size of 3,265 households was designed to be representative at the national, urban/rural, and major agro-ecological zones. The total sample size was 3,265 households in 409 EAs (2,063 households in rural areas and 1,202 urban areas).    
+* **2012/2013 NPS Panel, Wave 3** -- the sample design includes the originally sampled 3,265 households plus split-off households added into the sample in the second round of the NPS. Thus the total sample at the onset of the NPS 2012/2013 consisted of 3,924 target households.  
+* 2014/2015, NPS Panel, Wave 4 --  in all 4 panels the sample design allows analysis at 4 primary domains of inference and 7 zones. The sample design is a stratified two-stage design. The design consists of 51 design strata corresponding to a rural/urban designation for each of the 26 regions. Wave 4 sample design consists of a new selection of 3,360 households corresponding to 420 EAs from the 2012 PHC. This new cohort in NPS 2014/2015 will be maintained and tracked in all future rounds between national censuses.  
+
+
+```{r tza-samples}
+
+
+
+```
+

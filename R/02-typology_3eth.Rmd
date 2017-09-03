@@ -1,0 +1,44 @@
+# Ethiopia
+
+```{r eth-erss, eval=FALSE}
+
+# Load and copy constructed vars from the 2015 ETH Segmentation
+setwd("~/Google Drive/2016-BMGF-Segmentation/ETH")
+e1 <- new.env()
+load("./temp/eth-erss-11_bmgf_seg.RData", envir=e1)
+names(e1)
+erss <- e1$hh
+erss.lbl <- e1$hh.lb
+
+e1 <- new.env()
+# Seems more recent
+load("./temp/eth_bmgf_seg.RData", envir=e1)
+names(e1)
+erss2 <- e1$hh
+erss2.lbl <- e1$hh.lb
+
+rm(e1)
+setwd("~/Projects/2017-agra-aasr")
+
+# Differences between the 2 set of ERSS vars?
+names(erss2)[!names(erss2) %in% names(erss)]
+# => merged in all seg vars, poverty, expendc, real_totcons, livestock, eff
+names(erss)[!names(erss) %in% names(erss2)]
+# [1] "hhid"     "input_12"
+
+# Merge in `input_12` and keep `erss2` only
+setkey(erss, household_id)
+setkey(erss2, household_id)
+erss[!erss2][, .(household_id, hhid)]
+erss2[erss][, .(household_id, hhid)]
+
+```
+
+Relevant sources of household-level micro records for Ethiopia include:
+
+* 2011/12 ERSS (income vars)
+* 2013/14 and 2015/16 Ethiopia Socioeconomic Surveys
+* 2012/13 Ethiopia’s Agricultural Sample Survey (AgSS) -- but it's difficult to cross-tabulate results from the AgSS (crop production and input uses) with the ERSS' income data
+* 2012 ATA Baseline Survey (3,000 hhlds), see [@minot2013agataeth].
+
+

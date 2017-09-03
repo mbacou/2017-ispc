@@ -1,0 +1,89 @@
+---
+title: "Agricultural Transformation in Ghana, Tanzania and Ethiopia"
+author: "[BACOU, Melanie](http://github.com/mbacou) for BMGF"
+date: "Last updated on `r Sys.Date()` -- CODES AND NOTES, DO NOT USE OR CITE"
+description: "Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)"
+site: bookdown::bookdown_site
+knit: bookdown::render_book
+output:
+  bookdown::gitbook:
+    url: "https://mbacou.github.io/2017-agra-aasr/"
+    github-repo: "mbacou/2017-agra-aasr"
+always_allow_html: yes
+bibliography: biblio.bib
+csl: apa.csl
+link-citations: yes
+nocite: |
+  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation
+
+---
+
+# Data Preparation Steps
+
+```{r setup, include=FALSE}
+
+library(data.table)
+library(survey)
+library(knitr)
+library(tables)
+library(viridis)
+library(stringr)
+
+# Output options
+table_options(htmloptions(justification="c", head=F, pad=T))
+opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
+  dev="svg", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=T, 
+  dev.args=list(
+    png=list(family="Roboto Condensed", pointsize=9), 
+    svg=list(family="Roboto Condensed")))
+
+```
+
+## Harmonized Codebook
+
+This study combines micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.
+
+
+```{r prep, results="asis"}
+
+tmp <- fread("../data/codebook.csv")
+tmp[, section := tools::toTitleCase(section)]
+setorder(tmp, section, sortOrder)
+
+table_options(justification="l")
+for (i in unique(tmp$section)) {
+  cat("<h5>", i, "</h5>")
+  html(tabular((Variable=Factor(varCode))*DropEmpty()~(Heading(Label)*varLabel+Heading(Unit)*unit+Heading(Source)*source*Heading())*identity, 
+  data=tmp[section==i]))
+}
+
+```
+
+## RIGA Income Aggregates
+
+Notes on the RIGA income construction approach (see @riga2007doco):
+
+- All aggregates are estimated at the household level.  
+- All income and expenditures are **annualized**.  
+- All income components are **net of costs**.  
+- Purchases and sales of **durable goods**, investments and windfall gains are excluded from household income and expenditure calculations since these are not transactions undertaken regularly by households and can result in the significant over- or under-stating of permanent income.  
+- All aggregates are reported in **local currency units (LCU)**.  
+- For each survey, only the **rural** sample is used (this is not consustent across all surveys)  
+- An outlier check is imposed after the construction of all income aggregates to deal with extreme income shares that arise following the aggregation of all income components. After estimating the shares of the seven principal income categories (agricultural wages, non-agricultural wages, crop, livestock, self employment, transfer and other) **observations whose share is greater than or less than 3 (indicating a percentage share of +/- 300%) are dropped from the aggregate**.  
+
+However because RIGA income aggregates are *net of costs*, we use intermediary components instead:
+
+- $cropsales$ derived from $totcropsold$
+- $cropvalue$ derived from $totcropprod$
+- $cropsales\_sh$ (but can also be derived from $shcropsold$ and $shagprodsold$)
+  $$ cropsales\_sh = \frac{cropsales}{cropvalue} $$ 
+- $agsales$ derived from $totagsold$
+- $aggross = totagprod + farmrntimp + agr\_wge (+ selfimp1)$
+- $naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr\_wge + selfemp$
+- $totgross = aggross + naggross$  
+- $aggross\_sh$  
+  $$ aggross\_sh = \frac{aggross}{totgross} $$  
+
+RIGA does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.
+
+
