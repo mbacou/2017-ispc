@@ -66,8 +66,8 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Data Preparation Steps</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#riga-income-aggregates"><i class="fa fa-check"></i><b>1.1</b> RIGA Income Aggregates</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#harmonized-codebook"><i class="fa fa-check"></i><b>1.2</b> Harmonized Codebook</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#harmonized-codebook"><i class="fa fa-check"></i><b>1.1</b> Harmonized Codebook</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#riga-income-aggregates"><i class="fa fa-check"></i><b>1.2</b> RIGA Income Aggregates</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="ghana.html"><a href="ghana.html"><i class="fa fa-check"></i><b>2</b> Ghana</a></li>
 <li class="chapter" data-level="3" data-path="ethiopia.html"><a href="ethiopia.html"><i class="fa fa-check"></i><b>3</b> Ethiopia</a></li>
@@ -97,9 +97,2152 @@
 </div>
 <div id="data-preparation-steps" class="section level1">
 <h1><span class="header-section-number">Section 1</span> Data Preparation Steps</h1>
+<div id="harmonized-codebook" class="section level2">
+<h2><span class="header-section-number">1.1</span> Harmonized Codebook</h2>
+<p>This study combines micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.</p>
+<h5>
+Assets
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+agwealth
+</th>
+<td>
+agricultural wealth index
+</td>
+<td>
+index
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+brickwalls
+</th>
+<td>
+dwelling has brick walls
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+cellphone
+</th>
+<td>
+household has mobile phone
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+cementfloor
+</th>
+<td>
+dwelling has cement floors
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+electricity
+</th>
+<td>
+household has electricity
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+hhmignet
+</th>
+<td>
+household migration network
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landless
+</th>
+<td>
+hh is landless
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landown
+</th>
+<td>
+land owned
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landquint
+</th>
+<td>
+land ownership quintiles
+</td>
+<td>
+1-5
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landrent
+</th>
+<td>
+land rented out by hh
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landshare
+</th>
+<td>
+land sharecropped out by hh
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+nondirtfloor
+</th>
+<td>
+dwelling has non-dirt floors
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+ownhome
+</th>
+<td>
+household owns dwelling
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+runwater
+</th>
+<td>
+household has internal running water
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+safewater
+</th>
+<td>
+household has safe drinking water
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+telephone
+</th>
+<td>
+household has fixed telephone line
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_cattle
+</th>
+<td>
+tropical livestock units: cattle
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_horse
+</th>
+<td>
+tropical livestock units: horses
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_pigs
+</th>
+<td>
+tropical livestock units: pigs
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_sheep
+</th>
+<td>
+tropical livestock units: sheep, goats
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_small
+</th>
+<td>
+tropical livestock units: chicken, rabbits, other poultry
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_total
+</th>
+<td>
+tropical livestock units: total
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+toilet
+</th>
+<td>
+household has toilet
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+wealth
+</th>
+<td>
+RURAL: wealth index
+</td>
+<td>
+index
+</td>
+<td>
+RIGA
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Demographics
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+agehead
+</th>
+<td>
+age head of hh
+</td>
+<td>
+years
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+educadult
+</th>
+<td>
+ave years of education among hh members, &gt;15 yrs
+</td>
+<td>
+years
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+educave
+</th>
+<td>
+ave years of education in hh
+</td>
+<td>
+years
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+educave15_60
+</th>
+<td>
+ave years of education among hh members, 15-60 yrs
+</td>
+<td>
+years
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+educhead
+</th>
+<td>
+years of education head of hh
+</td>
+<td>
+years
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+educhigh
+</th>
+<td>
+highest years of education in hh
+</td>
+<td>
+years
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+femhead
+</th>
+<td>
+female headed hh
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+flabor
+</th>
+<td>
+hh female labor age &gt;14 but &lt;60 yrs
+</td>
+<td>
+person
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+flaborshare
+</th>
+<td>
+hh share of female labor
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+fsize
+</th>
+<td>
+number of females in the hh
+</td>
+<td>
+person
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+hhlabor
+</th>
+<td>
+hh labor age &gt;14 but &lt;60 yrs
+</td>
+<td>
+person
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+hhsize
+</th>
+<td>
+hh size
+</td>
+<td>
+person
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+marriedhead
+</th>
+<td>
+head of hh married
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+mlabor
+</th>
+<td>
+hh male labor age &gt;14 but &lt;60 yrs
+</td>
+<td>
+person
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+mlaborshare
+</th>
+<td>
+hh share of male labor
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+msize
+</th>
+<td>
+number of males in the hh
+</td>
+<td>
+person
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+snghead
+</th>
+<td>
+single head of hh
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+widowhead
+</th>
+<td>
+female head of hh widow
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Farm Management
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+fert_any
+</th>
+<td>
+farm uses any fertilizer
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+fert_inorg
+</th>
+<td>
+farm uses inorganic fertilizer
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+fert_org
+</th>
+<td>
+farm uses organic fertilizer
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+fuel
+</th>
+<td>
+farm purchases fuel
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+herb
+</th>
+<td>
+farm uses herbicides
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+hired_labor
+</th>
+<td>
+farm hires labor
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+irr
+</th>
+<td>
+farm uses irrigation
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+pest
+</th>
+<td>
+farm uses pesticides
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+seeds
+</th>
+<td>
+farm purchases seeds
+</td>
+<td>
+0,1
+</td>
+<td>
+micro
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Geography
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+ez
+</th>
+<td>
+agroecological zone
+</td>
+<td>
+ 
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+lc_esa
+</th>
+<td>
+ESA land cover classification, dominant
+</td>
+<td>
+ 
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+svyL1Nm
+</th>
+<td>
+level-1 admin unit (mapped)
+</td>
+<td>
+ 
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+svyL2Nm
+</th>
+<td>
+level-2 admin unit (mapped)
+</td>
+<td>
+ 
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+X
+</th>
+<td>
+GPS longitude
+</td>
+<td>
+decimal
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+Y
+</th>
+<td>
+GPS latitude
+</td>
+<td>
+decimal
+</td>
+<td>
+micro
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Income
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+aggross
+</th>
+<td>
+value of total annual farm income
+</td>
+<td>
+lcu
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+agmisc
+</th>
+<td>
+value total annual agricultural production - misc. uses
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+agowncons
+</th>
+<td>
+value total annual agricultural production consumed
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+agr_wge
+</th>
+<td>
+wage employment - agr, fishing
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+agsales
+</th>
+<td>
+value of annual farm sales
+</td>
+<td>
+lcu
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+agsales_sh
+</th>
+<td>
+share of annual farm production sold
+</td>
+<td>
+ 
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+cropsales
+</th>
+<td>
+value of annual crop sales
+</td>
+<td>
+lcu
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+cropsales_sh
+</th>
+<td>
+share of annual crop production sold
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+cropvalue
+</th>
+<td>
+value of annual crop production
+</td>
+<td>
+lcu
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+farmrntimp
+</th>
+<td>
+annual income received from rental of farm real estate assets, imputed
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+naggross
+</th>
+<td>
+value of total annual non-farm income
+</td>
+<td>
+lcu
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+naggross_sh
+</th>
+<td>
+share of non-farm income in total income
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+nonagr_wge
+</th>
+<td>
+wage employment - non-farm activities
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+nonfarmrntimp
+</th>
+<td>
+annual income received from non-farm real estate assets, imputed
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+otherincimp
+</th>
+<td>
+other non-labor income, imputed
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+selfemp
+</th>
+<td>
+annual net non-farm self employment income, imputed
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+selfimp1
+</th>
+<td>
+net HH income from ag business - agr, fishing, imputed
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+shagmisc
+</th>
+<td>
+share of annual agricultural production misc in total agricultural production
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+shagowncons
+</th>
+<td>
+share of annual agricultural production consumed in total agricultural productio
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+shagprodsold
+</th>
+<td>
+share of annual agricultural production sold in total agricultural production
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+shcropsold
+</th>
+<td>
+share of total annual crop production sold in total crop production
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+shlvstsold
+</th>
+<td>
+share of total annual livestock production sold in total livestock production
+</td>
+<td>
+share, 0-1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+totagprod
+</th>
+<td>
+value total annual agricultural production
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+totagsold
+</th>
+<td>
+value total annual agricultural production sold
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+totcropprod
+</th>
+<td>
+value of total annual crop production
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+totcropsold
+</th>
+<td>
+value total annual crop production sold
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+totgross
+</th>
+<td>
+value of total annual gross income
+</td>
+<td>
+lcu
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+totlivsold
+</th>
+<td>
+value total annual livestock production sold
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+totlvstprod
+</th>
+<td>
+value of total annual livestock production
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+transfersgrossimp
+</th>
+<td>
+annual total incoming public and private transfers, imputed
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Infrastructure
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+distbank
+</th>
+<td>
+km from community to bank
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+disthealth
+</th>
+<td>
+km from community to health facility
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+disthsrschool
+</th>
+<td>
+km from community to nearest senior secondary school
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distjsschool
+</th>
+<td>
+km from community to nearest junior secondary school
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distpost
+</th>
+<td>
+km from community to post office
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distprschool
+</th>
+<td>
+km from community to nearest primary school
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distpubphone
+</th>
+<td>
+km from community to public phone
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distpubtrans
+</th>
+<td>
+km from community to public transport
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distroad
+</th>
+<td>
+km from community to nearest motorable road
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distwater
+</th>
+<td>
+km from household to nearest water source
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+infraindex
+</th>
+<td>
+RURAL: index of access to infrastructure
+</td>
+<td>
+index
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+infraindex_natl
+</th>
+<td>
+NATIONAL: index of access to infrastructure
+</td>
+<td>
+index
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+infraindex_urb
+</th>
+<td>
+URBAN: index of access to infrastructure
+</td>
+<td>
+index
+</td>
+<td>
+RIGA
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Market Access
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+tt100k_mean
+</th>
+<td>
+IFPRI travel time to nearest market, 100K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+<tr class="left">
+<th>
+tt100k_med
+</th>
+<td>
+IFPRI travel time to nearest market, 100K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+<tr class="left">
+<th>
+tt20k_mean
+</th>
+<td>
+IFPRI travel time to nearest market, 20K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+<tr class="left">
+<th>
+tt20k_med
+</th>
+<td>
+IFPRI travel time to nearest market, 20K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+<tr class="left">
+<th>
+tt500k_mean
+</th>
+<td>
+IFPRI travel time to nearest market, 500K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+<tr class="left">
+<th>
+tt500k_med
+</th>
+<td>
+IFPRI travel time to nearest market, 500K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+<tr class="left">
+<th>
+tt50k_mean
+</th>
+<td>
+IFPRI travel time to nearest market, 50K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+<tr class="left">
+<th>
+tt50k_med
+</th>
+<td>
+IFPRI travel time to nearest market, 50K
+</td>
+<td>
+hrs
+</td>
+<td>
+IFPRI
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Sampling
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+clust
+</th>
+<td>
+enumeration area
+</td>
+<td>
+ 
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+district
+</th>
+<td>
+level-2 admin unit label (used in raw data)
+</td>
+<td>
+ 
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+hhid
+</th>
+<td>
+unique hhld identifier
+</td>
+<td>
+ 
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+month
+</th>
+<td>
+survey month
+</td>
+<td>
+1-12
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+nh
+</th>
+<td>
+hhld identifier (in raw data)
+</td>
+<td>
+ 
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+region
+</th>
+<td>
+level-1 admin unit label (used in raw data)
+</td>
+<td>
+ 
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+rural
+</th>
+<td>
+residence
+</td>
+<td>
+rural, urban
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+svyCode
+</th>
+<td>
+survey code
+</td>
+<td>
+tza-nps-08
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+wave
+</th>
+<td>
+survey round
+</td>
+<td>
+1,2,3,4,5,6
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+weight
+</th>
+<td>
+replication weight
+</td>
+<td>
+ 
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+year
+</th>
+<td>
+survey year
+</td>
+<td>
+2008
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+zone
+</th>
+<td>
+other stratification
+</td>
+<td>
+ 
+</td>
+<td>
+micro
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Segmentation
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+class5
+</th>
+<td>
+farm typology, 5-class
+</td>
+<td>
+subs., trans., pre-comm., specd. comm., divf. comm.
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+class9
+</th>
+<td>
+farm typology, 9-class
+</td>
+<td>
+LoCLoD, LoCMeD, LoCHiD, MeCLoD, MeCMeD, MeCHiD, HiCLoD, HiCMeD, HiCHiD
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+croparea
+</th>
+<td>
+cultivated area (used in farm typology), imputed
+</td>
+<td>
+ha
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+croparea_3clas
+</th>
+<td>
+cultivated area, 3-class
+</td>
+<td>
+&lt;= 2 ha, 2-4 ha, &gt; 4 ha
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+croparea_4ha
+</th>
+<td>
+cultivated area, 2-class
+</td>
+<td>
+&lt;= 4 ha, &gt; 4 ha
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+cropsales_3clas
+</th>
+<td>
+share of crop sales, 3-class
+</td>
+<td>
+LoC, MeC, HiC
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+naggross_2clas
+</th>
+<td>
+share of non-farm income in total income, 2-class
+</td>
+<td>
+LoD, HiD
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+naggross_3clas
+</th>
+<td>
+share of non-farm income in total income, 3-class
+</td>
+<td>
+LoD, MeD, HiD
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+seg_mkt100k
+</th>
+<td>
+IFPRI lo/hi market access class, 100K
+</td>
+<td>
+mkt-lo, mkt-hi
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+seg_mkt20k
+</th>
+<td>
+IFPRI lo/hi market access class, 20K
+</td>
+<td>
+mkt-lo, mkt-hi
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+seg_mkt250k
+</th>
+<td>
+IFPRI lo/hi market access class, 250K
+</td>
+<td>
+mkt-lo, mkt-hi
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+seg_mkt500k
+</th>
+<td>
+IFPRI lo/hi market access class, 500K
+</td>
+<td>
+mkt-lo, mkt-hi
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+seg_mkt50k
+</th>
+<td>
+IFPRI lo/hi market access class, 50K
+</td>
+<td>
+mkt-lo, mkt-hi
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+seg_quad
+</th>
+<td>
+agricultural potential segment (GAEZ)
+</td>
+<td>
+agpot-lo / mkt-lo, agpot-lo / mkt-hi, agpot-hi / mkt-lo, agpot-hi / mkt-hi
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+seg_suit_glues
+</th>
+<td>
+suitability class (GLUES), 2-class
+</td>
+<td>
+agpot-lo, agpot-hi
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+suit_bmgf
+</th>
+<td>
+BMGF-derived suitability, 3-class
+</td>
+<td>
+agpot-hi, agpot-lo, agpot-no
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+suit_gaez
+</th>
+<td>
+FAO/GAEZ suitability, 9-class
+</td>
+<td>
+ 
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+suit_glues
+</th>
+<td>
+GLUES suitability (point, mean, or median)
+</td>
+<td>
+ 
+</td>
+<td>
+calculated
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="riga-income-aggregates" class="section level2">
-<h2><span class="header-section-number">1.1</span> RIGA Income Aggregates</h2>
-<p>This study combines micro data for 4 countries across multiple survey years. To expedite all data reconciliation and preparation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. Generally in the RIGA approach the method is (see <span class="citation">Carletto, Covarrubias, Davis, Krausova, &amp; Winters (<a href="#ref-riga2007doco">2007</a>)</span>):</p>
+<h2><span class="header-section-number">1.2</span> RIGA Income Aggregates</h2>
+<p>Notes on the RIGA income construction approach (see <span class="citation">Carletto, Covarrubias, Davis, Krausova, &amp; Winters (<a href="#ref-riga2007doco">2007</a>)</span>):</p>
 <ul>
 <li>All aggregates are estimated at the household level.<br />
 </li>
@@ -115,7 +2258,7 @@
 </li>
 <li>An outlier check is imposed after the construction of all income aggregates to deal with extreme income shares that arise following the aggregation of all income components. After estimating the shares of the seven principal income categories (agricultural wages, non-agricultural wages, crop, livestock, self employment, transfer and other) <strong>observations whose share is greater than or less than 3 (indicating a percentage share of +/- 300%) are dropped from the aggregate</strong>.</li>
 </ul>
-<p>However because RIGA income aggregates are <em>net of costs</em>, we use intermediary components instead. Details are also shown in the table below.</p>
+<p>However because RIGA income aggregates are <em>net of costs</em>, we use intermediary components instead:</p>
 <ul>
 <li><span class="math inline">\(cropsales\)</span> derived from <span class="math inline">\(totcropsold\)</span></li>
 <li><span class="math inline">\(cropvalue\)</span> derived from <span class="math inline">\(totcropprod\)</span></li>
@@ -129,1707 +2272,6 @@
 <span class="math display">\[ aggross\_sh = \frac{aggross}{totgross} \]</span></li>
 </ul>
 <p>RIGA does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.</p>
-</div>
-<div id="harmonized-codebook" class="section level2">
-<h2><span class="header-section-number">1.2</span> Harmonized Codebook</h2>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-agwealth
-</th>
-<td>
-agricultural wealth index (index)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-brickwalls
-</th>
-<td>
-dwelling has brick walls (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-cellphone
-</th>
-<td>
-household has mobile phone (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-cementfloor
-</th>
-<td>
-dwelling has cement floors (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-electricity
-</th>
-<td>
-household has electricity (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-hhmignet
-</th>
-<td>
-household migration network (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-landless
-</th>
-<td>
-hh is landless (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-landown
-</th>
-<td>
-land owned (ha)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-landquint
-</th>
-<td>
-land ownership quintiles (1-5)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-landrent
-</th>
-<td>
-land rented out by hh (ha)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-landshare
-</th>
-<td>
-land sharecropped out by hh (ha)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-nondirtfloor
-</th>
-<td>
-dwelling has non-dirt floors (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-ownhome
-</th>
-<td>
-household owns dwelling (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-runwater
-</th>
-<td>
-household has internal running water (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-safewater
-</th>
-<td>
-household has safe drinking water (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-telephone
-</th>
-<td>
-household has fixed telephone line (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-TLU_cattle
-</th>
-<td>
-tropical livestock units: cattle (TLU)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-TLU_horse
-</th>
-<td>
-tropical livestock units: horses (TLU)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-TLU_pigs
-</th>
-<td>
-tropical livestock units: pigs (TLU)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-TLU_sheep
-</th>
-<td>
-tropical livestock units: sheep, goats (TLU)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-TLU_small
-</th>
-<td>
-tropical livestock units: chicken, rabbits, other poultry (TLU)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-TLU_total
-</th>
-<td>
-tropical livestock units: total (TLU)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-toilet
-</th>
-<td>
-household has toilet (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-wealth
-</th>
-<td>
-RURAL: wealth index (index)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-agehead
-</th>
-<td>
-age head of hh (years)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-educadult
-</th>
-<td>
-ave years of education among hh members, &gt;15 yrs (years)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-educave
-</th>
-<td>
-ave years of education in hh (years)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-educave15_60
-</th>
-<td>
-ave years of education among hh members, 15-60 yrs (years)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-educhead
-</th>
-<td>
-years of education head of hh (years)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-educhigh
-</th>
-<td>
-highest years of education in hh (years)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-femhead
-</th>
-<td>
-female headed hh (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-flabor
-</th>
-<td>
-hh female labor age &gt;14 but &lt;60 yrs (person)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-flaborshare
-</th>
-<td>
-hh share of female labor (share, 0-1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-fsize
-</th>
-<td>
-number of females in the hh (person)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-hhlabor
-</th>
-<td>
-hh labor age &gt;14 but &lt;60 yrs (person)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-hhsize
-</th>
-<td>
-hh size (person)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-marriedhead
-</th>
-<td>
-head of hh married (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-mlabor
-</th>
-<td>
-hh male labor age &gt;14 but &lt;60 yrs (person)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-mlaborshare
-</th>
-<td>
-hh share of male labor (share, 0-1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-msize
-</th>
-<td>
-number of males in the hh (person)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-snghead
-</th>
-<td>
-single head of hh (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-widowhead
-</th>
-<td>
-female head of hh widow (0,1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-fert_any
-</th>
-<td>
-farm uses any fertilizer (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-fert_inorg
-</th>
-<td>
-farm uses inorganic fertilizer (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-fert_org
-</th>
-<td>
-farm uses organic fertilizer (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-fuel
-</th>
-<td>
-farm purchases fuel (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-herb
-</th>
-<td>
-farm uses herbicides (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-hired_labor
-</th>
-<td>
-farm hires labor (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-irr
-</th>
-<td>
-farm uses irrigation (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-pest
-</th>
-<td>
-farm uses pesticides (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seeds
-</th>
-<td>
-farm purchases seeds (0,1)
-</td>
-<td>
-micro
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-ez
-</th>
-<td>
-agroecological zone
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-lc_esa
-</th>
-<td>
-ESA land cover classification, dominant
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-svyL1Nm
-</th>
-<td>
-level-1 admin unit (mapped)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-svyL2Nm
-</th>
-<td>
-level-2 admin unit (mapped)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-X
-</th>
-<td>
-GPS longitude (decimal)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-Y
-</th>
-<td>
-GPS latitude (decimal)
-</td>
-<td>
-micro
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-aggross
-</th>
-<td>
-value of total annual farm income (lcu)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-agmisc
-</th>
-<td>
-value total annual agricultural production - misc. uses (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-agowncons
-</th>
-<td>
-value total annual agricultural production consumed (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-agr_wge
-</th>
-<td>
-wage employment - agr, fishing (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-agsales
-</th>
-<td>
-value of annual farm sales (lcu)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-agsales_sh
-</th>
-<td>
-share of annual farm production sold
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-cropsales
-</th>
-<td>
-value of annual crop sales (lcu)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-cropsales_sh
-</th>
-<td>
-share of annual crop production sold (share, 0-1)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-cropvalue
-</th>
-<td>
-value of annual crop production (lcu)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-farmrntimp
-</th>
-<td>
-annual income received from rental of farm real estate assets, imputed (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-naggross
-</th>
-<td>
-value of total annual non-farm income (lcu)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-naggross_sh
-</th>
-<td>
-share of non-farm income in total income (share, 0-1)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-nonagr_wge
-</th>
-<td>
-wage employment - non-farm activities (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-nonfarmrntimp
-</th>
-<td>
-annual income received from non-farm real estate assets, imputed (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-otherincimp
-</th>
-<td>
-other non-labor income, imputed (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-selfemp
-</th>
-<td>
-annual net non-farm self employment income, imputed (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-selfimp1
-</th>
-<td>
-net HH income from ag business - agr, fishing, imputed (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-shagmisc
-</th>
-<td>
-share of annual agricultural production misc in total agricultural production (share, 0-1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-shagowncons
-</th>
-<td>
-share of annual agricultural production consumed in total agricultural productio (share, 0-1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-shagprodsold
-</th>
-<td>
-share of annual agricultural production sold in total agricultural production (share, 0-1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-shcropsold
-</th>
-<td>
-share of total annual crop production sold in total crop production (share, 0-1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-shlvstsold
-</th>
-<td>
-share of total annual livestock production sold in total livestock production (share, 0-1)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-totagprod
-</th>
-<td>
-value total annual agricultural production (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-totagsold
-</th>
-<td>
-value total annual agricultural production sold (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-totcropprod
-</th>
-<td>
-value of total annual crop production (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-totcropsold
-</th>
-<td>
-value total annual crop production sold (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-totgross
-</th>
-<td>
-value of total annual gross income (lcu)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-totlivsold
-</th>
-<td>
-value total annual livestock production sold (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-totlvstprod
-</th>
-<td>
-value of total annual livestock production (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-transfersgrossimp
-</th>
-<td>
-annual total incoming public and private transfers, imputed (lcu)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-distbank
-</th>
-<td>
-km from community to bank (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-disthealth
-</th>
-<td>
-km from community to health facility (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-disthsrschool
-</th>
-<td>
-km from community to nearest senior secondary school (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-distjsschool
-</th>
-<td>
-km from community to nearest junior secondary school (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-distpost
-</th>
-<td>
-km from community to post office (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-distprschool
-</th>
-<td>
-km from community to nearest primary school (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-distpubphone
-</th>
-<td>
-km from community to public phone (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-distpubtrans
-</th>
-<td>
-km from community to public transport (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-distroad
-</th>
-<td>
-km from community to nearest motorable road (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-distwater
-</th>
-<td>
-km from household to nearest water source (km)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-infraindex
-</th>
-<td>
-RURAL: index of access to infrastructure (index)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-infraindex_natl
-</th>
-<td>
-NATIONAL: index of access to infrastructure (index)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-infraindex_urb
-</th>
-<td>
-URBAN: index of access to infrastructure (index)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-tt100k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 100K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-tt100k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 100K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-tt20k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 20K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-tt20k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 20K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-tt500k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 500K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-tt500k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 500K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-tt50k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 50K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-tt50k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 50K (hrs)
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-clust
-</th>
-<td>
-enumeration area
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-district
-</th>
-<td>
-level-2 admin unit label (used in raw data)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-hhid
-</th>
-<td>
-unique hhld identifier
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-month
-</th>
-<td>
-survey month (1-12)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-nh
-</th>
-<td>
-hhld identifier (in raw data)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-region
-</th>
-<td>
-level-1 admin unit label (used in raw data)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-rural
-</th>
-<td>
-residence (rural, urban)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-svyCode
-</th>
-<td>
-survey code (tza-nps-08)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-wave
-</th>
-<td>
-survey round (1,2,3,4,5,6)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-weight
-</th>
-<td>
-replication weight
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-year
-</th>
-<td>
-survey year (2008)
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-zone
-</th>
-<td>
-other stratification
-</td>
-<td>
-micro
-</td>
-</tr>
-</tbody>
-</table>
-<table class="Rtable">
-<caption>
-<span id="tab:prep">Tab. 1.1: </span> Cross-country harmonized household-level variables
-</caption>
-<thead>
-<tr class="center">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="center">
-<th class="left">
-class5
-</th>
-<td>
-farm typology, 5-class (subs., trans., pre-comm., specd. comm., divf. comm.)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-class9
-</th>
-<td>
-farm typology, 9-class (LoCLoD, LoCMeD, LoCHiD, MeCLoD, MeCMeD, MeCHiD, HiCLoD, HiCMeD, HiCHiD)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-croparea
-</th>
-<td>
-cultivated area (used in farm typology), imputed (ha)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-croparea_3clas
-</th>
-<td>
-cultivated area, 3-class (&lt;= 2 ha, 2-4 ha, &gt; 4 ha)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-croparea_4ha
-</th>
-<td>
-cultivated area, 2-class (&lt;= 4 ha, &gt; 4 ha)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-cropsales_3clas
-</th>
-<td>
-share of crop sales, 3-class (LoC, MeC, HiC)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-naggross_2clas
-</th>
-<td>
-share of non-farm income in total income, 2-class (LoD, HiD)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-naggross_3clas
-</th>
-<td>
-share of non-farm income in total income, 3-class (LoD, MeD, HiD)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seg_mkt100k
-</th>
-<td>
-IFPRI lo/hi market access class, 100K (mkt-lo, mkt-hi)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seg_mkt20k
-</th>
-<td>
-IFPRI lo/hi market access class, 20K (mkt-lo, mkt-hi)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seg_mkt250k
-</th>
-<td>
-IFPRI lo/hi market access class, 250K (mkt-lo, mkt-hi)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seg_mkt500k
-</th>
-<td>
-IFPRI lo/hi market access class, 500K (mkt-lo, mkt-hi)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seg_mkt50k
-</th>
-<td>
-IFPRI lo/hi market access class, 50K (mkt-lo, mkt-hi)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seg_quad
-</th>
-<td>
-agricultural potential segment (GAEZ) (agpot-lo / mkt-lo, agpot-lo / mkt-hi, agpot-hi / mkt-lo, agpot-hi / mkt-hi)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-seg_suit_glues
-</th>
-<td>
-suitability class (GLUES), 2-class (agpot-lo, agpot-hi)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-suit_bmgf
-</th>
-<td>
-BMGF-derived suitability, 3-class (agpot-hi, agpot-lo, agpot-no)
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-suit_gaez
-</th>
-<td>
-FAO/GAEZ suitability, 9-class
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="center">
-<th class="left">
-suit_glues
-</th>
-<td>
-GLUES suitability (point, mean, or median)
-</td>
-<td>
-calculated
-</td>
-</tr>
-</tbody>
-</table>
 
 </div>
 </div>

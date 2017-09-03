@@ -32,7 +32,7 @@ library(stringr)
 # Output options
 table_options(htmloptions(justification="c", head=F, pad=T))
 opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
-  dev="svg", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=T, 
+  dev="svg", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=F, 
   dev.args=list(
     png=list(family="Roboto Condensed", pointsize=9), 
     svg=list(family="Roboto Condensed")))
