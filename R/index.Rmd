@@ -4,12 +4,9 @@ author: "[BACOU, Melanie](http://github.com/mbacou) for BMGF"
 date: "Last updated on `r Sys.Date()` -- CODES AND NOTES, DO NOT USE OR CITE"
 description: "Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)"
 site: bookdown::bookdown_site
-knit: bookdown::render_book
-output:
-  bookdown::gitbook:
-    url: "https://mbacou.github.io/2017-agra-aasr/"
-    github-repo: "mbacou/2017-agra-aasr"
-always_allow_html: yes
+output:bookdown::gitbook:
+  url: "https://mbacou.github.io/2017-ispc/"
+  github-repo: "mbacou/2017-ispc"
 bibliography: biblio.bib
 csl: apa.csl
 link-citations: yes
@@ -18,7 +15,7 @@ nocite: |
 
 ---
 
-# Data Preparation Steps
+# Data Preparation
 
 ```{r setup, include=FALSE}
 
