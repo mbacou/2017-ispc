@@ -99,2491 +99,2475 @@
 <h1><span class="header-section-number">Section 1</span> Data Preparation</h1>
 <div id="harmonized-codebook" class="section level2">
 <h2><span class="header-section-number">1.1</span> Harmonized Codebook</h2>
-<p>This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.</p>
+<p>This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also use constructed variables from IFPRI replication datasets. Below is a full codebook.</p>
 <h5>
-sampling
+Sampling
 </h5>
-<table class="Rtable">
+<table>
 <thead>
-<tr class="left">
-<th>
+<tr>
+<th style="text-align:left;">
 Variable
 </th>
-<th>
+<th style="text-align:left;">
 Label
 </th>
-<th>
+<th style="text-align:left;">
 Unit
 </th>
-<th>
+<th style="text-align:left;">
 Source
 </th>
 </tr>
 </thead>
 <tbody>
-<tr class="left">
-<th>
-clust
-</th>
-<td>
-enumeration area
-</td>
-<td>
- 
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 hhid
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 unique hhld identifier
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 micro
 </td>
 </tr>
-<tr class="left">
-<th>
-month
-</th>
-<td>
-survey month
+<tr>
+<td style="text-align:left;">
+clust
 </td>
-<td>
-42747
+<td style="text-align:left;">
+enumeration area
 </td>
-<td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
 micro
 </td>
 </tr>
-<tr class="left">
-<th>
-nh
-</th>
-<td>
-hhld identifier (in raw data)
-</td>
-<td>
- 
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-rural
-</th>
-<td>
-residence
-</td>
-<td>
-rural, urban
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 svyCode
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 survey code
 </td>
-<td>
-tza-nps-08
+<td style="text-align:left;">
+gha-glss4, gha-glss5, gha-glss6, tza-nps-2008, tza-nps-2010, tza-nps-2012
 </td>
-<td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 wave
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 survey round
 </td>
-<td>
-1,2,3,4,5,6
+<td style="text-align:left;">
+gha4, gha5, gha6, tza09, tza11, tza13
 </td>
-<td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
-weight
-</th>
-<td>
-replication weight
-</td>
-<td>
- 
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 year
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 survey year
 </td>
-<td>
-2008
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 micro
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
+month
+</td>
+<td style="text-align:left;">
+survey month
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 zone
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 other stratification
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+weight
+</td>
+<td style="text-align:left;">
+replication weight
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nh
+</td>
+<td style="text-align:left;">
+hhld identifier (in raw data)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rural
+</td>
+<td style="text-align:left;">
+residence
+</td>
+<td style="text-align:left;">
+rural, urban
+</td>
+<td style="text-align:left;">
 micro
 </td>
 </tr>
 </tbody>
 </table>
 <h5>
-geography
+Geography
 </h5>
-<table class="Rtable">
+<table>
 <thead>
-<tr class="left">
-<th>
+<tr>
+<th style="text-align:left;">
 Variable
 </th>
-<th>
+<th style="text-align:left;">
 Label
 </th>
-<th>
+<th style="text-align:left;">
 Unit
 </th>
-<th>
+<th style="text-align:left;">
 Source
 </th>
 </tr>
 </thead>
 <tbody>
-<tr class="left">
-<th>
-district
-</th>
-<td>
-district ID used in RIGA
-</td>
-<td>
-(varies)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-ez
-</th>
-<td>
-agroecological zone
-</td>
-<td>
-label
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-lat_dd_mod
-</th>
-<td>
-jittered latitude
-</td>
-<td>
-decimal
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-lc_esa
-</th>
-<td>
-ESA land cover classification, dominant
-</td>
-<td>
-code
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-lon_dd_mod
-</th>
-<td>
-jittered longitude
-</td>
-<td>
-decimal
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-region
-</th>
-<td>
-region ID used in RIGA
-</td>
-<td>
-(varies)
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-svyL1Cd
-</th>
-<td>
-level-1 admin unit code (linked to survey map)
-</td>
-<td>
-integer
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-svyL1Nm
-</th>
-<td>
-level-1 admin unit label (linked to survey map)
-</td>
-<td>
-label
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-svyL2Cd
-</th>
-<td>
-level-1 admin unit code (linked to survey map)
-</td>
-<td>
-integer
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-svyL2Nm
-</th>
-<td>
-level-2 admin unit label (linked to survey map)
-</td>
-<td>
-label
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 X
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 hhld GPS longitude
 </td>
-<td>
+<td style="text-align:left;">
 decimal
 </td>
-<td>
+<td style="text-align:left;">
 micro
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 Y
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 hhld GPS latitude
 </td>
-<td>
+<td style="text-align:left;">
 decimal
 </td>
-<td>
+<td style="text-align:left;">
 micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+svyL1Cd
+</td>
+<td style="text-align:left;">
+level-1 admin unit code (linked to survey map)
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+svyL1Nm
+</td>
+<td style="text-align:left;">
+level-1 admin unit label (linked to survey map)
+</td>
+<td style="text-align:left;">
+label
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ez
+</td>
+<td style="text-align:left;">
+agroecological zone
+</td>
+<td style="text-align:left;">
+label
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+svyL2Cd
+</td>
+<td style="text-align:left;">
+level-1 admin unit code (linked to survey map)
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lc_esa
+</td>
+<td style="text-align:left;">
+ESA land cover classification, dominant
+</td>
+<td style="text-align:left;">
+code
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+svyL2Nm
+</td>
+<td style="text-align:left;">
+level-2 admin unit label (linked to survey map)
+</td>
+<td style="text-align:left;">
+label
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lon_dd_mod
+</td>
+<td style="text-align:left;">
+jittered longitude
+</td>
+<td style="text-align:left;">
+decimal
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lat_dd_mod
+</td>
+<td style="text-align:left;">
+jittered latitude
+</td>
+<td style="text-align:left;">
+decimal
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+region
+</td>
+<td style="text-align:left;">
+region ID used in RIGA
+</td>
+<td style="text-align:left;">
+varies
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+district
+</td>
+<td style="text-align:left;">
+district ID used in RIGA
+</td>
+<td style="text-align:left;">
+varies
+</td>
+<td style="text-align:left;">
+RIGA
 </td>
 </tr>
 </tbody>
 </table>
 <h5>
-demographics
+Demographics
 </h5>
-<table class="Rtable">
+<table>
 <thead>
-<tr class="left">
-<th>
+<tr>
+<th style="text-align:left;">
 Variable
 </th>
-<th>
+<th style="text-align:left;">
 Label
 </th>
-<th>
+<th style="text-align:left;">
 Unit
 </th>
-<th>
+<th style="text-align:left;">
 Source
 </th>
 </tr>
 </thead>
 <tbody>
-<tr class="left">
-<th>
-agehead
-</th>
-<td>
-age head of hh
-</td>
-<td>
-years
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-educadult
-</th>
-<td>
-ave years of education among hh members, &gt;15 yrs
-</td>
-<td>
-years
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-educave
-</th>
-<td>
-ave years of education in hh
-</td>
-<td>
-years
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-educave15_60
-</th>
-<td>
-ave years of education among hh members, 15-60 yrs
-</td>
-<td>
-years
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-educhead
-</th>
-<td>
-years of education head of hh
-</td>
-<td>
-years
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-educhigh
-</th>
-<td>
-highest years of education in hh
-</td>
-<td>
-years
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-femhead
-</th>
-<td>
-female headed hh
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-flabor
-</th>
-<td>
-hh female labor age &gt;14 but &lt;60 yrs
-</td>
-<td>
-person
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-flaborshare
-</th>
-<td>
-hh share of female labor
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-fsize
-</th>
-<td>
-number of females in the hh
-</td>
-<td>
-person
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-hhlabor
-</th>
-<td>
-hh labor age &gt;14 but &lt;60 yrs
-</td>
-<td>
-person
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 hhsize
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 hh size
 </td>
-<td>
+<td style="text-align:left;">
 person
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-marriedhead
-</th>
-<td>
-head of hh married
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-mlabor
-</th>
-<td>
-hh male labor age &gt;14 but &lt;60 yrs
-</td>
-<td>
-person
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-mlaborshare
-</th>
-<td>
-hh share of male labor
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 msize
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 number of males in the hh
 </td>
-<td>
+<td style="text-align:left;">
 person
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
+fsize
+</td>
+<td style="text-align:left;">
+number of females in the hh
+</td>
+<td style="text-align:left;">
+person
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+femhead
+</td>
+<td style="text-align:left;">
+female headed hh
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 snghead
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 single head of hh
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 widowhead
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 female head of hh widow
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+marriedhead
+</td>
+<td style="text-align:left;">
+head of hh married
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agehead
+</td>
+<td style="text-align:left;">
+age head of hh
+</td>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+educhead
+</td>
+<td style="text-align:left;">
+years of education head of hh
+</td>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+educhigh
+</td>
+<td style="text-align:left;">
+highest years of education in hh
+</td>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+educadult
+</td>
+<td style="text-align:left;">
+ave years of education among hh members, &gt;15 yrs
+</td>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+educave15_60
+</td>
+<td style="text-align:left;">
+ave years of education among hh members, 15-60 yrs
+</td>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+educave
+</td>
+<td style="text-align:left;">
+ave years of education in hh
+</td>
+<td style="text-align:left;">
+years
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hhlabor
+</td>
+<td style="text-align:left;">
+hh labor age &gt;14 but &lt;60 yrs
+</td>
+<td style="text-align:left;">
+person
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mlabor
+</td>
+<td style="text-align:left;">
+hh male labor age &gt;14 but &lt;60 yrs
+</td>
+<td style="text-align:left;">
+person
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mlaborshare
+</td>
+<td style="text-align:left;">
+hh share of male labor
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+flabor
+</td>
+<td style="text-align:left;">
+hh female labor age &gt;14 but &lt;60 yrs
+</td>
+<td style="text-align:left;">
+person
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+flaborshare
+</td>
+<td style="text-align:left;">
+hh share of female labor
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
 </tbody>
 </table>
 <h5>
-assets
+Assets
 </h5>
-<table class="Rtable">
+<table>
 <thead>
-<tr class="left">
-<th>
+<tr>
+<th style="text-align:left;">
 Variable
 </th>
-<th>
+<th style="text-align:left;">
 Label
 </th>
-<th>
+<th style="text-align:left;">
 Unit
 </th>
-<th>
+<th style="text-align:left;">
 Source
 </th>
 </tr>
 </thead>
 <tbody>
-<tr class="left">
-<th>
-agwealth
-</th>
-<td>
-agricultural wealth index
-</td>
-<td>
-index
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 brickwalls
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 dwelling has brick walls
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 cellphone
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household has mobile phone
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 cementfloor
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 dwelling has cement floors
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 electricity
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household has electricity
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 hhmignet
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household migration network
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-ilandown
-</th>
-<td>
-hectares of irrigated land owned
-</td>
-<td>
-ha
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-landless
-</th>
-<td>
-hh is landless
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-landown
-</th>
-<td>
-land owned
-</td>
-<td>
-ha
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-landquint
-</th>
-<td>
-land ownership quintiles
-</td>
-<td>
-qtl, 1-5
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-landrent
-</th>
-<td>
-land rented out by hh
-</td>
-<td>
-ha
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-landshare
-</th>
-<td>
-land sharecropped out by hh
-</td>
-<td>
-ha
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 nondirtfloor
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 dwelling has non-dirt floors
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 ownhome
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household owns dwelling
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-rlandown
-</th>
-<td>
-hectares of rain-fed land owned
-</td>
-<td>
-ha
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 runwater
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household has internal running water
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 safewater
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household has safe drinking water
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 telephone
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household has fixed telephone line
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-TLU_cattle
-</th>
-<td>
-tropical livestock units: cattle
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_draft
-</th>
-<td>
-Tropical Livestock Units: draft
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_horse
-</th>
-<td>
-tropical livestock units: horses
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_pigs
-</th>
-<td>
-tropical livestock units: pigs
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_sheep
-</th>
-<td>
-tropical livestock units: sheep, goats
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_small
-</th>
-<td>
-tropical livestock units: chicken, rabbits, other poultry
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_total
-</th>
-<td>
-tropical livestock units: total
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 toilet
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 household has toilet
 </td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-wealth
-</th>
-<td>
-RURAL: wealth index
+<tr>
+<td style="text-align:left;">
+landless
 </td>
-<td>
-index
+<td style="text-align:left;">
+hh is landless
 </td>
-<td>
-RIGA
-</td>
-</tr>
-</tbody>
-</table>
-<h5>
-income
-</h5>
-<table class="Rtable">
-<thead>
-<tr class="left">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Unit
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="left">
-<th>
-aggross
-</th>
-<td>
-value of total annual farm income
-</td>
-<td>
-lcu
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-agmisc
-</th>
-<td>
-value total annual agricultural production - misc. uses
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-agowncons
-</th>
-<td>
-value total annual agricultural production consumed
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-agr_wge
-</th>
-<td>
-wage employment - agr, fishing
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-agsales
-</th>
-<td>
-value of annual farm sales
-</td>
-<td>
-lcu
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-agsales_sh
-</th>
-<td>
-share of annual farm production sold
-</td>
-<td>
- 
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-cropsales
-</th>
-<td>
-value of annual crop sales
-</td>
-<td>
-lcu
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-cropsales_sh
-</th>
-<td>
-share of annual crop production sold
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-cropvalue
-</th>
-<td>
-value of annual crop production
-</td>
-<td>
-lcu
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-decile
-</th>
-<td>
-rural pcexp deciles
-</td>
-<td>
-dec, 1-10
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-decilurb
-</th>
-<td>
-urban pcexp deciles
-</td>
-<td>
-dec, 1-10
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-farmrntimp
-</th>
-<td>
-annual income received from rental of farm real estate assets, imputed
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-naggross
-</th>
-<td>
-value of total annual non-farm income
-</td>
-<td>
-lcu
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-naggross_sh
-</th>
-<td>
-share of non-farm income in total income
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-nonagr_wge
-</th>
-<td>
-wage employment - non-farm activities
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-nonfarmrntimp
-</th>
-<td>
-annual income received from non-farm real estate assets, imputed
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-otherincimp
-</th>
-<td>
-other non-labor income, imputed
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-pcexp
-</th>
-<td>
-pc expenditures, hhexp2/hhsize
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-quintile
-</th>
-<td>
-rural pcexp quintiles
-</td>
-<td>
-qtl, 1-5
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-quinttot
-</th>
-<td>
-rural &amp; urban pcexp quintiles
-</td>
-<td>
-qtl, 1-5
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-quinturb
-</th>
-<td>
-urban pcexp quintiles
-</td>
-<td>
-qtl, 1-5
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-selfemp
-</th>
-<td>
-annual net non-farm self employment income, imputed
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-selfimp1
-</th>
-<td>
-net HH income from ag business - agr, fishing, imputed
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-shagmisc
-</th>
-<td>
-share of annual agricultural production misc in total agricultural production
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-shagowncons
-</th>
-<td>
-share of annual agricultural production consumed in total agricultural productio
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-shagprodsold
-</th>
-<td>
-share of annual agricultural production sold in total agricultural production
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-shcropsold
-</th>
-<td>
-share of total annual crop production sold in total crop production
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-shlvstsold
-</th>
-<td>
-share of total annual livestock production sold in total livestock production
-</td>
-<td>
-share, 0-1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-totagprod
-</th>
-<td>
-value total annual agricultural production
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-totagsold
-</th>
-<td>
-value total annual agricultural production sold
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-totcropprod
-</th>
-<td>
-value of total annual crop production
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-totcropsold
-</th>
-<td>
-value total annual crop production sold
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-totgross
-</th>
-<td>
-value of total annual gross income
-</td>
-<td>
-lcu
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-totlivsold
-</th>
-<td>
-value total annual livestock production sold
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-totlvstprod
-</th>
-<td>
-value of total annual livestock production
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-transfersgrossimp
-</th>
-<td>
-annual total incoming public and private transfers, imputed
-</td>
-<td>
-lcu
-</td>
-<td>
-RIGA
-</td>
-</tr>
-</tbody>
-</table>
-<h5>
-infrastructure
-</h5>
-<table class="Rtable">
-<thead>
-<tr class="left">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Unit
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="left">
-<th>
-distbank
-</th>
-<td>
-km from community to bank
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-disthealth
-</th>
-<td>
-km from community to health facility
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-disthosptl
-</th>
-<td>
-KM from community to nearest hospital
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-disthsrschool
-</th>
-<td>
-km from community to nearest senior secondary school
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distjsschool
-</th>
-<td>
-km from community to nearest junior secondary school
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distmarket
-</th>
-<td>
-KM from community to nearest market
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distpolice
-</th>
-<td>
-KM from community to nearest police station
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distpost
-</th>
-<td>
-km from community to post office
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distprivprschool
-</th>
-<td>
-KM from community to nearest private primary school
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distprivsecschool
-</th>
-<td>
-KM from community to nearest private secondary school
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distprschool
-</th>
-<td>
-km from community to nearest primary school
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distpubphone
-</th>
-<td>
-km from community to public phone
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distpubtrans
-</th>
-<td>
-km from community to public transport
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distroad
-</th>
-<td>
-km from community to nearest motorable road
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distsecschool
-</th>
-<td>
-KM from community to nearest government secondary school
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-distwater
-</th>
-<td>
-km from household to nearest water source
-</td>
-<td>
-km
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-infraindex
-</th>
-<td>
-RURAL: index of access to infrastructure
-</td>
-<td>
-index
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-infraindex_natl
-</th>
-<td>
-NATIONAL: index of access to infrastructure
-</td>
-<td>
-index
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-infraindex_urb
-</th>
-<td>
-URBAN: index of access to infrastructure
-</td>
-<td>
-index
-</td>
-<td>
-RIGA
-</td>
-</tr>
-</tbody>
-</table>
-<h5>
-market access
-</h5>
-<table class="Rtable">
-<thead>
-<tr class="left">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Unit
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="left">
-<th>
-tt100k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 100K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="left">
-<th>
-tt100k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 100K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="left">
-<th>
-tt20k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 20K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="left">
-<th>
-tt20k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 20K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="left">
-<th>
-tt500k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 500K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="left">
-<th>
-tt500k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 500K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="left">
-<th>
-tt50k_mean
-</th>
-<td>
-IFPRI travel time to nearest market, 50K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-<tr class="left">
-<th>
-tt50k_med
-</th>
-<td>
-IFPRI travel time to nearest market, 50K
-</td>
-<td>
-hrs
-</td>
-<td>
-IFPRI
-</td>
-</tr>
-</tbody>
-</table>
-<h5>
-farm management
-</h5>
-<table class="Rtable">
-<thead>
-<tr class="left">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Unit
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="left">
-<th>
-fert_any
-</th>
-<td>
-farm uses any fertilizer
-</td>
-<td>
+<td style="text-align:left;">
 0,1
 </td>
-<td>
-micro
+<td style="text-align:left;">
+RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-fert_inorg
-</th>
-<td>
-farm uses inorganic fertilizer
+<tr>
+<td style="text-align:left;">
+landown
 </td>
-<td>
-0,1
+<td style="text-align:left;">
+land owned
 </td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-fert_org
-</th>
-<td>
-farm uses organic fertilizer
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-fuel
-</th>
-<td>
-farm purchases fuel
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-herb
-</th>
-<td>
-farm uses herbicides
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-hired_labor
-</th>
-<td>
-farm hires labor
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-irr
-</th>
-<td>
-farm uses irrigation
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-pest
-</th>
-<td>
-farm uses pesticides
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-seeds
-</th>
-<td>
-farm purchases seeds
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-</tbody>
-</table>
-<h5>
-segmentation
-</h5>
-<table class="Rtable">
-<thead>
-<tr class="left">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Unit
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="left">
-<th>
-class5
-</th>
-<td>
-farm typology, 5-class
-</td>
-<td>
-subs., trans., pre-comm., specd. comm., divf. comm.
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-class9
-</th>
-<td>
-farm typology, 9-class
-</td>
-<td>
-LoCLoD, LoCMeD, LoCHiD, MeCLoD, MeCMeD, MeCHiD, HiCLoD, HiCMeD, HiCHiD
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-croparea
-</th>
-<td>
-cultivated area (used in farm typology), imputed
-</td>
-<td>
+<td style="text-align:left;">
 ha
 </td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-croparea_3clas
-</th>
-<td>
-cultivated area, 3-class
-</td>
-<td>
-&lt;= 2 ha, 2-4 ha, &gt; 4 ha
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-croparea_4ha
-</th>
-<td>
-cultivated area, 2-class
-</td>
-<td>
-&lt;= 4 ha, &gt; 4 ha
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-cropsales_3clas
-</th>
-<td>
-share of crop sales, 3-class
-</td>
-<td>
-LoC, MeC, HiC
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-divhh
-</th>
-<td>
-FLM Typology: Diversified
-</td>
-<td>
- 
-</td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-fhh
+<tr>
+<td style="text-align:left;">
+landrent
+</td>
+<td style="text-align:left;">
+land rented out by hh
+</td>
+<td style="text-align:left;">
+ha
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ilandown
+</td>
+<td style="text-align:left;">
+hectares of irrigated land owned
+</td>
+<td style="text-align:left;">
+ha
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rlandown
+</td>
+<td style="text-align:left;">
+hectares of rain-fed land owned
+</td>
+<td style="text-align:left;">
+ha
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+landshare
+</td>
+<td style="text-align:left;">
+land sharecropped out by hh
+</td>
+<td style="text-align:left;">
+ha
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+landquint
+</td>
+<td style="text-align:left;">
+land ownership quintiles
+</td>
+<td style="text-align:left;">
+qtl, 1-5
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLU_cattle
+</td>
+<td style="text-align:left;">
+tropical livestock units: cattle
+</td>
+<td style="text-align:left;">
+TLU
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLU_horse
+</td>
+<td style="text-align:left;">
+tropical livestock units: horses
+</td>
+<td style="text-align:left;">
+TLU
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLU_pigs
+</td>
+<td style="text-align:left;">
+tropical livestock units: pigs
+</td>
+<td style="text-align:left;">
+TLU
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLU_sheep
+</td>
+<td style="text-align:left;">
+tropical livestock units: sheep, goats
+</td>
+<td style="text-align:left;">
+TLU
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLU_small
+</td>
+<td style="text-align:left;">
+tropical livestock units: chicken, rabbits, other poultry
+</td>
+<td style="text-align:left;">
+TLU
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLU_total
+</td>
+<td style="text-align:left;">
+tropical livestock units: total
+</td>
+<td style="text-align:left;">
+TLU
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLU_draft
+</td>
+<td style="text-align:left;">
+Tropical Livestock Units: draft
+</td>
+<td style="text-align:left;">
+TLU
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wealth
+</td>
+<td style="text-align:left;">
+RURAL: wealth index
+</td>
+<td style="text-align:left;">
+index
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agwealth
+</td>
+<td style="text-align:left;">
+agricultural wealth index
+</td>
+<td style="text-align:left;">
+index
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Income
+</h5>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
 </th>
-<td>
+<th style="text-align:left;">
+Label
+</th>
+<th style="text-align:left;">
+Unit
+</th>
+<th style="text-align:left;">
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+agmisc
+</td>
+<td style="text-align:left;">
+value total annual agricultural production - misc. uses
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agowncons
+</td>
+<td style="text-align:left;">
+value total annual agricultural production consumed
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agr_wge
+</td>
+<td style="text-align:left;">
+wage employment - agr, fishing
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+farmrntimp
+</td>
+<td style="text-align:left;">
+annual income received from rental of farm real estate assets, imputed
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nonagr_wge
+</td>
+<td style="text-align:left;">
+wage employment - non-farm activities
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nonfarmrntimp
+</td>
+<td style="text-align:left;">
+annual income received from non-farm real estate assets, imputed
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+otherincimp
+</td>
+<td style="text-align:left;">
+other non-labor income, imputed
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+selfemp
+</td>
+<td style="text-align:left;">
+annual net non-farm self employment income, imputed
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+selfimp1
+</td>
+<td style="text-align:left;">
+net HH income from ag business - agr, fishing, imputed
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shagmisc
+</td>
+<td style="text-align:left;">
+share of annual agricultural production misc in total agricultural production
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shagowncons
+</td>
+<td style="text-align:left;">
+share of annual agricultural production consumed in total agricultural productio
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shagprodsold
+</td>
+<td style="text-align:left;">
+share of annual agricultural production sold in total agricultural production
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shcropsold
+</td>
+<td style="text-align:left;">
+share of total annual crop production sold in total crop production
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+shlvstsold
+</td>
+<td style="text-align:left;">
+share of total annual livestock production sold in total livestock production
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+totagprod
+</td>
+<td style="text-align:left;">
+value total annual agricultural production
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+totagsold
+</td>
+<td style="text-align:left;">
+value total annual agricultural production sold
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+totcropprod
+</td>
+<td style="text-align:left;">
+value of total annual crop production
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+totcropsold
+</td>
+<td style="text-align:left;">
+value total annual crop production sold
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+totlivsold
+</td>
+<td style="text-align:left;">
+value total annual livestock production sold
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+totlvstprod
+</td>
+<td style="text-align:left;">
+value of total annual livestock production
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aggross
+</td>
+<td style="text-align:left;">
+value of total annual farm income
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+naggross
+</td>
+<td style="text-align:left;">
+value of total annual non-farm income
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+naggross_sh
+</td>
+<td style="text-align:left;">
+share of non-farm income in total income
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cropsales
+</td>
+<td style="text-align:left;">
+value of annual crop sales
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+totgross
+</td>
+<td style="text-align:left;">
+value of total annual gross income
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cropsales_sh
+</td>
+<td style="text-align:left;">
+share of annual crop production sold
+</td>
+<td style="text-align:left;">
+share, 0-1
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cropvalue
+</td>
+<td style="text-align:left;">
+value of annual crop production
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agsales
+</td>
+<td style="text-align:left;">
+value of annual farm sales
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agsales_sh
+</td>
+<td style="text-align:left;">
+share of annual farm production sold
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+transfersgrossimp
+</td>
+<td style="text-align:left;">
+annual total incoming public and private transfers, imputed
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pcexp
+</td>
+<td style="text-align:left;">
+pc expenditures, hhexp2/hhsize
+</td>
+<td style="text-align:left;">
+lcu
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+quintile
+</td>
+<td style="text-align:left;">
+rural pcexp quintiles
+</td>
+<td style="text-align:left;">
+qtl, 1-5
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+quinturb
+</td>
+<td style="text-align:left;">
+urban pcexp quintiles
+</td>
+<td style="text-align:left;">
+qtl, 1-5
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+quinttot
+</td>
+<td style="text-align:left;">
+rural &amp; urban pcexp quintiles
+</td>
+<td style="text-align:left;">
+qtl, 1-5
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+decile
+</td>
+<td style="text-align:left;">
+rural pcexp deciles
+</td>
+<td style="text-align:left;">
+dec, 1-10
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+decilurb
+</td>
+<td style="text-align:left;">
+urban pcexp deciles
+</td>
+<td style="text-align:left;">
+dec, 1-10
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Infrastructure
+</h5>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Label
+</th>
+<th style="text-align:left;">
+Unit
+</th>
+<th style="text-align:left;">
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+distbank
+</td>
+<td style="text-align:left;">
+km from community to bank
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+disthealth
+</td>
+<td style="text-align:left;">
+km from community to health facility
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+disthsrschool
+</td>
+<td style="text-align:left;">
+km from community to nearest senior secondary school
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distjsschool
+</td>
+<td style="text-align:left;">
+km from community to nearest junior secondary school
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distpost
+</td>
+<td style="text-align:left;">
+km from community to post office
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distprschool
+</td>
+<td style="text-align:left;">
+km from community to nearest primary school
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distpubphone
+</td>
+<td style="text-align:left;">
+km from community to public phone
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distpubtrans
+</td>
+<td style="text-align:left;">
+km from community to public transport
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distroad
+</td>
+<td style="text-align:left;">
+km from community to nearest motorable road
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distwater
+</td>
+<td style="text-align:left;">
+km from household to nearest water source
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distprivprschool
+</td>
+<td style="text-align:left;">
+KM from community to nearest private primary school
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distsecschool
+</td>
+<td style="text-align:left;">
+KM from community to nearest government secondary school
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distprivsecschool
+</td>
+<td style="text-align:left;">
+KM from community to nearest private secondary school
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+disthosptl
+</td>
+<td style="text-align:left;">
+KM from community to nearest hospital
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distpolice
+</td>
+<td style="text-align:left;">
+KM from community to nearest police station
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+distmarket
+</td>
+<td style="text-align:left;">
+KM from community to nearest market
+</td>
+<td style="text-align:left;">
+km
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+infraindex
+</td>
+<td style="text-align:left;">
+RURAL: index of access to infrastructure
+</td>
+<td style="text-align:left;">
+index
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+infraindex_natl
+</td>
+<td style="text-align:left;">
+NATIONAL: index of access to infrastructure
+</td>
+<td style="text-align:left;">
+index
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+infraindex_urb
+</td>
+<td style="text-align:left;">
+URBAN: index of access to infrastructure
+</td>
+<td style="text-align:left;">
+index
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Market Access
+</h5>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Label
+</th>
+<th style="text-align:left;">
+Unit
+</th>
+<th style="text-align:left;">
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+tt20k_mean
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 20K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt20k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 20K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt50k_mean
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 50K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt50k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 50K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt100k_mean
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 100K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt100k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 100K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt500k_mean
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 500K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt500k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 500K
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Farm Management
+</h5>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Label
+</th>
+<th style="text-align:left;">
+Unit
+</th>
+<th style="text-align:left;">
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fert_org
+</td>
+<td style="text-align:left;">
+farm uses organic fertilizer
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fert_inorg
+</td>
+<td style="text-align:left;">
+farm uses inorganic fertilizer
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fert_any
+</td>
+<td style="text-align:left;">
+farm uses any fertilizer
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pest
+</td>
+<td style="text-align:left;">
+farm uses pesticides
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+herb
+</td>
+<td style="text-align:left;">
+farm uses herbicides
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+irr
+</td>
+<td style="text-align:left;">
+farm uses irrigation
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+seeds
+</td>
+<td style="text-align:left;">
+farm purchases seeds
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fuel
+</td>
+<td style="text-align:left;">
+farm purchases fuel
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hired_labor
+</td>
+<td style="text-align:left;">
+farm hires labor
+</td>
+<td style="text-align:left;">
+0,1
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+Segmentation
+</h5>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Label
+</th>
+<th style="text-align:left;">
+Unit
+</th>
+<th style="text-align:left;">
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+fhh
+</td>
+<td style="text-align:left;">
 FLM Typology: Farm specializer
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 fmhh
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 FLM Typology: Farm specializer, market-oriented producer
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 fshh
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 FLM Typology: Farm specializer, subsistence producer
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 lhh
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 FLM Typology: Labour (wages) specializer
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 mhh
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 FLM Typology: Migration (transfers)specializer
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 RIGA
 </td>
 </tr>
-<tr class="left">
-<th>
-naggross_2clas
-</th>
-<td>
-share of non-farm income in total income, 2-class
+<tr>
+<td style="text-align:left;">
+divhh
 </td>
-<td>
-LoD, HiD
+<td style="text-align:left;">
+FLM Typology: Diversified
 </td>
-<td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+croparea
+</td>
+<td style="text-align:left;">
+cultivated area (used in farm typology), imputed
+</td>
+<td style="text-align:left;">
+ha
+</td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
-naggross_3clas
-</th>
-<td>
-share of non-farm income in total income, 3-class
+<tr>
+<td style="text-align:left;">
+croparea_4ha
 </td>
-<td>
-LoD, MeD, HiD
+<td style="text-align:left;">
+cultivated area, 2-class
 </td>
-<td>
+<td style="text-align:left;">
+&lt;= 4 ha, &gt; 4 ha
+</td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
-seg_mkt100k
-</th>
-<td>
-IFPRI lo/hi market access class, 100K
+<tr>
+<td style="text-align:left;">
+croparea_3clas
 </td>
-<td>
-mkt-lo, mkt-hi
+<td style="text-align:left;">
+cultivated area, 3-class
 </td>
-<td>
+<td style="text-align:left;">
+&lt;= 2 ha, 2-4 ha, &gt; 4 ha
+</td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 seg_mkt20k
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 IFPRI lo/hi market access class, 20K
 </td>
-<td>
+<td style="text-align:left;">
 mkt-lo, mkt-hi
 </td>
-<td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
-seg_mkt250k
-</th>
-<td>
-IFPRI lo/hi market access class, 250K
-</td>
-<td>
-mkt-lo, mkt-hi
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-seg_mkt500k
-</th>
-<td>
-IFPRI lo/hi market access class, 500K
-</td>
-<td>
-mkt-lo, mkt-hi
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 seg_mkt50k
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 IFPRI lo/hi market access class, 50K
 </td>
-<td>
+<td style="text-align:left;">
 mkt-lo, mkt-hi
 </td>
-<td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
+seg_mkt100k
+</td>
+<td style="text-align:left;">
+IFPRI lo/hi market access class, 100K
+</td>
+<td style="text-align:left;">
+mkt-lo, mkt-hi
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+seg_mkt250k
+</td>
+<td style="text-align:left;">
+IFPRI lo/hi market access class, 250K
+</td>
+<td style="text-align:left;">
+mkt-lo, mkt-hi
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+seg_mkt500k
+</td>
+<td style="text-align:left;">
+IFPRI lo/hi market access class, 500K
+</td>
+<td style="text-align:left;">
+mkt-lo, mkt-hi
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 seg_quad
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 agricultural potential segment (GAEZ)
 </td>
-<td>
+<td style="text-align:left;">
 agpot-lo / mkt-lo, agpot-lo / mkt-hi, agpot-hi / mkt-lo, agpot-hi / mkt-hi
 </td>
-<td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 seg_suit_glues
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 suitability class (GLUES), 2-class
 </td>
-<td>
+<td style="text-align:left;">
 agpot-lo, agpot-hi
 </td>
-<td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
-suit_bmgf
-</th>
-<td>
-BMGF-derived suitability, 3-class
-</td>
-<td>
-agpot-hi, agpot-lo, agpot-no
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 suit_gaez
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 FAO/GAEZ suitability, 9-class
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
-<tr class="left">
-<th>
+<tr>
+<td style="text-align:left;">
 suit_glues
-</th>
-<td>
+</td>
+<td style="text-align:left;">
 GLUES suitability (point, mean, or median)
 </td>
-<td>
- 
+<td style="text-align:left;">
 </td>
-<td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+suit_bmgf
+</td>
+<td style="text-align:left;">
+BMGF-derived suitability, 3-class
+</td>
+<td style="text-align:left;">
+agpot-hi, agpot-lo, agpot-no
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+naggross_2clas
+</td>
+<td style="text-align:left;">
+share of non-farm income in total income, 2-class
+</td>
+<td style="text-align:left;">
+LoD, HiD
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+naggross_3clas
+</td>
+<td style="text-align:left;">
+share of non-farm income in total income, 3-class
+</td>
+<td style="text-align:left;">
+LoD, MeD, HiD
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cropsales_3clas
+</td>
+<td style="text-align:left;">
+share of crop sales, 3-class
+</td>
+<td style="text-align:left;">
+LoC, MeC, HiC
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+class5
+</td>
+<td style="text-align:left;">
+farm typology, 5-class
+</td>
+<td style="text-align:left;">
+subs., trans., pre-comm., specd. comm., divf. comm.
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+class9
+</td>
+<td style="text-align:left;">
+farm typology, 9-class
+</td>
+<td style="text-align:left;">
+LoCLoD, LoCMeD, LoCHiD, MeCLoD, MeCMeD, MeCHiD, HiCLoD, HiCMeD, HiCHiD
+</td>
+<td style="text-align:left;">
 calculated
 </td>
 </tr>
@@ -2592,7 +2576,7 @@ calculated
 </div>
 <div id="riga-income-aggregates" class="section level2">
 <h2><span class="header-section-number">1.2</span> RIGA Income Aggregates</h2>
-<p>Notes on the RIGA income construction approach (see <span class="citation">Carletto, Covarrubias, Davis, Krausova, &amp; Winters (<a href="#ref-riga2007doco">2007</a>)</span>):</p>
+<p>Notes on RIGA income construction approach (see <span class="citation">Carletto, Covarrubias, Davis, Krausova, &amp; Winters (<a href="#ref-riga2007doco">2007</a>)</span>):</p>
 <ul>
 <li>All aggregates are estimated at the household level.<br />
 </li>

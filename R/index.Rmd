@@ -129,17 +129,23 @@ rm(X)
 
 # Which vars are missing 
 tmp <- lbl[!varCode %in% names(gha)]
-setnames(gha, c("croparea_clas", "naggross_clas", "cropsales_clas", "seg_quad"), 
+setnames(gha, 
+  c("croparea_clas", "naggross_clas", "cropsales_clas", "seg_quad"), 
   c("croparea_3clas", "naggross_3clas", "cropsales_3clas", "seg_quad_4"))
 
-
+# Other recodes
+gha[, `:=`(
+  clust_pam3 = NULL,
+  clust_pam5 = NULL,
+  clust_pam5_2var = NULL
+)]
 
 
 ```
 
 ```{r tza, eval=FALSE}
 
-# Combine 3 waves from RIGA
+# Combine TZA 3 waves from RIGA
 tza.f.adm <- c(
   "~/Data/TZA-NPS-12/riga/Tanzania13_HH_ADMIN_V12.dta",
   "~/Data/TZA-NPS-10/riga/Tanzania11_HH_ADMIN_V12.dta",
@@ -154,7 +160,7 @@ tza.f.inc <- c(
   "~/Data/TZA-NPS-08/riga/Tanzania09_HH_INCOME_V8.dta")
 
 ###############################################
-# _ADMIN
+# ADMIN
 tza.adm <- lapply(tza.f.adm, function(x) data.table(read.dta(x)))
 
 # Harmonize var codes
@@ -333,7 +339,7 @@ tza[, sum(is.na(lon_dd_mod)), by=wave]
 # 3: tza11   7
 
 ###############################################
-# _CHAR
+# HHCHAR
 tza.chr <- lapply(tza.f.chr, function(x) data.table(read.dta(x)))
 
 # Harmonize var codes
@@ -353,7 +359,7 @@ setnames(tza, c("hh", "i.hh"), c("hhid", "hh"))
 tza[, i.district := NULL]
 
 ###############################################
-# _INCOME
+# INCOME
 tza.inc <- lapply(tza.f.inc, function(x) data.table(read.dta(x)))
 
 # Harmonize var codes
@@ -416,12 +422,6 @@ save.image("./tmp/2017-ispc.RData")
 ###############################################
 # Export harmonized panel datasets
 # GHA
-gha[, `:=`(
-  clust_pam3 = NULL,
-  clust_pam5 = NULL,
-  clust_pam5_2var = NULL
-)]
-
 names(gha)[!names(gha) %in% lbl$varCode]
 tmp <- lbl[varCode %in% names(gha)]
 setorder(tmp, secOrder, sortOrder)
@@ -452,25 +452,23 @@ write.dta(
 
 ## Harmonized Codebook
 
-This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.
+This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also use constructed variables from IFPRI replication datasets. Below is a full codebook.
 
 
 ```{r prep, results="asis"}
 
 setorder(lbl, secOrder, sortOrder)
-
-table_options(justification="l")
 for (i in unique(lbl$section)) {
-  cat("<h5>", i, "</h5>")
-  html(tabular((Variable=Factor(varCode))*DropEmpty()~(Heading(Label)*varLabel+Heading(Unit)*unit+Heading(Source)*source*Heading())*identity, 
-  data=lbl[section==i]))
+  print(htmltools::h5(tools::toTitleCase(i)))
+  print(kable(lbl[section==i, .SD, .SDcols=4:7], "html", 
+    col.names=c("Variable", "Label", "Unit", "Source")))
 }
 
 ```
 
 ## RIGA Income Aggregates
 
-Notes on the RIGA income construction approach (see @riga2007doco):
+Notes on RIGA income construction approach (see @riga2007doco):
 
 - All aggregates are estimated at the household level.  
 - All income and expenditures are **annualized**.  
