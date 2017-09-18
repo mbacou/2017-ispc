@@ -25,8 +25,8 @@ tmp <- tza[, .(
   Regions = uniqueN(svyL1Nm),
   Districts = uniqueN(paste(svyL1Cd, svyL2Cd)),
   Sample = .N,
-  Urban = sum(rural=="rural", na.rm=T),
-  Rural = sum(rural=="urban", na.rm=T)
+  Urban = sum(rural=="urban", na.rm=T),
+  Rural = sum(rural=="rural", na.rm=T)
 ), keyby=.(Survey=svyCode)]
 
 kable(tmp,
