@@ -1,15 +1,5 @@
 # Tanzania
 
-```{r tza-nps, eval=FALSE}
-
-
-```
-
-```{r tza-save, eval=FALSE}
-
-
-```
-
 Relevant sources of household-level micro records for Ethiopia include the last 4 rounds of LSMS-ISA National Panel Surveys, 2007 National Sample Census of Agriculture, and 2012 Population and Housing Census:
 
 * **2007/2008 National Sample Census of Agriculture (NSCA)** -- small-holder questionnaire covers household information, land ownership/tenure, land use, crop production and marketing, use of credit for agricultural purposes, livestock, investment activities and services and core poverty indicators. The data were collected from a sample of 52,635 rural households (incl. mainland and Zanzibar).   
@@ -22,7 +12,26 @@ Relevant sources of household-level micro records for Ethiopia include the last 
 
 ```{r tza-samples}
 
+tmp <- data.frame(
+  Survey=c("GLSS4", "GLSS5", "GLSS6"),
+  Year=c("1997/98", "2005/06", "2012/13"),
+  Regions=c(10, 10, 10),
+  Districts=c(102, 110, 170),
+  `Sample`=c(5998, 8687, 16772),
+  `Urban`=c(2199, 3618, 7445),
+  `Rural`=c(3799, 5069, 9327))
 
+tmp <- tza[, .(
+  Regions = uniqueN(svyL1Nm),
+  Districts = uniqueN(paste(svyL1Cd, svyL2Cd)),
+  Sample = .N,
+  Urban = sum(rural=="rural", na.rm=T),
+  Rural = sum(rural=="urban", na.rm=T)
+), keyby=.(Survey=svyCode)]
+
+kable(tmp,
+  justify="ccrrrrrrrr", format.args=list(big.mark=","),
+  caption="Composition of Tanzania NPS Harmonized Survey Samples")
 
 ```
 

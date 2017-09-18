@@ -413,6 +413,7 @@ gha.svy.farm <- lapply(gha.svy, subset, !is.na(croparea_clas))
 rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc)
 save.image("./tmp/2017-ispc.RData")
 
+###############################################
 # Export harmonized panel datasets
 # GHA
 gha[, `:=`(
@@ -420,24 +421,27 @@ gha[, `:=`(
   clust_pam5 = NULL,
   clust_pam5_2var = NULL
 )]
-setorder(lbl, secOrder, sortOrder)
+
 names(gha)[!names(gha) %in% lbl$varCode]
-tmp <- lbl[varCode %in% names(gha), varCode]
+tmp <- lbl[varCode %in% names(gha)]
+setorder(tmp, secOrder, sortOrder)
+tmp <- tmp$varCode
 setcolorder(gha, c(tmp, setdiff(names(gha), tmp)))
 setkey(lbl, varCode)
 write.dta(
-  setattr(gha, "var.labels", lbl[names(gha), paste(varLabel, " (", unit, ")")]),
+  setattr(gha, "var.labels", lbl[names(gha), paste0(varLabel, " (", unit, ")")]),
   "./out/gha-glss_merged_2017.09.18.dta",
   version=12L, convert.factors="string")
 
 # TZA
-setorder(lbl, secOrder, sortOrder)
 setdiff(names(tza), lbl$varCode)
-tmp <- lbl[varCode %in% names(tza), varCode]
+tmp <- lbl[varCode %in% names(tza)]
+setorder(tmp, secOrder, sortOrder)
+tmp <- tmp$varCode
 setcolorder(tza, c(tmp, setdiff(names(tza), tmp)))
 setkey(lbl, varCode)
 write.dta(
-  setattr(tza, "var.labels", lbl[names(tza), paste(varLabel, " (", unit, ")")]),
+  setattr(tza, "var.labels", lbl[names(tza), paste0(varLabel, " (", unit, ")")]),
   "./out/tza-nps_merged_2017.09.18.dta",
   version=12L, convert.factors="string")
 
