@@ -452,7 +452,7 @@ write.dta(
 
 ## Harmonized Codebook
 
-This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also use constructed variables from IFPRI replication datasets. Below is a full codebook.
+This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also use construct variables from IFPRI replication datasets. Below is a full codebook.
 
 
 ```{r prep, results="asis"}
@@ -495,4 +495,16 @@ However because RIGA income aggregates are *net of costs*, we use intermediary c
 
 RIGA does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.
 
+## Survey Maps
 
+In addition to reconciling household-level micro data, we also construct (approximate) district-level administrative maps for all survey waves. Survey maps and household variables may be linked using attributes `svyCode`, `svyL1Cd`, and `svyL2Cd` (the combination of these 3 attributes always identifies a unique district). The current maps are:
+
+```{r maps}
+
+kable(g2.dt[, .(
+  Regions=uniqueN(svyL1Cd),
+  Districts=uniqueN(paste(svyL1Nm, svyL2Nm))), 
+  keyby=.(Survey=svyCode)],
+  caption="Constructed Survey Maps (in progress)")
+
+```

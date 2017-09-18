@@ -68,6 +68,7 @@
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Data Preparation</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#harmonized-codebook"><i class="fa fa-check"></i><b>1.1</b> Harmonized Codebook</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#riga-income-aggregates"><i class="fa fa-check"></i><b>1.2</b> RIGA Income Aggregates</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#survey-maps"><i class="fa fa-check"></i><b>1.3</b> Survey Maps</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="ethiopia.html"><a href="ethiopia.html"><i class="fa fa-check"></i><b>2</b> Ethiopia</a></li>
 <li class="chapter" data-level="3" data-path="ghana.html"><a href="ghana.html"><i class="fa fa-check"></i><b>3</b> Ghana</a></li>
@@ -99,7 +100,7 @@
 <h1><span class="header-section-number">Section 1</span> Data Preparation</h1>
 <div id="harmonized-codebook" class="section level2">
 <h2><span class="header-section-number">1.1</span> Harmonized Codebook</h2>
-<p>This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also use constructed variables from IFPRI replication datasets. Below is a full codebook.</p>
+<p>This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also use construct variables from IFPRI replication datasets. Below is a full codebook.</p>
 <h5>
 Sampling
 </h5>
@@ -2607,6 +2608,47 @@ calculated
 <span class="math display">\[ aggross\_sh = \frac{aggross}{totgross} \]</span></li>
 </ul>
 <p>RIGA does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.</p>
+</div>
+<div id="survey-maps" class="section level2">
+<h2><span class="header-section-number">1.3</span> Survey Maps</h2>
+<p>In addition to reconciling household-level micro data, we also construct (approximate) district-level administrative maps for all survey waves. Survey maps and household variables may be linked using attributes <code>svyCode</code>, <code>svyL1Cd</code>, and <code>svyL2Cd</code> (the combination of these 3 attributes always identifies a unique district). The current maps are:</p>
+<table>
+<caption><span id="tab:maps">Tab. 1.1: </span>Constructed Survey Maps (in progress)</caption>
+<thead>
+<tr class="header">
+<th align="left">Survey</th>
+<th align="right">Regions</th>
+<th align="right">Districts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">tza-nps-2012</td>
+<td align="right">8</td>
+<td align="right">26</td>
+</tr>
+<tr class="even">
+<td align="left">eth-ess-2012</td>
+<td align="right">11</td>
+<td align="right">79</td>
+</tr>
+<tr class="odd">
+<td align="left">eth-erss-2010</td>
+<td align="right">11</td>
+<td align="right">710</td>
+</tr>
+<tr class="even">
+<td align="left">gha-glss6</td>
+<td align="right">10</td>
+<td align="right">170</td>
+</tr>
+<tr class="odd">
+<td align="left">gha-glss5</td>
+<td align="right">10</td>
+<td align="right">110</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 </div>
