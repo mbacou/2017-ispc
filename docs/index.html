@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Agricultural Transformation in Ghana, Tanzania and Ethiopia</title>
+  <title>Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia</title>
   <meta name="description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)">
   <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
 
-  <meta property="og:title" content="Agricultural Transformation in Ghana, Tanzania and Ethiopia" />
+  <meta property="og:title" content="Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Agricultural Transformation in Ghana, Tanzania and Ethiopia" />
+  <meta name="twitter:title" content="Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia" />
   
   <meta name="twitter:description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)" />
   
@@ -82,7 +82,7 @@
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Agricultural Transformation in Ghana, Tanzania and Ethiopia</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia</a>
           </h1>
         </div>
 
@@ -91,17 +91,17 @@
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Agricultural Transformation in Ghana, Tanzania and Ethiopia</h1>
+<h1 class="title">Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia</h1>
 <h4 class="author"><em><a href="http://github.com/mbacou">BACOU, Melanie</a> for BMGF</em></h4>
-<h4 class="date"><em>Last updated on 2017-09-11 – CODES AND NOTES, DO NOT USE OR CITE</em></h4>
+<h4 class="date"><em>Last updated on 2017-09-18 – CODES AND NOTES, DO NOT USE OR CITE</em></h4>
 </div>
 <div id="data-preparation" class="section level1">
 <h1><span class="header-section-number">Section 1</span> Data Preparation</h1>
 <div id="harmonized-codebook" class="section level2">
 <h2><span class="header-section-number">1.1</span> Harmonized Codebook</h2>
-<p>This study combines household-level micro data for 3 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.</p>
+<p>This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.</p>
 <h5>
-Assets
+sampling
 </h5>
 <table class="Rtable">
 <thead>
@@ -123,344 +123,339 @@ Source
 <tbody>
 <tr class="left">
 <th>
-agwealth
+clust
 </th>
 <td>
-agricultural wealth index
+enumeration area
 </td>
 <td>
-index
+ 
 </td>
 <td>
-RIGA
+micro
 </td>
 </tr>
 <tr class="left">
 <th>
-brickwalls
+hhid
 </th>
 <td>
-dwelling has brick walls
+unique hhld identifier
 </td>
 <td>
-0,1
+ 
 </td>
 <td>
-RIGA
+micro
 </td>
 </tr>
 <tr class="left">
 <th>
-cellphone
+month
 </th>
 <td>
-household has mobile phone
+survey month
 </td>
 <td>
-0,1
+1-12
 </td>
 <td>
-RIGA
+micro
 </td>
 </tr>
 <tr class="left">
 <th>
-cementfloor
+nh
 </th>
 <td>
-dwelling has cement floors
+hhld identifier (in raw data)
 </td>
 <td>
-0,1
+ 
 </td>
 <td>
-RIGA
+micro
 </td>
 </tr>
 <tr class="left">
 <th>
-electricity
+rural
 </th>
 <td>
-household has electricity
+residence
 </td>
 <td>
-0,1
+rural, urban
 </td>
 <td>
-RIGA
+micro
 </td>
 </tr>
 <tr class="left">
 <th>
-hhmignet
+svyCode
 </th>
 <td>
-household migration network
+survey code
 </td>
 <td>
-0,1
+tza-nps-08
 </td>
 <td>
-RIGA
+calculated
 </td>
 </tr>
 <tr class="left">
 <th>
-landless
+wave
 </th>
 <td>
-hh is landless
+survey round
 </td>
 <td>
-0,1
+1,2,3,4,5,6
 </td>
 <td>
-RIGA
+calculated
 </td>
 </tr>
 <tr class="left">
 <th>
-landown
+weight
 </th>
 <td>
-land owned
+replication weight
 </td>
 <td>
-ha
+ 
 </td>
 <td>
-RIGA
+micro
 </td>
 </tr>
 <tr class="left">
 <th>
-landquint
+year
 </th>
 <td>
-land ownership quintiles
+survey year
 </td>
 <td>
-1-5
+2008
 </td>
 <td>
-RIGA
+micro
 </td>
 </tr>
 <tr class="left">
 <th>
-landrent
+zone
 </th>
 <td>
-land rented out by hh
+other stratification
 </td>
 <td>
-ha
+ 
 </td>
 <td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-landshare
-</th>
-<td>
-land sharecropped out by hh
-</td>
-<td>
-ha
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-nondirtfloor
-</th>
-<td>
-dwelling has non-dirt floors
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-ownhome
-</th>
-<td>
-household owns dwelling
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-runwater
-</th>
-<td>
-household has internal running water
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-safewater
-</th>
-<td>
-household has safe drinking water
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-telephone
-</th>
-<td>
-household has fixed telephone line
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_cattle
-</th>
-<td>
-tropical livestock units: cattle
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_horse
-</th>
-<td>
-tropical livestock units: horses
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_pigs
-</th>
-<td>
-tropical livestock units: pigs
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_sheep
-</th>
-<td>
-tropical livestock units: sheep, goats
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_small
-</th>
-<td>
-tropical livestock units: chicken, rabbits, other poultry
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-TLU_total
-</th>
-<td>
-tropical livestock units: total
-</td>
-<td>
-TLU
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-toilet
-</th>
-<td>
-household has toilet
-</td>
-<td>
-0,1
-</td>
-<td>
-RIGA
-</td>
-</tr>
-<tr class="left">
-<th>
-wealth
-</th>
-<td>
-RURAL: wealth index
-</td>
-<td>
-index
-</td>
-<td>
-RIGA
+micro
 </td>
 </tr>
 </tbody>
 </table>
 <h5>
-Demographics
+geography
+</h5>
+<table class="Rtable">
+<thead>
+<tr class="left">
+<th>
+Variable
+</th>
+<th>
+Label
+</th>
+<th>
+Unit
+</th>
+<th>
+Source
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="left">
+<th>
+district
+</th>
+<td>
+district ID used in RIGA
+</td>
+<td>
+(varies)
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+ez
+</th>
+<td>
+agroecological zone
+</td>
+<td>
+label
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+lat_dd_mod
+</th>
+<td>
+jittered latitude
+</td>
+<td>
+decimal
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+lc_esa
+</th>
+<td>
+ESA land cover classification, dominant
+</td>
+<td>
+code
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+lon_dd_mod
+</th>
+<td>
+jittered longitude
+</td>
+<td>
+decimal
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+region
+</th>
+<td>
+region ID used in RIGA
+</td>
+<td>
+(varies)
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+svyL1Cd
+</th>
+<td>
+level-1 admin unit code (linked to survey map)
+</td>
+<td>
+integer
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+svyL1Nm
+</th>
+<td>
+level-1 admin unit label (linked to survey map)
+</td>
+<td>
+label
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+svyL2Cd
+</th>
+<td>
+level-1 admin unit code (linked to survey map)
+</td>
+<td>
+integer
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+svyL2Nm
+</th>
+<td>
+level-2 admin unit label (linked to survey map)
+</td>
+<td>
+label
+</td>
+<td>
+calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+X
+</th>
+<td>
+hhld GPS longitude
+</td>
+<td>
+decimal
+</td>
+<td>
+micro
+</td>
+</tr>
+<tr class="left">
+<th>
+Y
+</th>
+<td>
+hhld GPS latitude
+</td>
+<td>
+decimal
+</td>
+<td>
+micro
+</td>
+</tr>
+</tbody>
+</table>
+<h5>
+demographics
 </h5>
 <table class="Rtable">
 <thead>
@@ -735,7 +730,7 @@ RIGA
 </tbody>
 </table>
 <h5>
-Farm Management
+assets
 </h5>
 <table class="Rtable">
 <thead>
@@ -757,162 +752,13 @@ Source
 <tbody>
 <tr class="left">
 <th>
-fert_any
+agwealth
 </th>
 <td>
-farm uses any fertilizer
+agricultural wealth index
 </td>
 <td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-fert_inorg
-</th>
-<td>
-farm uses inorganic fertilizer
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-fert_org
-</th>
-<td>
-farm uses organic fertilizer
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-fuel
-</th>
-<td>
-farm purchases fuel
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-herb
-</th>
-<td>
-farm uses herbicides
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-hired_labor
-</th>
-<td>
-farm hires labor
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-irr
-</th>
-<td>
-farm uses irrigation
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-pest
-</th>
-<td>
-farm uses pesticides
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-seeds
-</th>
-<td>
-farm purchases seeds
-</td>
-<td>
-0,1
-</td>
-<td>
-micro
-</td>
-</tr>
-</tbody>
-</table>
-<h5>
-Geography
-</h5>
-<table class="Rtable">
-<thead>
-<tr class="left">
-<th>
-Variable
-</th>
-<th>
-Label
-</th>
-<th>
-Unit
-</th>
-<th>
-Source
-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="left">
-<th>
-ez
-</th>
-<td>
-agroecological zone
-</td>
-<td>
- 
+index
 </td>
 <td>
 RIGA
@@ -920,78 +766,372 @@ RIGA
 </tr>
 <tr class="left">
 <th>
-lc_esa
+brickwalls
 </th>
 <td>
-ESA land cover classification, dominant
+dwelling has brick walls
 </td>
 <td>
- 
+0,1
 </td>
 <td>
-calculated
+RIGA
 </td>
 </tr>
 <tr class="left">
 <th>
-svyL1Nm
+cellphone
 </th>
 <td>
-level-1 admin unit (mapped)
+household has mobile phone
 </td>
 <td>
- 
+0,1
 </td>
 <td>
-calculated
+RIGA
 </td>
 </tr>
 <tr class="left">
 <th>
-svyL2Nm
+cementfloor
 </th>
 <td>
-level-2 admin unit (mapped)
+dwelling has cement floors
 </td>
 <td>
- 
+0,1
 </td>
 <td>
-calculated
+RIGA
 </td>
 </tr>
 <tr class="left">
 <th>
-X
+electricity
 </th>
 <td>
-GPS longitude
+household has electricity
 </td>
 <td>
-decimal
+0,1
 </td>
 <td>
-micro
+RIGA
 </td>
 </tr>
 <tr class="left">
 <th>
-Y
+hhmignet
 </th>
 <td>
-GPS latitude
+household migration network
 </td>
 <td>
-decimal
+0,1
 </td>
 <td>
-micro
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+ilandown
+</th>
+<td>
+hectares of irrigated land owned
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landless
+</th>
+<td>
+hh is landless
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landown
+</th>
+<td>
+land owned
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landquint
+</th>
+<td>
+land ownership quintiles
+</td>
+<td>
+qtl, 1-5
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landrent
+</th>
+<td>
+land rented out by hh
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+landshare
+</th>
+<td>
+land sharecropped out by hh
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+nondirtfloor
+</th>
+<td>
+dwelling has non-dirt floors
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+ownhome
+</th>
+<td>
+household owns dwelling
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+rlandown
+</th>
+<td>
+hectares of rain-fed land owned
+</td>
+<td>
+ha
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+runwater
+</th>
+<td>
+household has internal running water
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+safewater
+</th>
+<td>
+household has safe drinking water
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+telephone
+</th>
+<td>
+household has fixed telephone line
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_cattle
+</th>
+<td>
+tropical livestock units: cattle
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_draft
+</th>
+<td>
+Tropical Livestock Units: draft
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_horse
+</th>
+<td>
+tropical livestock units: horses
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_pigs
+</th>
+<td>
+tropical livestock units: pigs
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_sheep
+</th>
+<td>
+tropical livestock units: sheep, goats
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_small
+</th>
+<td>
+tropical livestock units: chicken, rabbits, other poultry
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+TLU_total
+</th>
+<td>
+tropical livestock units: total
+</td>
+<td>
+TLU
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+toilet
+</th>
+<td>
+household has toilet
+</td>
+<td>
+0,1
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+wealth
+</th>
+<td>
+RURAL: wealth index
+</td>
+<td>
+index
+</td>
+<td>
+RIGA
 </td>
 </tr>
 </tbody>
 </table>
 <h5>
-Income
+income
 </h5>
 <table class="Rtable">
 <thead>
@@ -1139,6 +1279,34 @@ calculated
 </tr>
 <tr class="left">
 <th>
+decile
+</th>
+<td>
+rural pcexp deciles
+</td>
+<td>
+dec, 1-10
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+decilurb
+</th>
+<td>
+urban pcexp deciles
+</td>
+<td>
+dec, 1-10
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
 farmrntimp
 </th>
 <td>
@@ -1216,6 +1384,62 @@ other non-labor income, imputed
 </td>
 <td>
 lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+pcexp
+</th>
+<td>
+pc expenditures, hhexp2/hhsize
+</td>
+<td>
+lcu
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+quintile
+</th>
+<td>
+rural pcexp quintiles
+</td>
+<td>
+qtl, 1-5
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+quinttot
+</th>
+<td>
+rural &amp; urban pcexp quintiles
+</td>
+<td>
+qtl, 1-5
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+quinturb
+</th>
+<td>
+urban pcexp quintiles
+</td>
+<td>
+qtl, 1-5
 </td>
 <td>
 RIGA
@@ -1434,7 +1658,7 @@ RIGA
 </tbody>
 </table>
 <h5>
-Infrastructure
+infrastructure
 </h5>
 <table class="Rtable">
 <thead>
@@ -1484,6 +1708,20 @@ RIGA
 </tr>
 <tr class="left">
 <th>
+disthosptl
+</th>
+<td>
+KM from community to nearest hospital
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
 disthsrschool
 </th>
 <td>
@@ -1512,10 +1750,66 @@ RIGA
 </tr>
 <tr class="left">
 <th>
+distmarket
+</th>
+<td>
+KM from community to nearest market
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distpolice
+</th>
+<td>
+KM from community to nearest police station
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
 distpost
 </th>
 <td>
 km from community to post office
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distprivprschool
+</th>
+<td>
+KM from community to nearest private primary school
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distprivsecschool
+</th>
+<td>
+KM from community to nearest private secondary school
 </td>
 <td>
 km
@@ -1572,6 +1866,20 @@ distroad
 </th>
 <td>
 km from community to nearest motorable road
+</td>
+<td>
+km
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+distsecschool
+</th>
+<td>
+KM from community to nearest government secondary school
 </td>
 <td>
 km
@@ -1639,7 +1947,7 @@ RIGA
 </tbody>
 </table>
 <h5>
-Market Access
+market access
 </h5>
 <table class="Rtable">
 <thead>
@@ -1774,7 +2082,7 @@ IFPRI
 </tbody>
 </table>
 <h5>
-Sampling
+farm management
 </h5>
 <table class="Rtable">
 <thead>
@@ -1796,13 +2104,13 @@ Source
 <tbody>
 <tr class="left">
 <th>
-clust
+fert_any
 </th>
 <td>
-enumeration area
+farm uses any fertilizer
 </td>
 <td>
- 
+0,1
 </td>
 <td>
 micro
@@ -1810,13 +2118,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-district
+fert_inorg
 </th>
 <td>
-level-2 admin unit label (used in raw data)
+farm uses inorganic fertilizer
 </td>
 <td>
- 
+0,1
 </td>
 <td>
 micro
@@ -1824,13 +2132,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-hhid
+fert_org
 </th>
 <td>
-unique hhld identifier
+farm uses organic fertilizer
 </td>
 <td>
- 
+0,1
 </td>
 <td>
 micro
@@ -1838,13 +2146,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-month
+fuel
 </th>
 <td>
-survey month
+farm purchases fuel
 </td>
 <td>
-1-12
+0,1
 </td>
 <td>
 micro
@@ -1852,13 +2160,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-nh
+herb
 </th>
 <td>
-hhld identifier (in raw data)
+farm uses herbicides
 </td>
 <td>
- 
+0,1
 </td>
 <td>
 micro
@@ -1866,13 +2174,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-region
+hired_labor
 </th>
 <td>
-level-1 admin unit label (used in raw data)
+farm hires labor
 </td>
 <td>
- 
+0,1
 </td>
 <td>
 micro
@@ -1880,13 +2188,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-rural
+irr
 </th>
 <td>
-residence
+farm uses irrigation
 </td>
 <td>
-rural, urban
+0,1
 </td>
 <td>
 micro
@@ -1894,41 +2202,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-svyCode
+pest
 </th>
 <td>
-survey code
+farm uses pesticides
 </td>
 <td>
-tza-nps-08
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-wave
-</th>
-<td>
-survey round
-</td>
-<td>
-1,2,3,4,5,6
-</td>
-<td>
-calculated
-</td>
-</tr>
-<tr class="left">
-<th>
-weight
-</th>
-<td>
-replication weight
-</td>
-<td>
- 
+0,1
 </td>
 <td>
 micro
@@ -1936,27 +2216,13 @@ micro
 </tr>
 <tr class="left">
 <th>
-year
+seeds
 </th>
 <td>
-survey year
+farm purchases seeds
 </td>
 <td>
-2008
-</td>
-<td>
-micro
-</td>
-</tr>
-<tr class="left">
-<th>
-zone
-</th>
-<td>
-other stratification
-</td>
-<td>
- 
+0,1
 </td>
 <td>
 micro
@@ -1965,7 +2231,7 @@ micro
 </tbody>
 </table>
 <h5>
-Segmentation
+segmentation
 </h5>
 <table class="Rtable">
 <thead>
@@ -2067,6 +2333,90 @@ LoC, MeC, HiC
 </td>
 <td>
 calculated
+</td>
+</tr>
+<tr class="left">
+<th>
+divhh
+</th>
+<td>
+FLM Typology: Diversified
+</td>
+<td>
+ 
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+fhh
+</th>
+<td>
+FLM Typology: Farm specializer
+</td>
+<td>
+ 
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+fmhh
+</th>
+<td>
+FLM Typology: Farm specializer, market-oriented producer
+</td>
+<td>
+ 
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+fshh
+</th>
+<td>
+FLM Typology: Farm specializer, subsistence producer
+</td>
+<td>
+ 
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+lhh
+</th>
+<td>
+FLM Typology: Labour (wages) specializer
+</td>
+<td>
+ 
+</td>
+<td>
+RIGA
+</td>
+</tr>
+<tr class="left">
+<th>
+mhh
+</th>
+<td>
+FLM Typology: Migration (transfers)specializer
+</td>
+<td>
+ 
+</td>
+<td>
+RIGA
 </td>
 </tr>
 <tr class="left">
@@ -2260,10 +2610,11 @@ calculated
 </ul>
 <p>However because RIGA income aggregates are <em>net of costs</em>, we use intermediary components instead:</p>
 <ul>
-<li><span class="math inline">\(cropsales\)</span> derived from <span class="math inline">\(totcropsold\)</span></li>
-<li><span class="math inline">\(cropvalue\)</span> derived from <span class="math inline">\(totcropprod\)</span></li>
-<li><span class="math inline">\(cropsales\_sh\)</span> (but can also be derived from <span class="math inline">\(shcropsold\)</span> and <span class="math inline">\(shagprodsold\)</span>) <span class="math display">\[ cropsales\_sh = \frac{cropsales}{cropvalue} \]</span></li>
+<li><span class="math inline">\(cropsales\)</span> derived from RIGA <span class="math inline">\(totcropsold\)</span></li>
+<li><span class="math inline">\(cropvalue\)</span> derived from RIGA <span class="math inline">\(totcropprod\)</span></li>
+<li><span class="math inline">\(cropsales\_sh\)</span> (but can also be derived from RIGA <span class="math inline">\(totcropsold\)</span>, <span class="math inline">\(shcropsold\)</span> or <span class="math inline">\(shagprodsold\)</span>) <span class="math display">\[ cropsales\_sh = \frac{cropsales}{cropvalue} \]</span></li>
 <li><span class="math inline">\(agsales\)</span> derived from <span class="math inline">\(totagsold\)</span></li>
+<li><span class="math inline">\(agsales\_sh\)</span> (<span class="math inline">\(agsales\)</span> is an imputed version of RIGA <span class="math inline">\(totagsold\)</span>) <span class="math display">\[ agsales\_sh = \frac{agsales}{totagprod} \]</span></li>
 <li><span class="math inline">\(aggross = totagprod + farmrntimp + agr\_wge (+ selfimp1)\)</span></li>
 <li><span class="math inline">\(naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr\_wge + selfemp\)</span></li>
 <li><span class="math inline">\(totgross = aggross + naggross\)</span><br />

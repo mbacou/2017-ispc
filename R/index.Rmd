@@ -1,5 +1,5 @@
 ---
-title: "Agricultural Transformation in Ghana, Tanzania and Ethiopia"
+title: "Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia"
 author: "[BACOU, Melanie](http://github.com/mbacou) for BMGF"
 date: "Last updated on `r Sys.Date()` -- CODES AND NOTES, DO NOT USE OR CITE"
 description: "Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)"
@@ -21,10 +21,13 @@ nocite: |
 
 library(data.table)
 library(survey)
+library(raster)
 library(knitr)
 library(tables)
 library(viridis)
 library(stringr)
+
+load("../tmp/2017-ispc.RData")
 
 # Output options
 table_options(htmloptions(justification="c", head=F, pad=T))
@@ -36,22 +39,427 @@ opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
 
 ```
 
+```{r ifpri, eval=FALSE}
+
+library(foreign)
+
+setwd("~/Projects/2017-ispc")
+load("./tmp/2017-ispc.RData")
+
+#####################################################################################
+# Helper - Default numeric formats
+prty <- function(...) prettyNum(..., digits=0, big.mark=",", scientific=FALSE)
+
+# Helper - ggplot defaults
+theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", ...) + 
+  theme(panel.grid=element_line(linetype="dotted"))
+
+#####################################################################################
+# Harmonize income/sales vars across 4 countries and survey years
+# Compare crop income with total farm income
+# Need to replicate AGRA tables with 5 farm types across spatial quadrants
+
+# Load codebook
+lbl <- fread("./data/codebook.csv")
+
+# Import poverty and farm management vars from IFPRI replication datasets (1.2GB)
+ifpri <- haven::read_dta("~/Data/_global_codes/temp/2017.06/Final_SSA_HH_POV_shock_26jun17.dta")
+
+# Drop climate shock vars
+ifpri <- data.table(ifpri)[, .SD, .SDcols=c(1:118, 183:212, 651:662)]
+
+# Keep countries of interest
+ifpri <- ifpri[ISO3 %in% c("ETH", "GHA", "NGA", "TZA")]
+ifpri[, .N, keyby=svyCode]
+#    svyCode     N
+# 1: eth2010 27835
+# 2: gha2012 16772
+# 3: nga2012  4536
+# 4: tza2012  4878
+# => only last waves, but contains poverty, biophysical, land, soc, spei, drought, input
+# "tractor"             "draft_animals"      
+# "cart_plough"         "improvedseeds"       "orgfert"             "chemfert"           
+# "smallagriassets"     "bigagriassets"  
+ifpri[, .N, by=farm]
+#    farm     N
+# 1:    1 24082
+# 2:    0 29939
+
+
+# Load administrative region/district codes (developed for IFPRI)
+g2 <- shapefile("~//Data/_global_codes/out/r16.12/svyL2Maps_2016.12.shp")
+sort(unique(g2$svyCode))
+#  [1] "ago2008" "bdi2006" "bfa2003" "bfa2014" "civ2002" "cmr2007" "cod2012" "eth2010" "eth2012" "gha2005"
+# [11] "gha2012" "ken2005" "lso2003" "mdg2005" "mli2006" "mli2014" "moz2008" "mrt2000" "mwi2010" "ner2011"
+# [21] "nga2012" "rwa2005" "sen2011" "ssd2009" "tza2012" "uga2012" "uga2013" "zaf2011" "zmb2010"
+# => missing tza2010, tza2008, gha2008, do we have maps for these?
+# => are admin codes the same in all TZA NPS?
+# Keep only ETH and TZA survey maps (bring GHA from AGRA-AASR work)
+g2 <- g2[g2$ISO3 %in% c("ETH", "TZA"),]
+tmp <- shapefile("~/Projects/2017-agra-aasr/maps/svyL2Maps_GHA.shp")
+tmp <- tmp[, names(g2)]
+g2 <- rbind(g2, tmp)
+g2.dt <- data.table(g2@data)
+g2.dt[, rn := row.names(g2)]
+g2.dt[, unique(svyCode)]
+# [1] "tza2012"   "eth2012"   "eth2010"   "gha-glss6" "gha-glss5"
+g2.dt[, svyCode := factor(svyCode, 
+  levels=c("tza2012",   "eth2012",   "eth2010",   "gha-glss6", "gha-glss5"), 
+  labels=c("tza-nps-2012",   "eth-ess-2012",   "eth-erss-2010",   "gha-glss6", "gha-glss5"))]
+
+
+# RIGA components
+vars.chr <- c("totcropprod", "totcropsold", "totagprod", "totagsold", "totlvstprod",
+"totlivsold", "agowncons", "agmisc", "shagprodsold", "shagowncons",
+"shagmisc", "shcropsold", "shlvstsold")
+
+vars.inc <- c("farmrntimp", "agr_wge", "selfimp1", "transfersgrossimp", "otherincimp", 
+  "nonfarmrntimp", "nonagr_wge", "selfemp",
+  "cropincome1grossimp", "cropincome2grossimp", "livestockgrossimp") 
+
+```
+
+
+```{r gha, eval=FALSE}
+
+# Load GHA GLSS constructed survey variables
+load("~/Projects/2017-agra-aasr/tmp/2017-agra-aasr_GHA_cluster.RData")
+rm(list=ls()[ls() %like% "mod."])
+rm(X)
+
+# Which vars are missing 
+tmp <- lbl[!varCode %in% names(gha)]
+setnames(gha, c("croparea_clas", "naggross_clas", "cropsales_clas", "seg_quad"), 
+  c("croparea_3clas", "naggross_3clas", "cropsales_3clas", "seg_quad_4"))
+
+
+
+
+```
+
+```{r tza, eval=FALSE}
+
+# Combine 3 waves from RIGA
+tza.f.adm <- c(
+  "~/Data/TZA-NPS-12/riga/Tanzania13_HH_ADMIN_V12.dta",
+  "~/Data/TZA-NPS-10/riga/Tanzania11_HH_ADMIN_V12.dta",
+  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_ADMIN_V8.dta")
+tza.f.chr <- c(
+  "~/Data/TZA-NPS-12/riga/Tanzania13_HHCHAR_V12.dta",
+  "~/Data/TZA-NPS-10/riga/Tanzania11_HHCHAR_V12.dta",
+  "~/Data/TZA-NPS-08/riga/Tanzania09_HHCHAR_V8.dta")
+tza.f.inc <- c(
+  "~/Data/TZA-NPS-12/riga/Tanzania13_HH_INCOME_V12.dta",
+  "~/Data/TZA-NPS-10/riga/Tanzania11_HH_INCOME_V12.dta",
+  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_INCOME_V8.dta")
+
+###############################################
+# _ADMIN
+tza.adm <- lapply(tza.f.adm, function(x) data.table(read.dta(x)))
+
+# Harmonize var codes
+tmp <- unlist(lapply(tza.adm, names))
+table(tmp)
+# There are `locality` and `weight_trimmed` vars in tza09, but can be ignored
+tza.adm[[3]][, `:=`(locality=NULL, weight_trimmed=NULL)]
+# Add survey codes
+tza.adm[[1]][, `:=`(svyCode="tza-nps-2012", wave="tza13")]
+tza.adm[[2]][, `:=`(svyCode="tza-nps-2010", wave="tza11")]
+tza.adm[[3]][, `:=`(svyCode="tza-nps-2008", wave="tza09")]
+# Check unique IDs
+tza.adm[[3]][, .(range(hh), range(hhid))]
+#                V1             V2
+# 1: 01010140020171 01010140020171
+# 2: 55020180210078 55020180210078
+tza.adm[[2]][, .(range(hh), range(hhid))]
+#                  V1               V2
+# 1: 0101014002017101 0101014002017101
+# 2: 5502018021007801 5502018021007801
+tza.adm[[1]][, .(range(hh), range(hhid))]
+#          V1       V2
+# 1: 0001-001 0001-001
+# 2: 3924-001 3924-001
+
+# Combine all waves
+tza <- rbindlist(tza.adm)
+
+# Add admin codes and labels
+# Recodes
+setnames(tza, c("hhid", "hh"), c("hh", "hhid"))
+tza[, unique(urban), by=wave]
+#     wave    V1
+# 1: tza09 Rural
+# 2: tza09 Urban
+# 3: tza11 Rural
+# 4: tza11 Urban
+# 5: tza13 Rural
+# 6: tza13 Urban
+tza[, rural := factor(urban, levels=c("Rural", "Urban"), labels=c("rural", "urban"))]
+tza[, urban := NULL]
+tza[, unique(region), by=wave]
+tza[, unique(district), by=.(wave, region)]
+tza[, .N, by=wave]
+#     wave    N
+# 1: tza13 4995
+# 2: tza11 3913
+# 3: tza09 3255
+# tza09 regions are coded 1-5 (should be 8)?
+# tza districts are coded 1-8, will need to merge district details from another source
+
+unique(tza, by="hhid")
+tza[, `:=`(
+  region=as.character(region),
+  district=as.character(district)
+  )]
+tza[, `:=`(svyL1Nm=NULL, svyL2Nm=NULL, svyL1Cd=NULL, svyL2Cd=NULL)]
+x <- c(
+  "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta",
+  "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
+  "~/Data/TZA-NPS-08/raw/SEC_A_T.dta"
+)
+
+# Fix tza13 admin codes
+tmp <- read.dta(x[1], convert.factors=F)
+tmp <- data.table(tmp)
+tmp[, range(y3_hhid)]
+# [1] "0001-001" "3924-001"
+tza[!hhid %in% tmp$y3_hhid, .N, by=wave]
+setkey(tmp, y3_hhid)
+setkey(tza, hhid)
+tza[tmp, `:=`(
+  svyL1Nm = as.character(i.hh_a01_2),
+  svyL1Cd = as.integer(i.hh_a01_1),
+  svyL2Nm = as.character(i.hh_a02_2),
+  svyL2Cd = as.integer(i.hh_a02_1)
+  )]
+tmp <- read.dta(x[1])
+tmp <- attr(tmp, "label.table")$hh_a01_1
+tmp <- data.table(svyCode="tza-nps-2012", svyL1Cd=tmp, svyL1Nm=names(tmp))
+setkey(tmp, svyCode, svyL1Nm)
+setkey(tza, svyCode, svyL1Nm)
+tza[tmp,  svyL1Cd := i.svyL1Cd]
+
+# Fix tza11 admin codes
+tmp <- read.dta(x[2])
+tmp <- data.table(tmp)
+tmp[, range(y2_hhid)]
+tza[!hhid %in% tmp$y2_hhid, .N, by=wave]
+setkey(tmp, y2_hhid)
+setkey(tza, hhid)
+tza[tmp, `:=`(
+  svyL1Cd = i.region,
+  svyL2Cd = i.district
+  )]
+
+# Fix tza09 admin codes
+tmp <- read.dta(x[3])
+tmp <- data.table(tmp)
+tmp[, range(hhid)]
+tza[!hhid %in% tmp$hhid, .N, by=wave]
+setkey(tmp, hhid)
+setkey(tza, hhid)
+tza[tmp, `:=`(
+  svyL1Nm = as.character(i.region),
+  svyL2Cd = as.integer(i.district)
+  )]
+tmp <- read.dta(x[3])
+tmp <- attr(tmp, "label.table")$REGION
+tmp <- data.table(svyCode="tza-nps-2008", svyL1Cd=tmp, svyL1Nm=names(tmp))
+setkey(tmp, svyCode, svyL1Nm)
+setkey(tza, svyCode, svyL1Nm)
+tza[tmp,  svyL1Cd := i.svyL1Cd]
+
+tmp[, svyCode := "tza-nps-2010"]
+setkey(tmp, svyCode, svyL1Cd)
+setkey(tza, svyCode, svyL1Cd)
+tza[tmp,  svyL1Nm := i.svyL1Nm]
+
+# Verify
+tza[, sum(is.na(svyL1Nm))/.N, by=wave]
+tza[, sum(is.na(svyL1Cd))/.N, by=wave]
+tza[, sum(is.na(svyL2Nm))/.N, by=wave]
+tza[, sum(is.na(svyL2Cd))/.N, by=wave]
+tmp <- tza[, .N, keyby=.(svyCode, svyL1Cd, svyL1Nm, svyL2Cd, svyL2Nm)]
+# TODO still missing district labels for tza09 and tza11
+
+# Could also use hhld XY if I can find them (IFPRI?), in files:
+x <- c(
+  "~/Data/TZA-NPS-12/raw/HouseholdGeovars_Y3.dta",
+  "~/Data/TZA-NPS-10/raw/HH.Geovariables_Y2.dta",
+  "~/Data/TZA-NPS-08/raw/HH.Geovariables_Y1.dta")
+tmp <- read.dta(x[1])
+tmp <- data.table(tmp)
+tza[!hhid %in% tmp$y3_hhid, .N, by=wave]
+#     wave    N
+# 1: tza09 3255
+# 2: tza11 3913
+# 3: tza13   22
+setkey(tmp, y3_hhid)
+setkey(tza, hhid)
+tza[tmp, `:=`(
+  lon_dd_mod = lon_dd_mod,
+  lat_dd_mod = lat_dd_mod
+)]
+tmp <- read.dta(x[2])
+tmp <- data.table(tmp)
+tza[!hhid %in% tmp$y2_hhid, .N, by=wave]
+#     wave    N
+# 1: tza13 4995
+# 2: tza09 3255
+# 3: tza11    7
+setkey(tmp, y2_hhid)
+setkey(tza, hhid)
+tza[tmp, `:=`(
+  lon_dd_mod = lon_modified,
+  lat_dd_mod = lat_modified
+)]
+tmp <- read.dta(x[3])
+tmp <- data.table(tmp)
+tza[!hhid %in% tmp$hhid, .N, by=wave]
+#     wave    N
+# 1: tza13 4995
+# 2: tza11 3913
+# 3: tza09  459
+setkey(tmp, hhid)
+setkey(tza, hhid)
+tza[tmp, `:=`(
+  lon_dd_mod = lon_modified,
+  lat_dd_mod = lat_modified
+)]
+tza[, sum(is.na(lon_dd_mod)), by=wave]
+#     wave  V1
+# 1: tza13  22
+# 2: tza09 459
+# 3: tza11   7
+
+###############################################
+# _CHAR
+tza.chr <- lapply(tza.f.chr, function(x) data.table(read.dta(x)))
+
+# Harmonize var codes
+tmp <- unlist(lapply(tza.chr, names))
+tmp <- table(tmp)
+vars.chr[!vars.chr %in% names(tmp)]
+vars.chr <- names(tmp)[tmp==3]
+tza.chr <- lapply(tza.chr, function(x) x[, .SD, .SDcols=vars.chr])
+tza.chr <- rbindlist(tza.chr)
+unique(tza.chr, on="hh")
+tza[!hhid %in% tza.chr$hh, .(svyCode, hhid)]
+# Empty data.table (0 rows) of 2 cols: svyCode,hhid
+setkey(tza.chr, hh)
+setkey(tza, hhid)
+tza <- tza.chr[tza]
+setnames(tza, c("hh", "i.hh"), c("hhid", "hh"))
+tza[, i.district := NULL]
+
+###############################################
+# _INCOME
+tza.inc <- lapply(tza.f.inc, function(x) data.table(read.dta(x)))
+
+# Harmonize var codes
+tmp <- unlist(lapply(tza.inc, names))
+tmp <- table(tmp)
+vars.inc[!vars.inc %in% names(tmp)]
+tza.inc <- lapply(tza.inc, function(x) x[, .SD, .SDcols=c("hh", vars.inc)])
+tza.inc <- rbindlist(tza.inc)
+unique(tza.inc, on="hh")
+tza[!hhid %in% tza.inc$hh, .(svyCode, hhid)]
+# Empty data.table (0 rows) of 2 cols: svyCode,hhid
+setkey(tza.inc, hh)
+setkey(tza, hhid)
+tza <- tza.inc[tza]
+
+# Extra recodes
+setnames(tza, c("hh", "i.hh"), c("hhid", "hh"))
+tza[, landrent := rowSums(cbind(landrent, landlend), na.rm=T)]
+tza[, `:=`(hh=NULL, distmarket_ag=NULL, distroad_ag=NULL, disthome_ag=NULL, landlend=NULL)]
+setnames(tza, "ea", "clust")
+
+
+###############################################
+# TODO FARM MANAGEMENT
+
+
+
+```
+
+```{r eth, eval=FALSE}
+
+```
+
+
+
+```{r segment, eval=FALSE}
+
+# Add total farm income `agsales_sh=totagsold/totagprod`
+
+
+
+
+```
+
+
+```{r survey, eval=FALSE}
+
+# Define stratified survey designs
+gha.svy[["gha6"]] <- svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
+    data=gha[survey=="2012/13"])
+gha.svy.farm <- lapply(gha.svy, subset, !is.na(croparea_clas))
+
+```
+
+```{r save, eval=FALSE}
+
+rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc)
+save.image("./tmp/2017-ispc.RData")
+
+# Export harmonized panel datasets
+# GHA
+gha[, `:=`(
+  clust_pam3 = NULL,
+  clust_pam5 = NULL,
+  clust_pam5_2var = NULL
+)]
+setorder(lbl, secOrder, sortOrder)
+names(gha)[!names(gha) %in% lbl$varCode]
+tmp <- lbl[varCode %in% names(gha), varCode]
+setcolorder(gha, c(tmp, setdiff(names(gha), tmp)))
+setkey(lbl, varCode)
+write.dta(
+  setattr(gha, "var.labels", lbl[names(gha), paste(varLabel, " (", unit, ")")]),
+  "./out/gha-glss_merged_2017.09.18.dta",
+  version=12L, convert.factors="string")
+
+# TZA
+setorder(lbl, secOrder, sortOrder)
+setdiff(names(tza), lbl$varCode)
+tmp <- lbl[varCode %in% names(tza), varCode]
+setcolorder(tza, c(tmp, setdiff(names(tza), tmp)))
+setkey(lbl, varCode)
+write.dta(
+  setattr(tza, "var.labels", lbl[names(tza), paste(varLabel, " (", unit, ")")]),
+  "./out/tza-nps_merged_2017.09.18.dta",
+  version=12L, convert.factors="string")
+
+# TODO ETH
+
+
+```
+
 ## Harmonized Codebook
 
-This study combines household-level micro data for 3 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.
+This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized database of income aggregates. These aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We are also using constructed variables from IFPRI replication datasets. Below is a full codebook.
 
 
 ```{r prep, results="asis"}
 
-tmp <- fread("../data/codebook.csv")
-tmp[, section := tools::toTitleCase(section)]
-setorder(tmp, section, sortOrder)
+setorder(lbl, secOrder, sortOrder)
 
 table_options(justification="l")
-for (i in unique(tmp$section)) {
+for (i in unique(lbl$section)) {
   cat("<h5>", i, "</h5>")
   html(tabular((Variable=Factor(varCode))*DropEmpty()~(Heading(Label)*varLabel+Heading(Unit)*unit+Heading(Source)*source*Heading())*identity, 
-  data=tmp[section==i]))
+  data=lbl[section==i]))
 }
 
 ```
@@ -70,11 +478,13 @@ Notes on the RIGA income construction approach (see @riga2007doco):
 
 However because RIGA income aggregates are *net of costs*, we use intermediary components instead:
 
-- $cropsales$ derived from $totcropsold$
-- $cropvalue$ derived from $totcropprod$
-- $cropsales\_sh$ (but can also be derived from $shcropsold$ and $shagprodsold$)
+- $cropsales$ derived from RIGA $totcropsold$
+- $cropvalue$ derived from RIGA $totcropprod$
+- $cropsales\_sh$ (but can also be derived from RIGA $totcropsold$, $shcropsold$ or $shagprodsold$)
   $$ cropsales\_sh = \frac{cropsales}{cropvalue} $$ 
 - $agsales$ derived from $totagsold$
+- $agsales\_sh$ ($agsales$ is an imputed version of RIGA $totagsold$)
+  $$ agsales\_sh = \frac{agsales}{totagprod} $$
 - $aggross = totagprod + farmrntimp + agr\_wge (+ selfimp1)$
 - $naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr\_wge + selfemp$
 - $totgross = aggross + naggross$  
