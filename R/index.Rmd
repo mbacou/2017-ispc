@@ -34,7 +34,7 @@ table_options(htmloptions(justification="c", head=F, pad=T))
 opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
   dev="svg", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=F, 
   dev.args=list(
-    png=list(family="Roboto Condensed", pointsize=9), 
+    png=list(family="Roboto Condensed", pointsize=10), 
     svg=list(family="Roboto Condensed")))
 
 ```
@@ -140,6 +140,22 @@ gha[, `:=`(
   clust_pam5_2var = NULL
 )]
 
+
+# Define 2-stage stratified survey designs, one for each wave
+gha.svy <- list(
+  `gha6` = svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
+    data=gha[survey=="2012/13"]),
+  `gha5` =  svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
+    data=gha[survey=="2005/06"]),  
+  `gha4` = svydesign(~clust+hhid, strata=~rural, w=~weight, nest=T,
+    data=gha[survey=="1998/99"])
+)
+
+# Subset survey sample to farms
+gha.svy.farm <- lapply(gha.svy, subset, !is.na(croparea_3clas))
+
+# Subset survey sample to only SHF (note that they exclude farms with no `croparea`)
+gha.svy.shf <- lapply(gha.svy, subset, croparea_4ha=="<= 4 ha")
 
 ```
 
@@ -459,7 +475,7 @@ This study combines household-level micro data for 4 countries across multiple s
 
 setorder(lbl, secOrder, sortOrder)
 for (i in unique(lbl$section)) {
-  print(htmltools::h5(tools::toTitleCase(i)))
+  print(htmltools::h3(tools::toTitleCase(i)))
   print(kable(lbl[section==i, .SD, .SDcols=4:7], "html", 
     col.names=c("Variable", "Label", "Unit", "Source")))
 }

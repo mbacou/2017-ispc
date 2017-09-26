@@ -26,3 +26,160 @@ kable(tmp,
   caption="Composition of Ghana GLSS Harmonized Survey Samples")
 
 ```
+
+## Distribution of Farm Holdings across Farm Sizes and Farm Types
+
+### 3x3 Farm Classification
+
+```{r gha-prop9, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Categories", dev="png"}
+
+par(mfrow=c(1,3), mar=c(3,3,0,.25))
+plot(svytable(~croparea_3clas+class9, gha.svy[["gha6"]]), main=NA, las=1, col=viridis(9),
+  ylab=NA, xlab="Typology 9-class (GLSS6, 2012/13)")
+plot(svytable(~croparea_3clas+class9, gha.svy[["gha5"]]), main=NA, las=1, col=viridis(9),
+  ylab=NA, xlab="Typology 9-class (GLSS5, 2005/06)")
+plot(svytable(~croparea_3clas+class9, gha.svy[["gha4"]]), main=NA, las=1, col=viridis(9),
+  ylab=NA, xlab="Typology 9-class (GLSS4, 1998/99)")
+
+```
+
+```{r gha-proptab96, results="asis"}
+
+# GLSS6
+tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), gha.svy.farm[["gha6"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(gha$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  cropsales_3clas = factor(rep(levels(gha$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
+  naggross_3clas = factor(rep(levels(gha$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+
+table_options(HTMLcaption="(#tab:tab1) Est. Proportions of Farm Holdings across Categories (GLSS6, 2012/13, percent)")
+html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r gha-proptab95, results="asis"}
+
+# GLSS5
+tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), gha.svy.farm[["gha5"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(gha$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  cropsales_3clas = factor(rep(levels(gha$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
+  naggross_3clas = factor(rep(levels(gha$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+
+table_options(HTMLcaption="(#tab:tab1) Est. Proportions of Farm Holdings across Categories (GLSS5, 2005/06, percent)")
+html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r gha-proptab94, results="asis"}
+# GLSS4
+tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), gha.svy.farm[["gha4"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(gha$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  cropsales_3clas = factor(rep(levels(gha$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
+  naggross_3clas = factor(rep(levels(gha$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+
+table_options(HTMLcaption="(#tab:tab1) Est. Proportions of Farm Holdings across Categories (GLSS4, 1998/99, percent)")
+html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+### Simplified Farm Classification (5-class)
+
+```{r gha-prop5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Categories", dev="png"}
+
+par(mfrow=c(1,3), mar=c(3,3,0,.25))
+plot(svytable(~croparea_3clas+class5, gha.svy[["gha6"]]), main=NA, las=1, col=viridis(5),
+  ylab=NA, xlab="Typology 5-class (GLSS6, 2012/13)")
+plot(svytable(~croparea_3clas+class5, gha.svy[["gha5"]]), main=NA, las=1, col=viridis(5),
+  ylab=NA, xlab="Typology 5-class (GLSS5, 2005/06)")
+plot(svytable(~croparea_3clas+class5, gha.svy[["gha4"]]), main=NA, las=1, col=viridis(5),
+  ylab=NA, xlab="Typology 5-class (GLSS4, 1998/99)")
+
+```
+
+```{r gha-proptab56, results="asis"}
+
+# GLSS6
+tmp <- svymean(~I(interaction(croparea_3clas, class5)), gha.svy.farm[["gha6"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(gha$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  class5 = factor(rep(levels(gha$class5), each=3, 1), levels=levels(gha$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab56) Est. Proportions of Farm Holdings across Categories (GLSS6, 2012/13, percent)")
+html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r gha-proptab55, results="asis"}
+
+# GLSS5
+tmp <- svymean(~I(interaction(croparea_3clas, class5)), gha.svy.farm[["gha5"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(gha$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  class5 = factor(rep(levels(gha$class5), each=3, 1), levels=levels(gha$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab55) Est. Proportions of Farm Holdings across Categories (GLSS6, 2005/06, percent)")
+html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r gha-proptab54, results="asis"}
+# GLSS4
+tmp <- svymean(~I(interaction(croparea_3clas, class5)), gha.svy.farm[["gha4"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(gha$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  class5 = factor(rep(levels(gha$class5), each=3, 1), levels=levels(gha$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab54) Est. Proportions of Farm Holdings across Categories (GLSS6, 1998/99, percent)")
+html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
