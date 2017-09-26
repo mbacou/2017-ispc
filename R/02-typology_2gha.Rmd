@@ -158,7 +158,7 @@ tmp[, `:=`(
   class5 = factor(rep(levels(gha$class5), each=3, 1), levels=levels(gha$class5))
   )]
 
-table_options(HTMLcaption="(#tab:proptab55) Est. Proportions of Farm Holdings across Categories (GLSS6, 2005/06, percent)")
+table_options(HTMLcaption="(#tab:proptab55) Est. Proportions of Farm Holdings across Categories (GLSS5, 2005/06, percent)")
 html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
   data=tmp), rmarkdown=T)
 
@@ -178,7 +178,7 @@ tmp[, `:=`(
   class5 = factor(rep(levels(gha$class5), each=3, 1), levels=levels(gha$class5))
   )]
 
-table_options(HTMLcaption="(#tab:proptab54) Est. Proportions of Farm Holdings across Categories (GLSS6, 1998/99, percent)")
+table_options(HTMLcaption="(#tab:proptab54) Est. Proportions of Farm Holdings across Categories (GLSS4, 1998/99, percent)")
 html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
   data=tmp), rmarkdown=T)
 
