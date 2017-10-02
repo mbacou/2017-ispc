@@ -2,12 +2,6 @@
 ___  ____  ____  ____  ____ (R)
 /__    /   ____/   /   ____/
 ___/   /   /___/   /   /___/   14.2   Copyright 1985-2015 StataCorp LLC
-Statistics/Data Analysis            StataCorp
-4905 Lakeway Drive
-MP - Parallel Edition            College Station, Texas 77845 USA
-800-STATA-PC        http://www.stata.com
-979-696-4600        stata@stata.com
-979-696-4601 (fax)
 
 . use "/home/mbacou/Projects/2017-ispc/out/tza-nps_merged_2017.09.18.dta"
 (Written by R.              )
