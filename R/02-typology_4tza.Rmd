@@ -1,6 +1,6 @@
 # Tanzania
 
-Relevant sources of household-level micro records for Ethiopia include the last 4 rounds of LSMS-ISA National Panel Surveys, 2007 National Sample Census of Agriculture, and 2012 Population and Housing Census:
+Relevant sources of household-level micro records for Tanzania include the last 4 rounds of LSMS-ISA National Panel Surveys, 2007 National Sample Census of Agriculture, and 2012 Population and Housing Census:
 
 * **2007/2008 National Sample Census of Agriculture (NSCA)** -- small-holder questionnaire covers household information, land ownership/tenure, land use, crop production and marketing, use of credit for agricultural purposes, livestock, investment activities and services and core poverty indicators. The data were collected from a sample of 52,635 rural households (incl. mainland and Zanzibar).   
 * **2012 Population and Housing Census (PHC)** -- only summary report and tables are available
@@ -30,7 +30,7 @@ kable(tmp,
 
 ```
 
-```{r tza-strata, fig.cap="(Appoximate) Household Locations and Stratification across Survey Waves", fig.height=2}
+```{r tza-strata, fig.cap="(Appoximate) Household Locations and Stratification across Survey Waves", fig.height=3}
 
 # Map household by strata to verify
 tm_shape(g2[g2$svyCode=="tza2012",]) + tm_polygons("grey90", border.col="grey50") +
@@ -41,6 +41,24 @@ tm_shape(g2[g2$svyCode=="tza2012",]) + tm_polygons("grey90", border.col="grey50"
 ```
 
 ## Distribution of Farm Holdings across Farm Sizes and Farm Types
+
+The plots below show the distribution of key variables in the samples of households across survey waves. The median line is in red, mean line in green, and the blue region is the inferred 95% confidence interval of the mean.
+
+### Land Holding
+
+```{r tza-land, fig.cap="Trends in Farm Sizes across Survey Waves (ha)"}
+
+pplot(croparea_imp~survey, tza[croparea_4ha=="<= 4 ha"],
+  xlab="Farms below 4 ha", ylab="Farm Size (ha)",
+  note=tza[, 100*sum(is.na(croparea_imp)|croparea_imp==0)/.N])
+
+pplot(croparea_imp~survey, tza[croparea_4ha=="> 4 ha"],
+  xlab="Farms above 4 ha", ylab="Farm Size (ha)", ylim=c(4,25),
+  note=tza[, 100*sum(is.na(croparea_imp)|croparea_imp==0)/.N])
+
+```
+
+
 
 ### Trends in Commercialization
 
