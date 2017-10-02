@@ -64,7 +64,7 @@ theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", 
 lbl <- fread("./data/codebook.csv")
 
 # Import poverty and farm management vars from IFPRI replication datasets (1.2GB)
-ifpri <- haven::read_dta("~/Data/_global_codes/temp/2017.06/Final_SSA_HH_POV_shock_26jun17.dta")
+ifpri <- read.dta13("~/Data/_global_codes/temp/2017.06/Final_SSA_HH_POV_shock_26jun17.dta")
 
 # Drop climate shock vars
 ifpri <- data.table(ifpri)[, .SD, .SDcols=c(1:118, 183:212, 651:662)]
@@ -159,7 +159,7 @@ tmp <- lapply(seq_along(tmp), function(x) {
     fName=unlist(strsplit(tmp[x], "/"))[7])
 })
 tmp <- rbindlist(tmp)
-fwrite(tmp, "./data/TZA_raw_codebook.csv")
+fwrite(tmp, "./data/tza_raw_codebook.csv")
 tza.raw.lbl <- tmp
 
 # Combine TZA 3 waves from RIGA-H
@@ -488,18 +488,37 @@ ifpri[, .N, by=svyCode]
 
 # Generate raw codebook
 tmp <- list.files(c(
-  "~/Data/ETH-ESS-15/raw", "~/Data/ETH-ESS-13/raw", "~/Data/ETH-ERSS-11/raw"), 
+  "~/Data/ETH-ERSS-11/raw", "~/Data/ETH-ESS-13/raw", "~/Data/ETH-ESS-15/raw"), 
   glob2rx("*.dta"), recursive=T, full.names=T)
 tmp <- lapply(seq_along(tmp), function(x) {
   y <- read.dta13(tmp[x])
   y <- data.table(
     varCode=names(y), 
     varLabel=attr(y, "var.labels"), 
-    svyCode=unlist(strsplit(f[x], "/"))[5],
-    fName=unlist(strsplit(f[x], "/"))[7])
+    svyCode=unlist(strsplit(tmp[x], "/"))[5],
+    fName=str_replace(tmp[x], "/home/mbacou/Data/", ""))
 })
 tmp <- rbindlist(tmp)
+fwrite(tmp, "./data/eth_raw_codebook.csv")
 eth.raw.lbl <- tmp
+
+# Combine eth 3 waves from RIGA-H
+eth.f.adm <- c(
+  "~/Data/ETH-ESS-15/riga/Ethiopia15_HH_ADMIN.dta",
+  "~/Data/ETH-ESS-13/riga/Ethiopia13_HH_ADMIN.dta",
+  "~/Data/ETH-ERSS-11/riga/Ethiopia12_HH_ADMIN.dta")
+eth.f.chr <- c(
+  "~/Data/ETH-ESS-15/riga/Ethiopia15_HHCHAR.dta",
+  "~/Data/ETH-ESS-13/riga/Ethiopia13_HHCHAR.dta",
+  "~/Data/ETH-ERSS-11/riga/Ethiopia12_HHCHAR.dta")
+eth.f.inc <- c(
+  "~/Data/ETH-ESS-15/riga/Ethiopia15_HH_INCOME.dta",
+  "~/Data/ETH-ESS-13/riga/Ethiopia13_HH_INCOME.dta",
+  "~/Data/ETH-ERSS-11/riga/Ethiopia12_HH_INCOME.dta")
+eth.f.hh <- c(
+  "~/Data/ETH-ESS-15/raw/Geovariables/ETH_HouseholdGeovars_y3.dta",
+  "~/Data/ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta",
+  "~/Data/ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta")
 
 
 
@@ -893,6 +912,10 @@ summary(tza$class5)
 
 ```
 
+```{r eth-typo, eval=FALSE}
+
+```
+
 
 ```{r designs, eval=FALSE}
 
@@ -931,7 +954,18 @@ tza.svy.shf <- lapply(tza.svy, subset, croparea_4ha=="<= 4 ha")
 
 
 ###############################################
-# TODO ETH
+# ETH
+eth.svy <- list(
+  `eth3` = svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
+    data=eth[survey=="2015/16"]),
+  `eth2` =  svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
+    data=eth[survey=="2013/14"]),  
+  `eth1` = svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
+    data=eth[survey=="2011/12"])
+)
+
+eth.svy.farm <- lapply(eth.svy, subset, !is.na(croparea_3clas))
+eth.svy.shf <- lapply(eth.svy, subset, croparea_4ha=="<= 4 ha")
 
 ```
 
@@ -967,7 +1001,16 @@ write.dta(
   "./out/tza-nps_merged_2017.10.01.dta", version=12L, convert.factors="string")
 
 ###############################################
-# TODO ETH
+# ETH
+setdiff(names(eth), lbl$varCode)
+tmp <- lbl[varCode %in% names(eth)]
+setorder(tmp, secOrder, sortOrder)
+tmp <- tmp$varCode
+setcolorder(eth, c(tmp, setdiff(names(eth), tmp)))
+setkey(lbl, varCode)
+write.dta(
+  setattr(eth, "var.labels", lbl[names(eth), paste0(varLabel, " (", unit, ")")]),
+  "./out/eth-ess_merged_2017.10.01.dta", version=12L, convert.factors="string")
 
 
 ```
