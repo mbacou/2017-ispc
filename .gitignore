@@ -33,7 +33,7 @@ vignettes/*.pdf
 *.knit.md
 .Rproj.user
 
-*.dta/
+*.dta
 /tmp/
 /in/
 *_bookdown_files/
