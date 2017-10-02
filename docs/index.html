@@ -77,7 +77,13 @@
 <li class="chapter" data-level="3.1.2" data-path="ghana.html"><a href="ghana.html#simplified-farm-classification-5-class"><i class="fa fa-check"></i><b>3.1.2</b> Simplified Farm Classification (5-class)</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="tanzania.html"><a href="tanzania.html"><i class="fa fa-check"></i><b>4</b> Tanzania</a></li>
+<li class="chapter" data-level="4" data-path="tanzania.html"><a href="tanzania.html"><i class="fa fa-check"></i><b>4</b> Tanzania</a><ul>
+<li class="chapter" data-level="4.1" data-path="tanzania.html"><a href="tanzania.html#household-sampling-and-stratification"><i class="fa fa-check"></i><b>4.1</b> Household Sampling and Stratification</a></li>
+<li class="chapter" data-level="4.2" data-path="tanzania.html"><a href="tanzania.html#distribution-of-farm-holdings-across-farm-sizes-and-farm-types-1"><i class="fa fa-check"></i><b>4.2</b> Distribution of Farm Holdings across Farm Sizes and Farm Types</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="tanzania.html"><a href="tanzania.html#x3-farm-classification-1"><i class="fa fa-check"></i><b>4.2.1</b> 3x3 Farm Classification</a></li>
+<li class="chapter" data-level="4.2.2" data-path="tanzania.html"><a href="tanzania.html#simplified-farm-classification-5-class-1"><i class="fa fa-check"></i><b>4.2.2</b> Simplified Farm Classification (5-class)</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
@@ -99,13 +105,13 @@
 <div id="header">
 <h1 class="title">Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia</h1>
 <h4 class="author"><em><a href="http://github.com/mbacou">BACOU, Melanie</a> for BMGF</em></h4>
-<h4 class="date"><em>Last updated on 2017-09-26 – CODES AND NOTES, DO NOT USE OR CITE</em></h4>
+<h4 class="date"><em>Last updated on 2017-10-02 – CODES AND NOTES, DO NOT USE OR CITE</em></h4>
 </div>
 <div id="data-preparation" class="section level1">
 <h1><span class="header-section-number">Section 1</span> Data Preparation</h1>
 <div id="harmonized-codebook" class="section level2">
 <h2><span class="header-section-number">1.1</span> Harmonized Codebook</h2>
-<p>This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also include household-level variables from <a href="https://dataverse.harvard.edu/dataverse/harvestchoice">IFPRI replication datasets</a>. Below is a full codebook.</p>
+<p>This study combines household-level micro data for 4 countries across multiple survey years. To expedite data reconciliation steps we choose to rely as much as possible on <a href="http://www.fao.org/economic/riga/riga-database/en/">FAO RIGA-L cross-country harmonized household-level database</a>. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also include additional household-level variables available through <a href="https://dataverse.harvard.edu/dataverse/harvestchoice">IFPRI replication datasets</a>. Below is a full codebook.</p>
 <h3>
 Sampling
 </h3>
@@ -145,7 +151,7 @@ micro
 clust
 </td>
 <td style="text-align:left;">
-enumeration area
+enumeration area / cluster identifier
 </td>
 <td style="text-align:left;">
 </td>
@@ -175,7 +181,20 @@ wave
 survey round
 </td>
 <td style="text-align:left;">
-gha4, gha5, gha6, tza09, tza11, tza13
+wave 1, wave 2, etc.
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+survey
+</td>
+<td style="text-align:left;">
+survey short label
+</td>
+<td style="text-align:left;">
 </td>
 <td style="text-align:left;">
 calculated
@@ -209,6 +228,19 @@ micro
 </tr>
 <tr>
 <td style="text-align:left;">
+strata
+</td>
+<td style="text-align:left;">
+strata identifier
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 zone
 </td>
 <td style="text-align:left;">
@@ -225,7 +257,7 @@ micro
 weight
 </td>
 <td style="text-align:left;">
-replication weight
+replication weight (by wave)
 </td>
 <td style="text-align:left;">
 </td>
@@ -251,7 +283,7 @@ micro
 rural
 </td>
 <td style="text-align:left;">
-residence
+locality
 </td>
 <td style="text-align:left;">
 rural, urban
@@ -341,6 +373,32 @@ calculated
 </tr>
 <tr>
 <td style="text-align:left;">
+svyL3Cd
+</td>
+<td style="text-align:left;">
+level-3 admin unit code (linked to survey map)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+svyL3Nm
+</td>
+<td style="text-align:left;">
+level-3 admin unit label (linked to survey map)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 ez
 </td>
 <td style="text-align:left;">
@@ -369,34 +427,6 @@ calculated
 </tr>
 <tr>
 <td style="text-align:left;">
-lon_dd_mod
-</td>
-<td style="text-align:left;">
-jittered longitude
-</td>
-<td style="text-align:left;">
-decimal
-</td>
-<td style="text-align:left;">
-micro
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lat_dd_mod
-</td>
-<td style="text-align:left;">
-jittered latitude
-</td>
-<td style="text-align:left;">
-decimal
-</td>
-<td style="text-align:left;">
-micro
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 X
 </td>
 <td style="text-align:left;">
@@ -415,6 +445,34 @@ Y
 </td>
 <td style="text-align:left;">
 hhld GPS latitude
+</td>
+<td style="text-align:left;">
+decimal
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lon_dd_mod
+</td>
+<td style="text-align:left;">
+jittered longitude
+</td>
+<td style="text-align:left;">
+decimal
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lat_dd_mod
+</td>
+<td style="text-align:left;">
+jittered latitude
 </td>
 <td style="text-align:left;">
 decimal
@@ -449,6 +507,32 @@ varies
 </td>
 <td style="text-align:left;">
 RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ward
+</td>
+<td style="text-align:left;">
+ward ID used in raw data
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+micro
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cell5m
+</td>
+<td style="text-align:left;">
+HarvestChoice 5-arc-minute grid CELL5M ID
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+calculated
 </td>
 </tr>
 </tbody>
@@ -2540,7 +2624,21 @@ calculated
 cropsales_3clas
 </td>
 <td style="text-align:left;">
-share of crop sales, 3-class
+share of crop production sold, 3-class
+</td>
+<td style="text-align:left;">
+LoC, MeC, HiC
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+agsales_3clas
+</td>
+<td style="text-align:left;">
+share of agricultural production sold, 3-class
 </td>
 <td style="text-align:left;">
 LoC, MeC, HiC
@@ -2565,6 +2663,20 @@ calculated
 </tr>
 <tr>
 <td style="text-align:left;">
+class6
+</td>
+<td style="text-align:left;">
+farm typology, 6-class
+</td>
+<td style="text-align:left;">
+LoCLoD, LoCHiD, MeCLoD, MeCHiD, HiCLoD, HiCHiD
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 class9
 </td>
 <td style="text-align:left;">
@@ -2582,7 +2694,7 @@ calculated
 </div>
 <div id="riga-income-aggregates" class="section level2">
 <h2><span class="header-section-number">1.2</span> RIGA Income Aggregates</h2>
-<p>Notes on RIGA income construction approach (see <span class="citation">Carletto, Covarrubias, Davis, Krausova, &amp; Winters (<a href="#ref-riga2007doco">2007</a>)</span>):</p>
+<p>Notes on RIGA variable construction (see <span class="citation">Carletto, Covarrubias, Davis, Krausova, &amp; Winters (<a href="#ref-riga2007doco">2007</a>)</span> for a complete documentation):</p>
 <ul>
 <li>All aggregates are estimated at the household level.<br />
 </li>
@@ -2592,19 +2704,19 @@ calculated
 </li>
 <li>Purchases and sales of <strong>durable goods</strong>, investments and windfall gains are excluded from household income and expenditure calculations since these are not transactions undertaken regularly by households and can result in the significant over- or under-stating of permanent income.<br />
 </li>
-<li>All aggregates are reported in <strong>local currency units (LCU)</strong>.<br />
+<li>All aggregates are reported in <strong>local currency (LCU)</strong>.<br />
 </li>
-<li>For each survey, only the <strong>rural</strong> sample is used (this is not consustent across all surveys)<br />
+<li>For each survey, only the <strong>rural</strong> sample is used (this does not seem consistent across all surveys)<br />
 </li>
-<li>An outlier check is imposed after the construction of all income aggregates to deal with extreme income shares that arise following the aggregation of all income components. After estimating the shares of the seven principal income categories (agricultural wages, non-agricultural wages, crop, livestock, self employment, transfer and other) <strong>observations whose share is greater than or less than 3 (indicating a percentage share of +/- 300%) are dropped from the aggregate</strong>.</li>
+<li>An outlier check is imposed after the construction of all income aggregates to deal with extreme income shares that arise following the aggregation of all income components. After estimating the shares of the seven principal income categories (agricultural wages, non-agricultural wages, crop, livestock, self employment, transfer and other) <strong>observations with shares greater than or less than 3 (indicating a percentage share of +/- 300%) are dropped from the aggregate</strong>.</li>
 </ul>
-<p>However because RIGA income aggregates are <em>net of costs</em>, we use intermediary components instead:</p>
+<p>However because RIGA income aggregates are <em>net of costs</em>, we construct intermediary components:</p>
 <ul>
-<li><span class="math inline">\(cropsales\)</span> derived from RIGA <span class="math inline">\(totcropsold\)</span></li>
-<li><span class="math inline">\(cropvalue\)</span> derived from RIGA <span class="math inline">\(totcropprod\)</span></li>
-<li><span class="math inline">\(cropsales\_sh\)</span> (but can also be derived from RIGA <span class="math inline">\(totcropsold\)</span>, <span class="math inline">\(shcropsold\)</span> or <span class="math inline">\(shagprodsold\)</span>) <span class="math display">\[ cropsales\_sh = \frac{cropsales}{cropvalue} \]</span></li>
-<li><span class="math inline">\(agsales\)</span> derived from <span class="math inline">\(totagsold\)</span></li>
-<li><span class="math inline">\(agsales\_sh\)</span> (<span class="math inline">\(agsales\)</span> is an imputed version of RIGA <span class="math inline">\(totagsold\)</span>) <span class="math display">\[ agsales\_sh = \frac{agsales}{totagprod} \]</span></li>
+<li><span class="math inline">\(cropsales\)</span> is derived/imputed from RIGA <span class="math inline">\(totcropsold\)</span></li>
+<li><span class="math inline">\(cropvalue\)</span> is derived/imputed from RIGA <span class="math inline">\(totcropprod\)</span></li>
+<li><span class="math inline">\(cropsales\_sh\)</span> (but can also be derived from RIGA <span class="math inline">\(totcropsold\)</span>, <span class="math inline">\(shcropsold\)</span>, or <span class="math inline">\(shagprodsold\)</span>) <span class="math display">\[ cropsales\_sh = \frac{cropsales}{cropvalue} \]</span></li>
+<li><span class="math inline">\(agsales\)</span> is derived/imputed from RIGA <span class="math inline">\(totagsold\)</span></li>
+<li><span class="math inline">\(agsales\_sh\)</span> <span class="math display">\[ agsales\_sh = \frac{agsales}{totagprod} \]</span></li>
 <li><span class="math inline">\(aggross = totagprod + farmrntimp + agr\_wge (+ selfimp1)\)</span></li>
 <li><span class="math inline">\(naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr\_wge + selfemp\)</span></li>
 <li><span class="math inline">\(totgross = aggross + naggross\)</span><br />
@@ -2612,7 +2724,7 @@ calculated
 <li><span class="math inline">\(aggross\_sh\)</span><br />
 <span class="math display">\[ aggross\_sh = \frac{aggross}{totgross} \]</span></li>
 </ul>
-<p>RIGA does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.</p>
+<p>RIGA-H does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.</p>
 </div>
 <div id="survey-maps" class="section level2">
 <h2><span class="header-section-number">1.3</span> Survey Maps</h2>

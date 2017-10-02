@@ -165,6 +165,7 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
 ```
 
 ```{r gha-proptab54, results="asis"}
+
 # GLSS4
 tmp <- svymean(~I(interaction(croparea_3clas, class5)), gha.svy.farm[["gha4"]], na.rm=T)
 tmp.cv <- confint(tmp)

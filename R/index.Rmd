@@ -21,7 +21,7 @@ nocite: |
 
 library(data.table)
 library(survey)
-library(raster)
+library(tmap)
 library(knitr)
 library(tables)
 library(viridis)
@@ -32,16 +32,17 @@ load("../tmp/2017-ispc.RData")
 # Output options
 table_options(htmloptions(justification="c", head=F, pad=T))
 opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
-  dev="svg", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=F, 
+  dev="png", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=F, 
   dev.args=list(
-    png=list(family="Roboto Condensed", pointsize=10), 
+    png=list(family="Roboto Condensed", pointsize=11), 
     svg=list(family="Roboto Condensed")))
 
 ```
 
 ```{r ifpri, eval=FALSE}
 
-library(foreign)
+library(readstata13)
+library(raster)
 
 setwd("~/Projects/2017-ispc")
 load("./tmp/2017-ispc.RData")
@@ -56,8 +57,8 @@ theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", 
 
 #####################################################################################
 # Harmonize income/sales vars across 4 countries and survey years
-# Compare crop income with total farm income
-# Need to replicate AGRA tables with 5 farm types across spatial quadrants
+# Compare crop income/sales with total farm income/sales
+# Need to replicate AGRA-AASR tables with 5 farm types across spatial quadrants
 
 # Load codebook
 lbl <- fread("./data/codebook.csv")
@@ -127,7 +128,7 @@ load("~/Projects/2017-agra-aasr/tmp/2017-agra-aasr_GHA_cluster.RData")
 rm(list=ls()[ls() %like% "mod."])
 rm(X)
 
-# Which vars are missing 
+# Which vars are missing?
 tmp <- lbl[!varCode %in% names(gha)]
 setnames(gha, 
   c("croparea_clas", "naggross_clas", "cropsales_clas", "seg_quad"), 
@@ -140,28 +141,28 @@ gha[, `:=`(
   clust_pam5_2var = NULL
 )]
 
-
-# Define 2-stage stratified survey designs, one for each wave
-gha.svy <- list(
-  `gha6` = svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
-    data=gha[survey=="2012/13"]),
-  `gha5` =  svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
-    data=gha[survey=="2005/06"]),  
-  `gha4` = svydesign(~clust+hhid, strata=~rural, w=~weight, nest=T,
-    data=gha[survey=="1998/99"])
-)
-
-# Subset survey sample to farms
-gha.svy.farm <- lapply(gha.svy, subset, !is.na(croparea_3clas))
-
-# Subset survey sample to only SHF (note that they exclude farms with no `croparea`)
-gha.svy.shf <- lapply(gha.svy, subset, croparea_4ha=="<= 4 ha")
-
 ```
 
 ```{r tza, eval=FALSE}
 
-# Combine TZA 3 waves from RIGA
+# Generate raw codebook
+tmp <- list.files(c(
+  "~/Data/TZA-NPS-14/raw", "~/Data/TZA-NPS-12/raw", 
+  "~/Data/TZA-NPS-10/raw", "~/Data/TZA-NPS-08/raw"), 
+  glob2rx("*.dta"), recursive=T, full.names=T)
+tmp <- lapply(seq_along(tmp), function(x) {
+  y <- read.dta13(tmp[x])
+  y <- data.table(
+    varCode=names(y), 
+    varLabel=attr(y, "var.labels"), 
+    svyCode=unlist(strsplit(tmp[x], "/"))[5],
+    fName=unlist(strsplit(tmp[x], "/"))[7])
+})
+tmp <- rbindlist(tmp)
+fwrite(tmp, "./data/TZA_raw_codebook.csv")
+tza.raw.lbl <- tmp
+
+# Combine TZA 3 waves from RIGA-H
 tza.f.adm <- c(
   "~/Data/TZA-NPS-12/riga/Tanzania13_HH_ADMIN_V12.dta",
   "~/Data/TZA-NPS-10/riga/Tanzania11_HH_ADMIN_V12.dta",
@@ -174,10 +175,14 @@ tza.f.inc <- c(
   "~/Data/TZA-NPS-12/riga/Tanzania13_HH_INCOME_V12.dta",
   "~/Data/TZA-NPS-10/riga/Tanzania11_HH_INCOME_V12.dta",
   "~/Data/TZA-NPS-08/riga/Tanzania09_HH_INCOME_V8.dta")
+tza.f.hh <- c(
+  "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta",
+  "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
+  "~/Data/TZA-NPS-08/raw/SEC_A_T.dta")
 
 ###############################################
 # ADMIN
-tza.adm <- lapply(tza.f.adm, function(x) data.table(read.dta(x)))
+tza.adm <- lapply(tza.f.adm, function(x) data.table(read.dta13(x)))
 
 # Harmonize var codes
 tmp <- unlist(lapply(tza.adm, names))
@@ -241,7 +246,7 @@ x <- c(
 )
 
 # Fix tza13 admin codes
-tmp <- read.dta(x[1], convert.factors=F)
+tmp <- read.dta13(x[1], convert.factors=F)
 tmp <- data.table(tmp)
 tmp[, range(y3_hhid)]
 # [1] "0001-001" "3924-001"
@@ -254,7 +259,7 @@ tza[tmp, `:=`(
   svyL2Nm = as.character(i.hh_a02_2),
   svyL2Cd = as.integer(i.hh_a02_1)
   )]
-tmp <- read.dta(x[1])
+tmp <- read.dta13(x[1])
 tmp <- attr(tmp, "label.table")$hh_a01_1
 tmp <- data.table(svyCode="tza-nps-2012", svyL1Cd=tmp, svyL1Nm=names(tmp))
 setkey(tmp, svyCode, svyL1Nm)
@@ -262,7 +267,7 @@ setkey(tza, svyCode, svyL1Nm)
 tza[tmp,  svyL1Cd := i.svyL1Cd]
 
 # Fix tza11 admin codes
-tmp <- read.dta(x[2])
+tmp <- read.dta13(x[2])
 tmp <- data.table(tmp)
 tmp[, range(y2_hhid)]
 tza[!hhid %in% tmp$y2_hhid, .N, by=wave]
@@ -274,7 +279,7 @@ tza[tmp, `:=`(
   )]
 
 # Fix tza09 admin codes
-tmp <- read.dta(x[3])
+tmp <- read.dta13(x[3])
 tmp <- data.table(tmp)
 tmp[, range(hhid)]
 tza[!hhid %in% tmp$hhid, .N, by=wave]
@@ -284,7 +289,7 @@ tza[tmp, `:=`(
   svyL1Nm = as.character(i.region),
   svyL2Cd = as.integer(i.district)
   )]
-tmp <- read.dta(x[3])
+tmp <- read.dta13(x[3])
 tmp <- attr(tmp, "label.table")$REGION
 tmp <- data.table(svyCode="tza-nps-2008", svyL1Cd=tmp, svyL1Nm=names(tmp))
 setkey(tmp, svyCode, svyL1Nm)
@@ -302,14 +307,16 @@ tza[, sum(is.na(svyL1Cd))/.N, by=wave]
 tza[, sum(is.na(svyL2Nm))/.N, by=wave]
 tza[, sum(is.na(svyL2Cd))/.N, by=wave]
 tmp <- tza[, .N, keyby=.(svyCode, svyL1Cd, svyL1Nm, svyL2Cd, svyL2Nm)]
-# TODO still missing district labels for tza09 and tza11
+# TODO still missing ward and district labels for tza09 and tza11
 
-# Could also use hhld XY if I can find them (IFPRI?), in files:
+
+
+# Could also use hhld XY coords if I can find them (IFPRI?), in files:
 x <- c(
   "~/Data/TZA-NPS-12/raw/HouseholdGeovars_Y3.dta",
   "~/Data/TZA-NPS-10/raw/HH.Geovariables_Y2.dta",
   "~/Data/TZA-NPS-08/raw/HH.Geovariables_Y1.dta")
-tmp <- read.dta(x[1])
+tmp <- read.dta13(x[1])
 tmp <- data.table(tmp)
 tza[!hhid %in% tmp$y3_hhid, .N, by=wave]
 #     wave    N
@@ -322,7 +329,7 @@ tza[tmp, `:=`(
   lon_dd_mod = lon_dd_mod,
   lat_dd_mod = lat_dd_mod
 )]
-tmp <- read.dta(x[2])
+tmp <- read.dta13(x[2])
 tmp <- data.table(tmp)
 tza[!hhid %in% tmp$y2_hhid, .N, by=wave]
 #     wave    N
@@ -335,7 +342,7 @@ tza[tmp, `:=`(
   lon_dd_mod = lon_modified,
   lat_dd_mod = lat_modified
 )]
-tmp <- read.dta(x[3])
+tmp <- read.dta13(x[3])
 tmp <- data.table(tmp)
 tza[!hhid %in% tmp$hhid, .N, by=wave]
 #     wave    N
@@ -356,7 +363,7 @@ tza[, sum(is.na(lon_dd_mod)), by=wave]
 
 ###############################################
 # HHCHAR
-tza.chr <- lapply(tza.f.chr, function(x) data.table(read.dta(x)))
+tza.chr <- lapply(tza.f.chr, function(x) data.table(read.dta13(x)))
 
 # Harmonize var codes
 tmp <- unlist(lapply(tza.chr, names))
@@ -376,7 +383,7 @@ tza[, i.district := NULL]
 
 ###############################################
 # INCOME
-tza.inc <- lapply(tza.f.inc, function(x) data.table(read.dta(x)))
+tza.inc <- lapply(tza.f.inc, function(x) data.table(read.dta13(x)))
 
 # Harmonize var codes
 tmp <- unlist(lapply(tza.inc, names))
@@ -396,47 +403,546 @@ setnames(tza, c("hh", "i.hh"), c("hhid", "hh"))
 tza[, landrent := rowSums(cbind(landrent, landlend), na.rm=T)]
 tza[, `:=`(hh=NULL, distmarket_ag=NULL, distroad_ag=NULL, disthome_ag=NULL, landlend=NULL)]
 setnames(tza, "ea", "clust")
+tza[, svyCode := factor(svyCode, levels=c("tza-nps-2012", "tza-nps-2010", "tza-nps-2008"))]
+tza[, survey := factor(svyCode, levels=levels(svyCode), labels=c("2012/13", "2010/11", "2008/09"))]
+tza[, wave := factor(svyCode, levels=levels(svyCode), labels=c("wave 3", "wave 2", "wave 1"))]
+
+##############################################
+# STRATIFICATION
+# Add stratification vars (7 zones, 6 ez?), these are not available from the RIGA files
+# Note that wards are marked as CONFIDENTIAL
+tza.hh <- lapply(tza.f.hh, function(x) data.table(read.dta13(x)))
+tza.hh[[1]][, wave := "wave 3"]
+tza.hh[[2]][, wave := "wave 2"]
+tza.hh[[3]][, wave := "wave 1"]
+tza[, range(hhid), by=wave]
+#      wave               V1
+# 1: wave 3         0001-001
+# 2: wave 3         3924-001
+# 3: wave 1   01010140020171
+# 4: wave 1   55020180210078
+# 5: wave 2 0101014002017101
+# 6: wave 2 5502018021007801
+
+setkey(tza.hh[[1]], wave, y3_hhid)
+setkey(tza.hh[[2]], wave, y2_hhid)
+setkey(tza.hh[[3]], wave, hhid)
+setkey(tza, wave, hhid)
+tza[, `:=`(clust=NULL, strata=NULL, weight=NULL, ward=NULL)]
+tza[tza.hh[[1]], `:=`(clust=i.clusterid, strata=i.strataid, ward=i.hh_a03_1, weight=i.y3_weight,
+  svyL3Cd=i.hh_a03_1, svyL3Nm=i.hh_a03_2)]
+tza[tza.hh[[2]], `:=`(clust=i.clusterid, strata=i.strataid, ward=i.ward, weight=i.y2_weight)]
+tza[tza.hh[[3]], `:=`(clust=i.clusterid, strata=i.strataid, ward=i.ward, weight=i.hh_weight)]
+tza[svyL3Nm=="", svyL3Nm := NA]
+
+
+# Verify
+tza[, range(clust), by=wave]
+#      wave       V1
+# 1: wave 3  1114002
+# 2: wave 3 55218021
+# 3: wave 2  1114002
+# 4: wave 2 55218021
+# 5: wave 1  1114002
+# 6: wave 1 55218021
+
+tza[, range(strata), by=wave]
+#      wave V1
+# 1: wave 3  1
+# 2: wave 3 16
+# 3: wave 2  1
+# 4: wave 2 16
+# 5: wave 1  1
+# 6: wave 1 16
+
+tza[, range(weight), by=wave]
+#      wave          V1
+# 1: wave 3    24.82792
+# 2: wave 3 13538.68262
+# 3: wave 2    74.96050
+# 4: wave 2 10446.71191
+# 5: wave 1   212.82059
+# 6: wave 1  5688.66260
+
+# Map household by strata to verify
+tmp <- tza[, .N, keyby=.(wave, strata)]
+tza.pts <- SpatialPointsDataFrame(tza[!is.na(lon_dd_mod), .(lon_dd_mod, lat_dd_mod)], 
+  data.frame(tza[!is.na(lon_dd_mod), .(survey, wave, svyCode, hhid, strata, svyL1Nm, svyL2Nm, svyL3Nm)]),
+  proj4string=CRS("+init=epsg:4326"))
 
 
 ###############################################
 # TODO FARM MANAGEMENT
-
+# Include IFPRI recodes (last wave only for each country unfortunately)
+ifpri[, .N, by=svyCode]
+#   svyCode     N
+# 1: eth2010 27835
+# 2: nga2012  4536
+# 3: tza2012  4878
+# 4: gha2012 16772
 
 
 ```
 
 ```{r eth, eval=FALSE}
 
+# Generate raw codebook
+tmp <- list.files(c(
+  "~/Data/ETH-ESS-15/raw", "~/Data/ETH-ESS-13/raw", "~/Data/ETH-ERSS-11/raw"), 
+  glob2rx("*.dta"), recursive=T, full.names=T)
+tmp <- lapply(seq_along(tmp), function(x) {
+  y <- read.dta13(tmp[x])
+  y <- data.table(
+    varCode=names(y), 
+    varLabel=attr(y, "var.labels"), 
+    svyCode=unlist(strsplit(f[x], "/"))[5],
+    fName=unlist(strsplit(f[x], "/"))[7])
+})
+tmp <- rbindlist(tmp)
+eth.raw.lbl <- tmp
+
+
+
+
 ```
 
 
 
-```{r segment, eval=FALSE}
+```{r gha-typo, eval=FALSE}
 
-# Add total farm income `agsales_sh=totagsold/totagprod`
+# Done in `2017-agra-aasr` but might need revisions
+
+##########################################
+# CROP SALES
+# Options #1 `totcropsold`
+gha[, summary(totcropsold)]
+gha[, median(totcropsold, na.rm=T), by=croparea_3clas]
+#    croparea_clas   V1
+# 1:            NA    0
+# 2:       <= 2 ha  270
+# 3:        2-4 ha 1240
+# 4:        > 4 ha 3883
+# => seems land consistent
+gha[, cropsales := totcropsold]
+gha[, cropsales_sh := cropsales / cropvalue]
+gha[, summary(cropsales_sh)]
+#  Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+# 0.000   0.000   0.254   0.336   0.601   1.000   15411 
+gha[cropsales_sh > 0, .N, by=svyCode]
+# Option #2 `shcropsold` (might have been imputed by RIGA)
+gha[, summary(shcropsold)]
+#  Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+# 0.000   0.000   0.102   0.273   0.529   1.000   11260 
+gha[shcropsold > 0, .N, by=svyCode]
+#      svyCode    N
+# 1: gha-glss6 5485
+# 2: gha-glss5 3272
+# 3: gha-glss4 2904
+gha[, cropsales_sh := shcropsold]
+
+##########################################
+# AG SALES
+gha[, summary(shagprodsold)]
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+# 0.0000  0.0000  0.0000  0.1998  0.3545  1.0000     310 
+# => probably just more 0
+gha[, agsales := totagsold]
+gha[, agsales_sh := totagsold / totagprod]
+# More positive obs if using `shagprodsold`
+gha[, agsales_sh := shagprodsold]
+
+pplot(cropsales_sh~survey+croparea_4ha, gha)
+pplot(agsales_sh~survey+croparea_4ha, gha)
 
 
+##########################################
+# SHF 4ha dummy `croparea_4ha` (2-class)
+gha[, croparea_4ha := NULL]
+gha[croparea_imp>0, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
+summary(gha$croparea_4ha)
+# <= 4 ha  > 4 ha    NA's 
+#   15587    3312   12558 
+
+##########################################
+# Crop commercialization dummy `cropsales_3clas`
+gha[, cropsales_3clas := NULL]
+gha[, cropsales_3clas := cut(cropsales_sh, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
+summary(gha$cropsales_3clas)
+#  LoC   MeC   HiC  NA's 
+# 9288  5579  5330 11260 
+# => there's a big difference in the number of NA's
+
+##########################################
+# Ag commercialization dummy `agsales_3clas`
+gha[, agsales_3clas := NULL]
+gha[, agsales_3clas := cut(agsales_sh, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
+summary(gha$agsales_3clas)
+#   LoC   MeC   HiC  NA's 
+# 18750  6452  5945   310 
+# => there's a big difference in the number of NA's
+
+##########################################
+# Income diversification dummy `naggross_3clas`
+gha[, naggross_3clas := NULL]
+gha[, naggross_3clas := cut(naggross_sh, c(-1,1/3,2/3,1.1), labels=c("LoD", "MeD", "HiD"), ordered=T, right=F)]
+summary(gha$naggross_3clas)
+#   LoD   MeD   HiD  NA's 
+# 10549  1934 16268  2706 
+
+##########################################
+# Income diversification dummy `noaggross_2clas`
+gha[, naggross_2clas := NULL]
+gha[, naggross_2clas := cut(naggross_sh, c(-1,1/3,1.1), labels=c("LoD", "HiD"), ordered=T, right=F)]
+summary(gha$naggross_2clas)
+#   LoD  HiD   NA's 
+# 10549 18202  2706 
+
+##########################################
+# Farm classification dummy `class9`
+class9 <- c("LoCLoD", "LoCMeD", "LoCHiD",  "MeCLoD", "MeCMeD", "MeCHiD", 
+  "HiCLoD", "HiCMeD", "HiCHiD")
+gha[, class9 := NULL]
+gha[, class9 := factor(paste0(agsales_3clas, naggross_3clas), levels=class9)]
+summary(gha$class9)
+# LoCLoD LoCMeD LoCHiD MeCLoD MeCMeD MeCHiD HiCLoD HiCMeD HiCHiD   NA's 
+#   2400    500  13454   4387    752   1313   3762    682   1501   2706 
+
+##########################################
+# Classification dummy `class6`
+class6 <- c("LoCLoD", "LoCHiD",  "MeCLoD", "MeCHiD", "HiCLoD", "HiCHiD")
+gha[, class6 := NULL]
+gha[, class6 := factor(paste0(agsales_3clas, naggross_2clas), levels=class6)]
+summary(gha$class6)
+# LoCLoD LoCHiD MeCLoD MeCHiD HiCLoD HiCHiD   NA's 
+#   2400  13954   4387   2065   3762   2183   2706
+
+##########################################
+# Farm classification dummy `class5`
+gha[, class5 := class6]
+levels(gha$class5) <- c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
+summary(gha$class5)
+# subs.       trans.    pre-comm. specd. comm.  divf. comm.         NA's 
+# 2400        16019         4387         3762         2183         2706 
+
+```
+
+
+```{r tza-typo, eval=FALSE}
+
+##################################################################################### 
+# TZA Farm Typology 
+#####################################################################################
+
+# CULTIVATED AREA
+# Settle for using RIGA operated area instead (we added landrent+landlend, didn't
+# seem consistent)
+# TODO Construct cultivated area from Ag module
+pplot(landown~survey, data=tza, ylim=c(0,10))
+pplot(landrent~survey, data=tza, ylim=c(0,10))
+tza[, .N, by=.(wave, pos=landown-landrent>=0)]
+tza[, summary(landown), by=.(wave, totagprod>0)]
+tza[, summary(totagprod), by=.(wave, landown>0)]
+tza[totagprod>0 & is.na(landown), .N, by=wave]
+# Empty data.table (0 rows) of 2 cols: wave,N
+tza[totagprod>0 & (landown==0 & landrent==0), .N, by=wave]
+#      wave   N
+# 1: wave 3 447
+# 2: wave 2 316
+# 3: wave 1 361
+tza[shagprodsold>0 & (landown==0 & landrent==0), .N, by=wave]
+#      wave   N
+# 1: wave 3 243
+# 2: wave 2 152
+# 3: wave 1 188
+# There are NAs in landown, but most hhlds with any agprod have land
+
+tza[, croparea := NULL]
+#tza[, croparea := rowSums(.SD[, .(landown, -landrent)], na.rm=T)]
+tza[, croparea := rowSums(.SD[, .(landown)], na.rm=T)]
+tza[, 100*sum(croparea > 0 & croparea <= 4, na.rm=T)/.N, by=.(wave, rural)]
+#     wave rural       V1
+# 1: wave 3 rural 53.96262
+# 2: wave 3 urban 13.28125
+# 3: wave 2 rural 65.18460
+# 4: wave 2 urban 24.96413
+# 5: wave 1 rural 78.15085
+# 6: wave 1 urban 20.66667
+
+
+# There are 908 hlds with some crop production but no land
+# I'm tempted to impute `croparea` in those cases
+tza[totcropprod>0, .N, by=.(wave, croparea>0)]
+
+# What is the median crop production per ha per survey/region. Use that to impute `croparea`.
+tza[, croparea_imp := croparea]
+tza[, qtl := cut(totcropprod, 
+  unique(quantile(totcropprod, seq(0,1,.2), na.rm=T)), include.lowest=T),
+  by=svyCode]
+tza[, q := median(ifelse(croparea==0, NA, croparea), na.rm=T),  by=.(svyCode, qtl)]
+tza[totcropprod>0 & (is.na(croparea_imp) | croparea_imp==0), croparea_imp := q]
+tza[totcropprod>0, .N, by=.(wave, croparea_imp>0)]
+
+tza[shagprodsold>0, .N, by=.(wave, croparea_imp>0)]
+# There are still 105 hlds with some `shagprodsold` but no land (in all 3 surveys)
+# Impute `croparea` again
+tza[, qtl := cut(shagprodsold, 
+  unique(quantile(shagprodsold, seq(0,1,.2), na.rm=T)), include.lowest=T),
+  by=svyCode]
+tza[, q := median(ifelse(croparea==0, NA, croparea), na.rm=T),  by=.(svyCode, qtl)]
+tza[shagprodsold>0 & (is.na(croparea_imp) | croparea_imp==0), croparea_imp := q]
+tza[shagprodsold>0, .N, by=.(wave, croparea_imp>0)]
+
+# Clean up
+tza[, `:=`(qtl=NULL, q=NULL)]
+
+##########################################
+# SHF 4ha dummy `croparea_4ha` (2-class)
+tza[, croparea_4ha := NULL]
+tza[croparea_imp>0, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
+summary(tza$croparea_4ha)
+# <= 4 ha  > 4 ha    NA's 
+#    7240     926    3997 
+
+##########################################
+# SHF 4ha dummy `croparea_3clas`
+tza[, croparea_3clas := NULL]
+tza[, max(croparea, na.rm=T)]
+tza[croparea_imp>0, croparea_3clas := cut(croparea_imp, c(-1,2,4,51), labels=c("<= 2 ha", "2-4 ha", "> 4 ha"), ordered=T, right=F)]
+summary(tza$croparea_3clas)
+# <= 2 ha  2-4 ha  > 4 ha    NA's 
+#    5750    1490     926    3997 
+
+
+##########################################
+# CROP PRODUCTION
+summary(tza$totcropprod)
+tza[, sum(is.na(totcropprod)), by=svyCode]
+tza[, sum(is.na(shagprodsold)), by=svyCode]
+tza[, median(totcropprod, na.rm=T), keyby=croparea_3clas]
+# => some hhlds have no/missing land but some crop production
+#    croparea_3clas        V1
+# 1:             NA       0.0
+# 2:        <= 2 ha  338083.3
+# 3:         2-4 ha  775080.0
+# 4:         > 4 ha 1135056.0
+tza[, cropvalue := totcropprod]
+tza[, 100*sum(cropvalue>0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural       V1
+# 1: 2012/13 rural 61.15448
+# 2: 2012/13 urban  0.00000
+# 3: 2010/11 rural 83.24732
+# 4: 2010/11 urban  2.51076
+# 5: 2008/09 rural 91.14355
+# 6: 2008/09 urban 24.66667
+
+##########################################
+# CROP SALES
+tza[, summary(totcropsold)]
+tza[, summary(shcropsold)]
+tza[, median(totcropsold, na.rm=T), keyby=croparea_3clas]
+#    croparea_3clas     V1
+# 1:             NA      0
+# 2:        <= 2 ha  28000
+# 3:         2-4 ha 193750
+# 4:         > 4 ha 322500
+# => seems land consistent
+tza[, cropsales := totcropsold]
+tza[, cropsales_sh := shcropsold]
+tza[, summary(cropsales_sh)]
+tza[, 100*sum(cropsales_sh>0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural        V1
+# 1: 2012/13 rural 45.682517
+# 2: 2012/13 urban  0.000000
+# 3: 2010/11 rural 61.254466
+# 4: 2010/11 urban  1.291248
+# 5: 2008/09 rural 67.639903
+# 6: 2008/09 urban 13.000000
+
+##########################################
+# AG SALES
+tza[, summary(totagsold)]
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#    0       0   48000  267700  270000 7646000    3188 
+tza[, summary(shagprodsold)]
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.0000  0.0000  0.0000  0.1608  0.2468  1.0000 
+tza[, agsales := totagsold]
+tza[, agsales_sh := shagprodsold]
+
+tza[, 100*sum(agsales_sh>0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural       V1
+# 1: 2012/13 rural 51.14739
+# 2: 2012/13 urban  0.00000
+# 3: 2010/11 rural 68.32076
+# 4: 2010/11 urban  2.15208
+# 5: 2008/09 rural 77.42092
+# 6: 2008/09 urban 18.66667
+
+##########################################
+# GROSS FARM INCOME
+tza[, summary(farmrntimp)]
+tza[, summary(agr_wge)]
+tza[, summary(selfimp1)]
+# => ignore `selfimp1` for now
+tza[, aggross := rowSums(.SD[, .(totagprod, farmrntimp, agr_wge)], na.rm=T)]
+tza[, 100*sum(aggross>0, na.rm=T)/.N, by=.(survey, rural)]
+
+# GROSS NON-FARM INCOME
+tza[, summary(transfersgrossimp)]
+tza[, summary(otherincimp)]
+tza[, summary(nonfarmrntimp)]
+tza[, summary(nonagr_wge)]
+tza[, summary(selfemp)]
+boxplot(selfemp~svyCode, tza)
+tza[, naggross := rowSums(.SD[, .(transfersgrossimp, otherincimp, nonfarmrntimp, nonagr_wge, ifelse(selfemp < 0, NA, selfemp))], na.rm=T)]
+tza[, totgross := rowSums(.SD[, .(aggross, naggross)], na.rm=T)]
+tza[, naggross_sh := naggross/totgross]
+tza[, 100*sum(naggross_sh>0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural       V1
+# 1: 2012/13 rural 87.29595
+# 2: 2012/13 urban 97.91667
+# 3: 2010/11 rural 83.04883
+# 4: 2010/11 urban 95.26542
+# 5: 2008/09 rural 77.56691
+# 6: 2008/09 urban 93.00000
+
+tza[, sum(cropsales_sh > 0, na.rm=T), keyby=croparea_3clas]
+tza[, sum(aggross > 0, na.rm=T), keyby=croparea_3clas]
+# some `aggross` with no land
+tza[, sum(naggross_sh > 0, na.rm=T), keyby=croparea_3clas]
+
+# HHlds with ag share but no/na aggross?
+tza[shagprodsold>0, .N, by=aggross>0]
+#    aggross     N
+# 1:    TRUE  5728
+# => OK
+
+# Other internal consistency checks
+# HHlds with crop share but no/null croparea?
+tza[, sum(shcropsold>0, na.rm=T), keyby=croparea_3clas]
+#    croparea_3clas   V1
+# 1:             NA    0
+# 2:        <= 2 ha 3178
+# 3:         2-4 ha 1127
+# 4:         > 4 ha  733
+# => OK
+
+pplot(cropsales_sh~survey+croparea_4ha, tza)
+pplot(agsales_sh~survey+croparea_4ha, tza)
+# => `cropsales_sh` shares seem to make more sense, but `agsales_sh` has much fewer NAs...
+
+##########################################
+# Crop commercialization dummy `cropsales_3clas`
+tza[, cropsales_3clas := NULL]
+tza[, cropsales_3clas := cut(cropsales_sh, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
+summary(tza$cropsales_3clas)
+#  LoC  MeC  HiC NA's 
+# 4380 2884 1711 3188 
+
+##########################################
+# Ag commercialization dummy `agsales_3clas`
+tza[, agsales_3clas := NULL]
+tza[, agsales_3clas := cut(agsales_sh, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
+summary(tza$agsales_3clas)
+#  LoC  MeC  HiC 
+# 7112 3591 1460 
+
+##########################################
+# Income diversification dummy `naggross_3clas`
+tza[, naggross_3clas := NULL]
+tza[, naggross_3clas := cut(naggross_sh, c(-1,1/3,2/3,1.1), labels=c("LoD", "MeD", "HiD"), ordered=T, right=F)]
+summary(tza$naggross_3clas)
+#  LoD  MeD  HiD NA's 
+# 4588 1392 5983  200
+
+##########################################
+# Income diversification dummy `noaggross_2clas`
+tza[, naggross_2clas := NULL]
+tza[, naggross_2clas := cut(naggross_sh, c(-1,1/3,1.1), labels=c("LoD", "HiD"), ordered=T, right=F)]
+summary(tza$naggross_2clas)
+#  LoD  HiD NA's 
+# 4588 7375  200 
+
+##########################################
+# Farm classification dummy `class9`
+class9 <- c("LoCLoD", "LoCMeD", "LoCHiD",  "MeCLoD", "MeCMeD", "MeCHiD", 
+  "HiCLoD", "HiCMeD", "HiCHiD")
+tza[, class9 := NULL]
+tza[, class9 := factor(paste0(cropsales_3clas, naggross_3clas), levels=class9)]
+summary(tza$class9)
+# LoCLoD LoCMeD LoCHiD MeCLoD MeCMeD MeCHiD HiCLoD HiCMeD HiCHiD   NA's 
+#   1376    508   2399   2100    517    267   1041    329    341   3285 
+
+##########################################
+# Classification dummy `class6`
+class6 <- c("LoCLoD", "LoCHiD",  "MeCLoD", "MeCHiD", "HiCLoD", "HiCHiD")
+tza[, class6 := NULL]
+tza[, class6 := factor(paste0(cropsales_3clas, naggross_2clas), levels=class6)]
+summary(tza$class6)
+# LoCLoD LoCHiD MeCLoD MeCHiD HiCLoD HiCHiD   NA's 
+#   1376   2907   2100    784   1041    670   3285 
+
+##########################################
+# Farm classification dummy `class5`
+tza[, class5 := class6]
+levels(tza$class5) <- c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
+summary(tza$class5)
+# subs.       trans.    pre-comm. specd. comm.  divf. comm.         NA's 
+#  1376         3691         2100         1041          670         3285 
 
 
 ```
 
 
-```{r survey, eval=FALSE}
+```{r designs, eval=FALSE}
 
-# Define stratified survey designs
-gha.svy[["gha6"]] <- svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
-    data=gha[survey=="2012/13"])
-gha.svy.farm <- lapply(gha.svy, subset, !is.na(croparea_clas))
+#####################################################################################
+# Define Stratified Survey Designs
+#####################################################################################
+# GHA
+gha.svy <- list(
+  `gha6` = svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
+    data=gha[survey=="2012/13"]),
+  `gha5` =  svydesign(~clust+hhid, strata=~region+rural, w=~weight, nest=T,
+    data=gha[survey=="2005/06"]),  
+  `gha4` = svydesign(~clust+hhid, strata=~rural, w=~weight, nest=T,
+    data=gha[survey=="1998/99"])
+)
+
+# Subset survey sample to farms
+gha.svy.farm <- lapply(gha.svy, subset, !is.na(croparea_3clas))
+
+# Subset survey sample to SHF (note that they exclude farms with no `croparea`)
+gha.svy.shf <- lapply(gha.svy, subset, croparea_4ha=="<= 4 ha")
+
+###############################################
+# TZA
+tza.svy <- list(
+  `tza3` = svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
+    data=tza[survey=="2012/13"]),
+  `tza2` =  svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
+    data=tza[survey=="2010/11"]),  
+  `tza1` = svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
+    data=tza[survey=="2008/09"])
+)
+
+tza.svy.farm <- lapply(tza.svy, subset, !is.na(croparea_3clas))
+tza.svy.shf <- lapply(tza.svy, subset, croparea_4ha=="<= 4 ha")
+
+
+###############################################
+# TODO ETH
 
 ```
 
 ```{r save, eval=FALSE}
 
-rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc)
+rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, tmp.cv)
 save.image("./tmp/2017-ispc.RData")
 
-###############################################
-# Export harmonized panel datasets
+#####################################################################################
+# Export Harmonized Panel Datasets
+#####################################################################################
 # GHA
 names(gha)[!names(gha) %in% lbl$varCode]
 tmp <- lbl[varCode %in% names(gha)]
@@ -446,9 +952,9 @@ setcolorder(gha, c(tmp, setdiff(names(gha), tmp)))
 setkey(lbl, varCode)
 write.dta(
   setattr(gha, "var.labels", lbl[names(gha), paste0(varLabel, " (", unit, ")")]),
-  "./out/gha-glss_merged_2017.09.18.dta",
-  version=12L, convert.factors="string")
+  "./out/gha-glss_merged_2017.10.01.dta", version=12L, convert.factors="string")
 
+###############################################
 # TZA
 setdiff(names(tza), lbl$varCode)
 tmp <- lbl[varCode %in% names(tza)]
@@ -458,9 +964,9 @@ setcolorder(tza, c(tmp, setdiff(names(tza), tmp)))
 setkey(lbl, varCode)
 write.dta(
   setattr(tza, "var.labels", lbl[names(tza), paste0(varLabel, " (", unit, ")")]),
-  "./out/tza-nps_merged_2017.09.18.dta",
-  version=12L, convert.factors="string")
+  "./out/tza-nps_merged_2017.10.01.dta", version=12L, convert.factors="string")
 
+###############################################
 # TODO ETH
 
 
@@ -468,7 +974,7 @@ write.dta(
 
 ## Harmonized Codebook
 
-This study combines household-level micro data for 4 countries across multiple survey years. To expedite all data reconciliation steps we choose to rely as much as possible on FAO/RIGA cross-country harmonized household-level database. RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also include household-level variables from [IFPRI replication datasets](https://dataverse.harvard.edu/dataverse/harvestchoice). Below is a full codebook.
+This study combines household-level micro data for 4 countries across multiple survey years. To expedite data reconciliation steps we choose to rely as much as possible on [FAO RIGA-L cross-country harmonized household-level database](http://www.fao.org/economic/riga/riga-database/en/). RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also include additional household-level variables available through [IFPRI replication datasets](https://dataverse.harvard.edu/dataverse/harvestchoice). Below is a full codebook.
 
 
 ```{r prep, results="asis"}
@@ -484,24 +990,24 @@ for (i in unique(lbl$section)) {
 
 ## RIGA Income Aggregates
 
-Notes on RIGA income construction approach (see @riga2007doco):
+Notes on RIGA variable construction (see @riga2007doco for a complete documentation):
 
 - All aggregates are estimated at the household level.  
 - All income and expenditures are **annualized**.  
 - All income components are **net of costs**.  
 - Purchases and sales of **durable goods**, investments and windfall gains are excluded from household income and expenditure calculations since these are not transactions undertaken regularly by households and can result in the significant over- or under-stating of permanent income.  
-- All aggregates are reported in **local currency units (LCU)**.  
-- For each survey, only the **rural** sample is used (this is not consustent across all surveys)  
-- An outlier check is imposed after the construction of all income aggregates to deal with extreme income shares that arise following the aggregation of all income components. After estimating the shares of the seven principal income categories (agricultural wages, non-agricultural wages, crop, livestock, self employment, transfer and other) **observations whose share is greater than or less than 3 (indicating a percentage share of +/- 300%) are dropped from the aggregate**.  
+- All aggregates are reported in **local currency (LCU)**.  
+- For each survey, only the **rural** sample is used (this does not seem consistent across all surveys)  
+- An outlier check is imposed after the construction of all income aggregates to deal with extreme income shares that arise following the aggregation of all income components. After estimating the shares of the seven principal income categories (agricultural wages, non-agricultural wages, crop, livestock, self employment, transfer and other) **observations with shares greater than or less than 3 (indicating a percentage share of +/- 300%) are dropped from the aggregate**.  
 
-However because RIGA income aggregates are *net of costs*, we use intermediary components instead:
+However because RIGA income aggregates are *net of costs*, we construct intermediary components:
 
-- $cropsales$ derived from RIGA $totcropsold$
-- $cropvalue$ derived from RIGA $totcropprod$
-- $cropsales\_sh$ (but can also be derived from RIGA $totcropsold$, $shcropsold$ or $shagprodsold$)
+- $cropsales$ is derived/imputed from RIGA $totcropsold$
+- $cropvalue$ is derived/imputed from RIGA $totcropprod$
+- $cropsales\_sh$ (but can also be derived from RIGA $totcropsold$, $shcropsold$, or $shagprodsold$)
   $$ cropsales\_sh = \frac{cropsales}{cropvalue} $$ 
-- $agsales$ derived from $totagsold$
-- $agsales\_sh$ ($agsales$ is an imputed version of RIGA $totagsold$)
+- $agsales$ is derived/imputed from RIGA $totagsold$
+- $agsales\_sh$
   $$ agsales\_sh = \frac{agsales}{totagprod} $$
 - $aggross = totagprod + farmrntimp + agr\_wge (+ selfimp1)$
 - $naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr\_wge + selfemp$
@@ -509,7 +1015,7 @@ However because RIGA income aggregates are *net of costs*, we use intermediary c
 - $aggross\_sh$  
   $$ aggross\_sh = \frac{aggross}{totgross} $$  
 
-RIGA does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.
+RIGA-H does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.
 
 ## Survey Maps
 

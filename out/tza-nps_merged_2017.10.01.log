@@ -1,0 +1,154 @@
+
+  ___  ____  ____  ____  ____ (R)
+ /__    /   ____/   /   ____/
+___/   /   /___/   /   /___/   14.2   Copyright 1985-2015 StataCorp LLC
+  Statistics/Data Analysis            StataCorp
+                                      4905 Lakeway Drive
+     MP - Parallel Edition            College Station, Texas 77845 USA
+                                      800-STATA-PC        http://www.stata.com
+                                      979-696-4600        stata@stata.com
+                                      979-696-4601 (fax)
+
+. use "/home/mbacou/Projects/2017-ispc/out/tza-nps_merged_2017.10.01.dta"
+(Written by R.              )
+
+. codebook, compact
+
+Variable        Obs Unique       Mean        Min        Max  Label
+-------------------------------------------------------------------------------------------------------------
+hhid          12163  12163          .          .          .  unique hhld identifier ()
+clust         12163    409   1.66e+07    1114002   5.52e+07  enumeration area / cluster identifier ()
+svyCode       12163      3          .          .          .  survey code (gha-glss4, gha-glss5, gha-glss6,...
+wave          12163      3          .          .          .  survey round (wave 1, wave 2, etc.)
+survey        12163      3          .          .          .  survey short label ()
+strata        12163     16   8.721697          1         16  strata identifier ()
+weight        12163   7672   2091.559   24.82792   13538.68  replication weight (by wave) ()
+rural         12163      2          .          .          .  locality (rural, urban)
+svyL1Cd       12163     26   16.10343          1         55  level-1 admin unit code (linked to survey map...
+svyL1Nm       12163     48          .          .          .  level-1 admin unit label (linked to survey ma...
+svyL2Cd       12163      8   2.891063          1          8  level-1 admin unit code (linked to survey map...
+svyL2Nm       12163    167          .          .          .  level-2 admin unit label (linked to survey ma...
+svyL3Cd        4992    107   119.7089         11        413  level-3 admin unit code (linked to survey map...
+svyL3Nm       12163      2          .          .          .  level-3 admin unit label (linked to survey ma...
+lon_dd_mod    11675   2005   36.46405   29.61135   40.42122  jittered longitude (decimal)
+lat_dd_mod    11675   2005  -6.225396  -11.49701  -.9980742  jittered latitude (decimal)
+region        12163     53          .          .          .  region ID used in RIGA (varies)
+district      11958      8   2.887272          1          8  district ID used in RIGA (varies)
+ward          12160    136   90.53462          1        413  ward ID used in raw data ()
+hhsize        11958     31   5.155377          1         55  hh size (person)
+msize         11958     19   2.491888          0         26  number of males in the hh (person)
+fsize         11958     21   2.663489          0         30  number of females in the hh (person)
+femhead       11765      2   .2525287          0          1  female headed hh (0,1)
+snghead       11958      2   .2834086          0          1  single head of hh (0,1)
+widowhead     11958      2   .1073758          0          1  female head of hh widow (0,1)
+marriedhead   11958      2   .6011875          0          1  head of hh married (0,1)
+agehead       11953     88   45.77152         16        108  age head of hh (years)
+educhead      11834     18   5.918286          0         17  years of education head of hh (years)
+educhigh      11941     18    7.94364          0         17  highest years of education in hh (years)
+educadult     11941    325   6.064365          0         17  ave years of education among hh members, >15 ...
+educave15_60  11377    284   6.531965          0         17  ave years of education among hh members, 15-6...
+educave       11941    561   4.773852          0         17  ave years of education in hh (years)
+hhlabor       11958     19   2.688911          0         25  hh labor age >14 but <60 yrs (person)
+mlabor        11958     13     1.2809          0         12  hh male labor age >14 but <60 yrs (person)
+mlaborshare   11958     40   .4428838          0          1  hh share of male labor (share, 0-1)
+flabor        11958     13   1.408011          0         13  hh female labor age >14 but <60 yrs (person)
+flaborshare   11958     40   .5148015          0          1  hh share of female labor (share, 0-1)
+brickwalls    11958      2   .3815855          0          1  dwelling has brick walls (0,1)
+cellphone     11956      2   .6227835          0          1  household has mobile phone (0,1)
+cementfloor   11958      2    .445225          0          1  dwelling has cement floors (0,1)
+electricity   11958      2   .2485365          0          1  household has electricity (0,1)
+nondirtfloor  11958      2   .4511624          0          1  dwelling has non-dirt floors (0,1)
+ownhome       11958      2   .7246195          0          1  household owns dwelling (0,1)
+runwater      11958      2   .0920723          0          1  household has internal running water (0,1)
+telephone     11956      2   .0139679          0          1  household has fixed telephone line (0,1)
+toilet        11958      2   .1334671          0          1  household has toilet (0,1)
+landless      11958      2    .401823          0          1  hh is landless (0,1)
+landown       11958   2788   1.219283          0   50.22148  land owned (ha)
+landrent      12163    118   .0262716          0   22.50861  land rented out by hh (ha)
+ilandown      11958    118    .044262          0      40.66  hectares of irrigated land owned (ha)
+rlandown      11958   2749   2.968652          0      124.1  hectares of rain-fed land owned (ha)
+landquint     11958      6   1.759575          0          5  land ownership quintiles (qtl, 1-5)
+TLU_cattle    11956    140   .9702032          0      63.75  tropical livestock units: cattle (TLU)
+TLU_pigs      11956     16   .0227334          0        3.2  tropical livestock units: pigs (TLU)
+TLU_sheep     11956     34    .037178          0          5  tropical livestock units: sheep, goats (TLU)
+TLU_total     11956   1226   1.224548          0       66.4  tropical livestock units: total (TLU)
+TLU_draft     11956     17   .0147206          0          4  Tropical Livestock Units: draft (TLU)
+wealth         7773   7333   .1539309  -1.008944   10.51772  RURAL: wealth index (index)
+agwealth       7773   4164  -.0532862  -.5948287   9.890068  agricultural wealth index (index)
+agmisc         8975   2302   144254.6          0   1.36e+07  value total annual agricultural production - ...
+agowncons      8975   5616   443100.8          0   1.87e+07  value total annual agricultural production co...
+agr_wge       12163    627   39855.18          0    1897675  wage employment - agr, fishing (lcu)
+farmrntimp    12163     33   806.2982          0     630000  annual income received from rental of farm re...
+nonagr_wge    12163   1760   769930.6          0   3.64e+07  wage employment - non-farm activities (lcu)
+nonfarmrnt~p   8908    151   44981.76          0    7200000  annual income received from non-farm real est...
+otherincimp    4995     72   27669.46          0   1.70e+07  other non-labor income, imputed (lcu)
+selfemp       12163   1648   861096.5  -8.50e+07   6.00e+07  annual net non-farm self employment income, i...
+selfimp1      12163     90   9598.241    -910000   1.02e+07  net HH income from ag business - agr, fishing...
+shagmisc      12163   3668   .0809194          0          1  share of annual agricultural production misc ...
+shagowncons   12163   5606   .3533711          0          1  share of annual agricultural production consu...
+shagprodsold  12163   5413    .160793          0          1  share of annual agricultural production sold ...
+shcropsold     8975   4614   .2273272          0          1  share of total annual crop production sold in...
+shlvstsold     8975   2120   .1216936          0          1  share of total annual livestock production so...
+totagprod      8975   6810   855065.4          0   2.19e+07  value total annual agricultural production (lcu)
+totagsold      8975   2101   267710.1          0    7645500  value total annual agricultural production so...
+totcropprod    8975   6377   570345.8          0   1.96e+07  value of total annual crop production (lcu)
+totcropsold    8975   1582     212995          0    7308000  value total annual crop production sold (lcu)
+totlivsold     8975    772   54715.13          0    3900000  value total annual livestock production sold ...
+totlvstprod    8975   2834   284719.6          0   1.83e+07  value of total annual livestock production (lcu)
+aggross       12163   7013   671608.8          0   2.20e+07  value of total annual farm income (lcu)
+naggross      12163   7393    1772883          0   6.01e+07  value of total annual non-farm income (lcu)
+naggross_sh   11963   6185   .5693406          0          1  share of non-farm income in total income (sha...
+cropsales      8975   1582     212995          0    7308000  value of annual crop sales (lcu)
+totgross      12163  10820    2444491          0   6.01e+07  value of total annual gross income (lcu)
+cropsales_sh   8975   4614   .2273272          0          1  share of annual crop production sold (share, ...
+cropvalue      8975   6377   570345.8          0   1.96e+07  value of annual crop production (lcu)
+agsales        8975   2101   267710.1          0    7645500  value of annual farm sales (lcu)
+agsales_sh    12163   5413    .160793          0          1  share of annual farm production sold ()
+transfersg~p  12163   3724    80911.8          0    4000000  annual total incoming public and private tran...
+pcexp         12163  11951          .          .          .  pc expenditures, hhexp2/hhsize (lcu)
+quintile       6918      5   3.085574          1          5  rural pcexp quintiles (qtl, 1-5)
+quinturb       6233      5   3.086796          1          5  urban pcexp quintiles (qtl, 1-5)
+quinttot      10751     10   3.578737          1         10  rural & urban pcexp quintiles (qtl, 1-5)
+decile         6918     10   5.677797          1         10  rural pcexp deciles (dec, 1-10)
+decilurb       6233   3264   26254.86          1    1165262  urban pcexp deciles (dec, 1-10)
+distbank      10981    112   9.250059          0        115  km from community to bank (km)
+disthealth    11504     43   1.164121          0         60  km from community to health facility (km)
+disthosptl    10984    119     7.9278          0        120  KM from community to nearest hospital (km)
+distmarket    10198     44   2.003153          0         40  KM from community to nearest market (km)
+distpolice    11529     73   3.326104          0         72  KM from community to nearest police station (km)
+distpost      11021    115   7.289534          0         97  km from community to post office (km)
+distprivpr~l   9745     82   6.809312          0        167  KM from community to nearest private primary ...
+distprivse~l  10018     89   5.632641          0        167  KM from community to nearest private secondar...
+distprschool  11958     20   .1492515          0         17  km from community to nearest primary school (km)
+distsecsch~l  11585     45   .9064609          0         30  KM from community to nearest government secon...
+distwater     10436     21   .2648524          0         47  km from household to nearest water source (km)
+infraindex     7775    315  -.0019487  -.9128691     4.8473  RURAL: index of access to infrastructure (index)
+infraindex~l  11958    668  -.0026865  -1.050559   2.932878  NATIONAL: index of access to infrastructure (...
+infraindex~b   4183    544   .0009806  -2.374089   1.866084  URBAN: index of access to infrastructure (index)
+divhh          8975      2   .3097493          0          1  FLM Typology: Diversified ()
+fhh            8975      2   .3729248          0          1  FLM Typology: Farm specializer ()
+fmhh           8975      2   .0704178          0          1  FLM Typology: Farm specializer, market-orient...
+fshh           8975      2    .302507          0          1  FLM Typology: Farm specializer, subsistence p...
+lhh            8975      2   .2792201          0          1  FLM Typology: Labour (wages) specializer ()
+mhh            8975      2   .0381058          0          1  FLM Typology: Migration (transfers)specialize...
+croparea      12163   2788   1.198732          0   50.22148  cultivated area (used in farm typology), impu...
+croparea_4ha  12163      3          .          .          .  cultivated area, 2-class (<= 4 ha, > 4 ha)
+croparea_3~s  12163      4          .          .          .  cultivated area, 3-class (<= 2 ha, 2-4 ha, > ...
+naggross_2~s  12163      3          .          .          .  share of non-farm income in total income, 2-c...
+naggross_3~s  12163      4          .          .          .  share of non-farm income in total income, 3-c...
+cropsales_~s  12163      4          .          .          .  share of crop production sold, 3-class (LoC, ...
+agsales_3c~s  12163      3          .          .          .  share of agricultural production sold, 3-clas...
+class5        12163      6          .          .          .  farm typology, 5-class (subs., trans., pre-co...
+class6        12163      7          .          .          .  farm typology, 6-class (LoCLoD, LoCHiD, MeCLo...
+class9        12163     10          .          .          .  farm typology, 9-class (LoCLoD, LoCMeD, LoCHi...
+cr~1grossimp  12163   6738   258271.7   -3515185    5106578  NA (NA)
+cr~2grossimp  12163   6906   415522.3          0    5994515  NA (NA)
+livestockg~p  12163   2164   135675.8          0    9643333  NA (NA)
+TLU_bulls     11956     23   .2021579          0       11.5  NA (NA)
+TLU_chickens  11956     84   .0499582          0          6  NA (NA)
+TLU_goats     11956     44    .126012          0        5.2  NA (NA)
+TLU_poultry   11956    115   .0535221          0          6  NA (NA)
+TLU_rabbits   11956     13   .0001782          0        .38  NA (NA)
+TLU_total_~g  11956   1035   .7967648          0       36.4  NA (NA)
+croparea_imp  12163   2790   1.288872          0   50.22148  NA (NA)
+-------------------------------------------------------------------------------------------------------------
