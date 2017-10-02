@@ -174,7 +174,7 @@ svyCode
 survey code
 </td>
 <td style="text-align:left;">
-gha-glss4, gha-glss5, gha-glss6, tza-nps-2008, tza-nps-2010, tza-nps-2012
+gha-glss4, gha-glss5, gha-glss6, tza-nps-2008, tza-nps-2010, tza-nps-2012, tza-nps-14, eth-ess-2015, eth-ess-2013, eth-erss-2011
 </td>
 <td style="text-align:left;">
 calculated
@@ -199,7 +199,7 @@ calculated
 survey
 </td>
 <td style="text-align:left;">
-survey short label
+survey short label (for printing)
 </td>
 <td style="text-align:left;">
 </td>
@@ -238,9 +238,10 @@ micro
 strata
 </td>
 <td style="text-align:left;">
-strata identifier
+unique strata identifier
 </td>
 <td style="text-align:left;">
+integer
 </td>
 <td style="text-align:left;">
 micro
@@ -267,6 +268,7 @@ weight
 replication weight (by wave)
 </td>
 <td style="text-align:left;">
+decimal
 </td>
 <td style="text-align:left;">
 micro
@@ -386,6 +388,7 @@ svyL3Cd
 level-3 admin unit code (linked to survey map)
 </td>
 <td style="text-align:left;">
+integer
 </td>
 <td style="text-align:left;">
 calculated
@@ -399,6 +402,7 @@ svyL3Nm
 level-3 admin unit label (linked to survey map)
 </td>
 <td style="text-align:left;">
+label
 </td>
 <td style="text-align:left;">
 calculated
@@ -496,7 +500,7 @@ region
 region ID used in RIGA
 </td>
 <td style="text-align:left;">
-varies
+varies by country
 </td>
 <td style="text-align:left;">
 RIGA
@@ -510,7 +514,7 @@ district
 district ID used in RIGA
 </td>
 <td style="text-align:left;">
-varies
+varies by country
 </td>
 <td style="text-align:left;">
 RIGA
@@ -524,6 +528,7 @@ ward
 ward ID used in raw data
 </td>
 <td style="text-align:left;">
+varies by country
 </td>
 <td style="text-align:left;">
 micro
@@ -537,6 +542,7 @@ cell5m
 HarvestChoice 5-arc-minute grid CELL5M ID
 </td>
 <td style="text-align:left;">
+integer
 </td>
 <td style="text-align:left;">
 calculated
@@ -2342,84 +2348,6 @@ Source
 <tbody>
 <tr>
 <td style="text-align:left;">
-fhh
-</td>
-<td style="text-align:left;">
-FLM Typology: Farm specializer
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-RIGA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fmhh
-</td>
-<td style="text-align:left;">
-FLM Typology: Farm specializer, market-oriented producer
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-RIGA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-fshh
-</td>
-<td style="text-align:left;">
-FLM Typology: Farm specializer, subsistence producer
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-RIGA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lhh
-</td>
-<td style="text-align:left;">
-FLM Typology: Labour (wages) specializer
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-RIGA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-mhh
-</td>
-<td style="text-align:left;">
-FLM Typology: Migration (transfers)specializer
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-RIGA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-divhh
-</td>
-<td style="text-align:left;">
-FLM Typology: Diversified
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-RIGA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 croparea
 </td>
 <td style="text-align:left;">
@@ -2694,6 +2622,84 @@ LoCLoD, LoCMeD, LoCHiD, MeCLoD, MeCMeD, MeCHiD, HiCLoD, HiCMeD, HiCHiD
 </td>
 <td style="text-align:left;">
 calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fhh
+</td>
+<td style="text-align:left;">
+FLM Typology: Farm specializer
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fmhh
+</td>
+<td style="text-align:left;">
+FLM Typology: Farm specializer, market-oriented producer
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fshh
+</td>
+<td style="text-align:left;">
+FLM Typology: Farm specializer, subsistence producer
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lhh
+</td>
+<td style="text-align:left;">
+FLM Typology: Labour (wages) specializer
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mhh
+</td>
+<td style="text-align:left;">
+FLM Typology: Migration (transfers)specializer
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+divhh
+</td>
+<td style="text-align:left;">
+FLM Typology: Diversified
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+RIGA
 </td>
 </tr>
 </tbody>
