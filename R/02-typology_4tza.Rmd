@@ -13,7 +13,6 @@ Note that FAO RIGA-H database is not yet available for NPS Wave 4 (as of Oct 1, 
 
 ## Household Sampling and Stratification
 
-
 ```{r tza-samples}
 
 tmp <- tza[, .(
@@ -29,6 +28,13 @@ kable(tmp,
   caption="Composition of Tanzania NPS Harmonized Survey Samples")
 
 ```
+
+The first round of the NPS sample was a multi-stage clustered sample design. First stage sampling involves the selection of survey clusters with the probability of selection proportional to cluster size within a stratum. The sampling of these clusters is stratified along two dimensions:
+
+- **8 administrative zones** (seven on Mainland Tanzania plus Zanzibar as an eighth zone), and  
+- **rural** versus **urban** clusters within each administrative zone.  
+
+The combination of these two dimensions yields **16 strata** (note that this stratification stratgey was modifed in NPS Wave 5).
 
 ```{r tza-strata, fig.cap="(Appoximate) Household Locations and Stratification across Survey Waves", fig.height=3}
 
