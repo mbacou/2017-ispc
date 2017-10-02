@@ -11,6 +11,8 @@ Relevant sources of household-level micro records for Ethiopia include the last 
 
 Note that FAO RIGA-H database is not yet available for NPS Wave 4 (as of Oct 1, 2017).
 
+## Household Sampling and Stratification
+
 
 ```{r tza-samples}
 
@@ -28,10 +30,7 @@ kable(tmp,
 
 ```
 
-
-## Household Sampling and Stratification
-
-```{r, fig.cap="Household Locations and Stratification across Survey Waves"}
+```{r tza-strata, fig.cap="(Appoximate) Household Locations and Stratification across Survey Waves", fig.height=2}
 
 # Map household by strata to verify
 tm_shape(g2[g2$svyCode=="tza2012",]) + tm_polygons("grey90", border.col="grey50") +
@@ -42,6 +41,33 @@ tm_shape(g2[g2$svyCode=="tza2012",]) + tm_polygons("grey90", border.col="grey50"
 ```
 
 ## Distribution of Farm Holdings across Farm Sizes and Farm Types
+
+### Trends in Commercialization
+
+```{r tza-cc, fig.cap="Crop Commercialization across Survey Waves (percent of crop production)"}
+
+pplot(100*cropsales_sh~croparea_4ha+survey, tza,
+  ylab="Crop Commercialization",
+  note=tza[, 100*sum(is.na(cropsales_sh)|cropsales_sh==0)/.N])
+```
+
+```{r tza-ac, fig.cap="Agricultural Commercialization across Survey Waves (percent of ag. production)"}
+
+pplot(100*agsales_sh~croparea_4ha+survey, tza,
+  ylab="Agricultural Commercialization",
+  note=tza[, 100*sum(is.na(agsales_sh)|agsales_sh==0)/.N])
+
+```
+
+### Trends in Income Diversification
+
+```{r tza-div, fig.cap="Non-Farm Income (percent of gross income)"}
+
+pplot(100*naggross_sh~croparea_4ha+survey, tza,
+  ylab="Non-Farm Income Share",
+  note=tza[, 100*sum(is.na(naggross_sh)|naggross_sh==0)/.N])
+```
+
 
 ### 3x3 Farm Classification
 

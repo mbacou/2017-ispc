@@ -10,6 +10,8 @@ In contrast to the latest 2 waves GLSS4 is only representative for 3 (ecology) x
 
 GLSS collect information on the demographic characteristics of the population, their education, health, employment and time use, migration, housing conditions and household agriculture, with a specific focus on **labour force**, with a labour force module expanded in GLSS6 to include a section on child labour.
 
+## Household Sampling and Stratification
+
 ```{r gha-samples}
 
 tmp <- data.frame(
@@ -29,9 +31,35 @@ kable(tmp,
 
 ## Distribution of Farm Holdings across Farm Sizes and Farm Types
 
+### Trends in Commercialization
+
+```{r gha-cc, fig.cap="Crop Commercialization across Survey Waves (percent of crop production)"}
+
+pplot(100*cropsales_sh~croparea_4ha+survey, gha,
+  ylab="Crop Commercialization",
+  note=gha[, 100*sum(is.na(cropsales_sh)|cropsales_sh==0)/.N])
+```
+
+```{r gha-ac, fig.cap="Agricultural Commercialization across Survey Waves (percent of ag. production)"}
+
+pplot(100*agsales_sh~croparea_4ha+survey, gha,
+  ylab="Agricultural Commercialization",
+  note=gha[, 100*sum(is.na(agsales_sh)|agsales_sh==0)/.N])
+
+```
+
+### Trends in Income Diversification
+
+```{r gha-div, fig.cap="Non-Farm Income (percent of gross income)"}
+
+pplot(100*naggross_sh~croparea_4ha+survey, gha,
+  ylab="Non-Farm Income Share",
+  note=gha[, 100*sum(is.na(naggross_sh)|naggross_sh==0)/.N])
+```
+
 ### 3x3 Farm Classification
 
-```{r gha-prop9, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Categories", dev="png"}
+```{r gha-prop9, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Categories"}
 
 par(mfrow=c(1,3), mar=c(3,3,0,.25))
 plot(svytable(~croparea_3clas+class9, gha.svy[["gha6"]]), main=NA, las=1, col=viridis(9),

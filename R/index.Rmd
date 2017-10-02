@@ -1,5 +1,5 @@
 ---
-title: "Agricultural Transformation in Ghana, Nigeria, Tanzania and Ethiopia"
+title: "Agricultural Transformation in Ghana, Ethiopia, and Tanzania"
 author: "[BACOU, Melanie](http://github.com/mbacou) for BMGF"
 date: "Last updated on `r Sys.Date()` -- CODES AND NOTES, DO NOT USE OR CITE"
 description: "Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)"
