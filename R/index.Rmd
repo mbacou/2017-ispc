@@ -974,7 +974,7 @@ write.dta(
 
 ## Harmonized Codebook
 
-This study combines household-level micro data for 4 countries across multiple survey years. To expedite data reconciliation steps we choose to rely as much as possible on [FAO RIGA-L cross-country harmonized household-level database](http://www.fao.org/economic/riga/riga-database/en/). RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also include additional household-level variables available through [IFPRI replication datasets](https://dataverse.harvard.edu/dataverse/harvestchoice). Below is a full codebook.
+This study combines household-level micro data for 4 countries across multiple survey years. To expedite data reconciliation steps we choose to rely as much as possible on [FAO RIGA-H cross-country harmonized household-level database](http://www.fao.org/economic/riga/riga-database/en/). RIGA expenditure and income aggregates are used to estimate both farm and crop sales and farm vs. non-farm income. We also include additional household-level variables available through [IFPRI replication datasets](https://dataverse.harvard.edu/dataverse/harvestchoice). Below is a full codebook.
 
 
 ```{r prep, results="asis"}
