@@ -34,7 +34,7 @@ The first round of the NPS sample is a multi-stage clustered sample design. Firs
 - **8 administrative zones** (seven on Mainland Tanzania plus Zanzibar as an eighth zone), and  
 - **rural** versus **urban** clusters within each administrative zone.  
 
-The combination of these two dimensions yields **16 strata** (note that this stratification stratgey was modifed in NPS Wave 5).
+The combination of these two dimensions yields **16 strata** (note that this stratification strategy was modifed in NPS Wave 5).
 
 ```{r tza-strata, fig.cap="(Appoximate) Household Locations and Stratification across Survey Waves", fig.height=3}
 
@@ -42,7 +42,7 @@ The combination of these two dimensions yields **16 strata** (note that this str
 tm_shape(g2[g2$svyCode=="tza2012",]) + tm_polygons("grey90", border.col="grey50") +
   tm_shape(tza.pts) + 
   tm_dots("strata", size=0.08, breaks=0:16, labels=paste("strata", 1:16), palette=viridis(16), title="Survey\nStratification") + 
-  tm_facets("survey", ncol=3)
+  tm_facets("survey", ncol=3) + tm_layout(legend.outside.size=.1)
 
 ```
 
