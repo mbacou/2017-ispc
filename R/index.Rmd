@@ -48,7 +48,7 @@ setwd("~/Projects/2017-ispc")
 load("./tmp/2017-ispc.RData")
 
 #####################################################################################
-# Helper - Default numeric formats
+# Helper - default numeric formats
 prty <- function(...) prettyNum(..., digits=0, big.mark=",", scientific=FALSE)
 
 # Helper - ggplot defaults
@@ -58,7 +58,7 @@ theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", 
 #####################################################################################
 # Harmonize income/sales vars across 4 countries and survey years
 # Compare crop income/sales with total farm income/sales
-# Need to replicate AGRA-AASR tables with 5 farm types across spatial quadrants
+# Replicate AGRA-AASR tables with 5 farm types across spatial quadrants
 
 # Load codebook
 lbl <- fread("./data/codebook.csv")
@@ -95,7 +95,7 @@ sort(unique(g2$svyCode))
 # [21] "nga2012" "rwa2005" "sen2011" "ssd2009" "tza2012" "uga2012" "uga2013" "zaf2011" "zmb2010"
 # => missing tza2010, tza2008, gha2008, do we have maps for these?
 # => are admin codes the same in all TZA NPS?
-# Keep only ETH and TZA survey maps (bring GHA from AGRA-AASR work)
+# Keep only ETH and TZA survey maps (bring in GHA survey maps from AGRA-AASR work)
 g2 <- g2[g2$ISO3 %in% c("ETH", "TZA"),]
 tmp <- shapefile("~/Projects/2017-agra-aasr/maps/svyL2Maps_GHA.shp")
 tmp <- tmp[, names(g2)]
@@ -107,6 +107,8 @@ g2.dt[, unique(svyCode)]
 g2.dt[, svyCode := factor(svyCode, 
   levels=c("tza2012",   "eth2012",   "eth2010",   "gha-glss6", "gha-glss5"), 
   labels=c("tza-nps-2012",   "eth-ess-2012",   "eth-erss-2010",   "gha-glss6", "gha-glss5"))]
+
+# TODO BMGF/SDI ag. potential quadrants
 
 
 # RIGA components
@@ -502,7 +504,8 @@ tmp <- rbindlist(tmp)
 fwrite(tmp, "./data/eth_raw_codebook.csv")
 eth.raw.lbl <- tmp
 
-# Combine eth 3 waves from RIGA-H
+# Combine ETH 3 waves from RIGA-H
+# Note that RIGA 2015 is not available yet
 eth.f.adm <- c(
   "~/Data/ETH-ESS-15/riga/Ethiopia15_HH_ADMIN.dta",
   "~/Data/ETH-ESS-13/riga/Ethiopia13_HH_ADMIN.dta",
