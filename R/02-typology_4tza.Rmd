@@ -48,7 +48,7 @@ tm_shape(g2[g2$svyCode=="tza2012",]) + tm_polygons("grey90", border.col="grey50"
 
 ## Distribution of Farm Holdings across Farm Sizes and Farm Types
 
-The plots below show the distribution of key variables in the sample of households across survey waves. The median line is in red, mean line in green, and the blue region is the inferred 95% confidence interval of the mean.
+The plots below show the distribution of key variables in the unweighted sample of households across survey waves. The median line is in red, mean line in green, and the blue region is the inferred 95% confidence interval of the mean.
 
 ### Land Holding
 

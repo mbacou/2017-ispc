@@ -112,7 +112,7 @@
 <div id="header">
 <h1 class="title">Agricultural Transformation in Ghana, Ethiopia, and Tanzania</h1>
 <h4 class="author"><em><a href="http://github.com/mbacou">BACOU, Melanie</a> for BMGF</em></h4>
-<h4 class="date"><em>Last updated on 2017-10-05 – CODES AND NOTES, DO NOT USE OR CITE</em></h4>
+<h4 class="date"><em>Last updated on 2017-10-06 – CODES AND NOTES, DO NOT USE OR CITE</em></h4>
 </div>
 <div id="data-preparation" class="section level1">
 <h1><span class="header-section-number">Section 1</span> Data Preparation</h1>
@@ -412,34 +412,6 @@ calculated
 </tr>
 <tr>
 <td style="text-align:left;">
-ez
-</td>
-<td style="text-align:left;">
-agroecological zone
-</td>
-<td style="text-align:left;">
-label
-</td>
-<td style="text-align:left;">
-RIGA
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lc_esa
-</td>
-<td style="text-align:left;">
-ESA land cover classification, dominant
-</td>
-<td style="text-align:left;">
-code
-</td>
-<td style="text-align:left;">
-calculated
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 X
 </td>
 <td style="text-align:left;">
@@ -471,7 +443,7 @@ raw data
 lon_dd_mod
 </td>
 <td style="text-align:left;">
-jittered longitude
+anonymized longitude
 </td>
 <td style="text-align:left;">
 decimal
@@ -485,7 +457,7 @@ raw data
 lat_dd_mod
 </td>
 <td style="text-align:left;">
-jittered latitude
+anonymized latitude
 </td>
 <td style="text-align:left;">
 decimal
@@ -534,6 +506,61 @@ varies by country
 </td>
 <td style="text-align:left;">
 raw data
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ez
+</td>
+<td style="text-align:left;">
+agroecological zone
+</td>
+<td style="text-align:left;">
+label
+</td>
+<td style="text-align:left;">
+RIGA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lc_esa
+</td>
+<td style="text-align:left;">
+ESA land cover classification, dominant
+</td>
+<td style="text-align:left;">
+code
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+suit_gaez
+</td>
+<td style="text-align:left;">
+FAO/GAEZ suitability, 9-class
+</td>
+<td style="text-align:left;">
+0-no data, 1-very high (&gt; 85%), 2-high (&gt; 70%), 3- good (&gt; 55%), 4-medium (&gt; 40%), 5-moderate (&gt; 25%), 6-marginal (&gt; 10%), 7-very marginal (&gt; 0%), 8-not suitable (0%), 9-water
+</td>
+<td style="text-align:left;">
+calculated
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+suit_glues
+</td>
+<td style="text-align:left;">
+GLUES suitability (point, mean, or median)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+calculated
 </td>
 </tr>
 <tr>
@@ -2069,21 +2096,7 @@ Source
 tt20k_mean
 </td>
 <td style="text-align:left;">
-IFPRI travel time to nearest market, 20K
-</td>
-<td style="text-align:left;">
-hrs
-</td>
-<td style="text-align:left;">
-IFPRI
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tt20k_med
-</td>
-<td style="text-align:left;">
-IFPRI travel time to nearest market, 20K
+IFPRI travel time to nearest market, 20K (point or area mean)
 </td>
 <td style="text-align:left;">
 hrs
@@ -2097,21 +2110,7 @@ IFPRI
 tt50k_mean
 </td>
 <td style="text-align:left;">
-IFPRI travel time to nearest market, 50K
-</td>
-<td style="text-align:left;">
-hrs
-</td>
-<td style="text-align:left;">
-IFPRI
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tt50k_med
-</td>
-<td style="text-align:left;">
-IFPRI travel time to nearest market, 50K
+IFPRI travel time to nearest market, 50K (point or area mean)
 </td>
 <td style="text-align:left;">
 hrs
@@ -2125,7 +2124,7 @@ IFPRI
 tt100k_mean
 </td>
 <td style="text-align:left;">
-IFPRI travel time to nearest market, 100K
+IFPRI travel time to nearest market, 100K (point or area mean)
 </td>
 <td style="text-align:left;">
 hrs
@@ -2136,10 +2135,10 @@ IFPRI
 </tr>
 <tr>
 <td style="text-align:left;">
-tt100k_med
+tt250k_mean
 </td>
 <td style="text-align:left;">
-IFPRI travel time to nearest market, 100K
+IFPRI travel time to nearest market, 250K (point or area mean)
 </td>
 <td style="text-align:left;">
 hrs
@@ -2153,7 +2152,63 @@ IFPRI
 tt500k_mean
 </td>
 <td style="text-align:left;">
-IFPRI travel time to nearest market, 500K
+IFPRI travel time to nearest market, 500K (point or area mean)
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt20k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 20K (median over area)
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt50k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 50K (median over area)
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt100k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 100K (median over area)
+</td>
+<td style="text-align:left;">
+hrs
+</td>
+<td style="text-align:left;">
+IFPRI
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tt250k_med
+</td>
+<td style="text-align:left;">
+IFPRI travel time to nearest market, 250K (median over area)
 </td>
 <td style="text-align:left;">
 hrs
@@ -2167,7 +2222,7 @@ IFPRI
 tt500k_med
 </td>
 <td style="text-align:left;">
-IFPRI travel time to nearest market, 500K
+IFPRI travel time to nearest market, 500K (median over area)
 </td>
 <td style="text-align:left;">
 hrs
@@ -2210,7 +2265,7 @@ farm uses organic fertilizer
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2224,7 +2279,7 @@ farm uses inorganic fertilizer
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2238,7 +2293,7 @@ farm uses any fertilizer
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2252,7 +2307,7 @@ farm uses pesticides
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2266,7 +2321,7 @@ farm uses herbicides
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2280,7 +2335,7 @@ farm uses irrigation
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2294,7 +2349,7 @@ farm purchases seeds
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2308,7 +2363,7 @@ farm purchases fuel
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 <tr>
@@ -2322,7 +2377,7 @@ farm hires labor
 0,1
 </td>
 <td style="text-align:left;">
-raw data
+calculated
 </td>
 </tr>
 </tbody>
@@ -2490,37 +2545,10 @@ calculated
 </tr>
 <tr>
 <td style="text-align:left;">
-suit_gaez
+seg_suit_gaez
 </td>
 <td style="text-align:left;">
-FAO/GAEZ suitability, 9-class
-</td>
-<td style="text-align:left;">
-0-no data, 1-very high (&gt; 85%), 2-high (&gt; 70%), 3- good (&gt; 55%), 4-medium (&gt; 40%), 5-moderate (&gt; 25%), 6-marginal (&gt; 10%), 7-very marginal (&gt; 0%), 8-not suitable (0%), 9-water
-</td>
-<td style="text-align:left;">
-calculated
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-suit_glues
-</td>
-<td style="text-align:left;">
-GLUES suitability (point, mean, or median)
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-calculated
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-suit_bmgf
-</td>
-<td style="text-align:left;">
-BMGF-derived suitability, 3-class
+FAO/GAEZ -derived suitability, 3-class
 </td>
 <td style="text-align:left;">
 agpot-hi, agpot-lo, agpot-no

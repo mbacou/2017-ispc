@@ -437,6 +437,8 @@ tza[tza.hh[[2]], `:=`(clust=i.clusterid, strata=i.strataid, ward=i.ward, weight=
 tza[tza.hh[[3]], `:=`(clust=i.clusterid, strata=i.strataid, ward=i.ward, weight=i.hh_weight)]
 tza[svyL3Nm=="", svyL3Nm := NA]
 
+# urban/rural breakdown is weird for wave 3 (was `mixed` recoded `urban`)?
+
 
 # Verify
 tza[, range(clust), by=wave]
