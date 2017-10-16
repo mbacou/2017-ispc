@@ -123,7 +123,7 @@ tmp[, `:=`(
   naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
   )]
 
-table_options(HTMLcaption="(#tab:tab1) Est. Proportions of Farm Holdings across Categories (TNPS3, 2012/13, percent)")
+table_options(HTMLcaption="(#tab:proptab93) Est. Proportions of Farm Holdings across Categories (TNPS3, 2012/13, percent)")
 html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
   data=tmp), rmarkdown=T)
 
@@ -145,7 +145,7 @@ tmp[, `:=`(
   naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
   )]
 
-table_options(HTMLcaption="(#tab:tab1) Est. Proportions of Farm Holdings across Categories (TNPS2, 2010/11, percent)")
+table_options(HTMLcaption="(#tab:proptab92) Est. Proportions of Farm Holdings across Categories (TNPS2, 2010/11, percent)")
 html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
   data=tmp), rmarkdown=T)
 
@@ -166,11 +166,40 @@ tmp[, `:=`(
   naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
   )]
 
-table_options(HTMLcaption="(#tab:tab1) Est. Proportions of Farm Holdings across Categories (TNPS1, 2008/09, percent)")
+table_options(HTMLcaption="(#tab:proptab91) Est. Proportions of Farm Holdings across Categories (TNPS1, 2008/09, percent)")
 html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
   data=tmp), rmarkdown=T)
 
 ```
+
+Proportions of **small holdings** across categories (farms below 4 ha).
+
+```{r tza-proptab59b, results="asis"}
+
+# To ease comparisons with EPAR
+tmp1 <- lapply(tza.svy.shf, function(x) {
+  tmp <- svymean(~I(interaction(cropsales_3clas, naggross_3clas)), x, na.rm=T)
+  tmp.cv <- confint(tmp)
+  tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+  tmp[`2.5 %`<0, `2.5 %` := 0]
+  tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+  tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+  tmp[, `:=`(
+    cropsales_3clas = factor(rep(levels(tza$cropsales_3clas), 3), levels=c("LoC", "MeC", "HiC")),
+    naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=3, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+})
+tmp <- rbindlist(tmp1)
+tmp2 <- c("2012/2013", "2010/2011", "2008/2009")
+tmp[, year := rep(tmp2, each=9)]
+tmp[, year := factor(year, levels=tmp2)]
+
+table_options(HTMLcaption="(#tab:proptab59b) Est. Proportions of Farm Holdings across Categories (TNPS all waves, percent, farms below 4 ha)")
+html(tabular((`Year`=year)*Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
 
 ### Simplified Farm Classification (5-class)
 
@@ -247,4 +276,32 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
   data=tmp), rmarkdown=T)
 
 ```
+
+Proportions of **small holdings** across categories (farms below 4 ha)
+
+
+```{r tza-proptab56b, results="asis"}
+
+# To ease comparisons with EPAR
+tmp1 <- lapply(tza.svy.shf, function(x) {
+  tmp <- svymean(~class5, x, na.rm=T)
+  tmp.cv <- confint(tmp)
+  tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+  tmp[`2.5 %`<0, `2.5 %` := 0]
+  tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+  tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+  tmp[, `:=`(class5 = factor(levels(tza$class5), labels=levels(tza$class5)))]
+})
+tmp <- rbindlist(tmp1)
+tmp2 <- c("2012/2013", "2010/2011", "2008/2009")
+tmp[, year := rep(tmp2, each=5)]
+tmp[, year := factor(year, levels=tmp2)]
+
+table_options(HTMLcaption="(#tab:proptab56) Est. Proportions of Farm Holdings across Categories (TNPS all waves, percent, farms below 4 ha)")
+html(tabular((`Year`=year)*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+
 

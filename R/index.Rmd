@@ -11,7 +11,7 @@ bibliography: biblio.bib
 csl: apa.csl
 link-citations: yes
 nocite: |
-  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation
+  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs
 
 ---
 
@@ -484,6 +484,22 @@ ifpri[, .N, by=svyCode]
 # 2: nga2012  4536
 # 3: tza2012  4878
 # 4: gha2012 16772
+
+
+###############################################
+# Comparisons with EPAR
+# Need to re-estimate proportions for farms <= 4 ha across waves
+# Load EPAR hhld proportions across categories (these are obviously unweighted)
+# I only have the 3x3 classification counts
+epar <- fread("~/Projects/2017-agra-aasr/out/EPAR/EPAR_UW_356_Categorizing Smallholder Farmers in ETH and TZ_5.17.17_SRW.csv")
+setnames(epar, c("country", "wave", "rural", "croparea_clas", "cropsales_3clas", "naggross_3clas", "N"))
+tmp <- epar[croparea_clas!="0 < ha <= 4" & rural=="Both", 
+  .(N=sum(N, na.rm=T)), by=.(country, wave, cropsales_3clas, naggross_3clas, croparea_clas)]
+tmp[, total := sum(N), by=.(country, wave)]
+tmp[, pct := 100*N/total]
+tmp[, sum(pct), by=.(country, wave)]
+tmp <- dcast(tmp, country+wave+naggross_3clas~croparea_clas+cropsales_3clas, value.var="pct")
+fwrite(tmp, "./out/EPAR/EPAR_UW_356_Categorizing Smallholder Farmers in ETH and TZ.csv")
 
 
 ```
