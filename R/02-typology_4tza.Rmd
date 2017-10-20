@@ -305,7 +305,7 @@ html(tabular((`Year`=year)*(mean+CI)~Heading("Farm Types")*class5*Heading()*iden
 ```
 
 
-### Farm Segmentation along Farm Types (5-class) and Spatial Quadrants
+## Farm Segmentation along Farm Types (5-class) and Spatial Quadrants
 
 ```{r tza-propquad5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)", dev="png"}
 

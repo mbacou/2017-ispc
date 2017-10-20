@@ -230,7 +230,7 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
 
 ```
 
-### Farm Segmentation along Farm Types (5-class) and Spatial Quadrants
+## Farm Segmentation along Farm Types (5-class) and Spatial Quadrants
 
 ```{r gha-propquad5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)", dev="png"}
 
