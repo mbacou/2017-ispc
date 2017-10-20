@@ -355,7 +355,7 @@ tmp[, `:=`(
   class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
   )]
 
-table_options(HTMLcaption="(#tab:propquadtab52) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2010/2011, percent)")
+table_options(HTMLcaption="(#tab:propquadtab52) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS2, 2010/2011, percent)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
   data=tmp), rmarkdown=T)
 
@@ -376,7 +376,7 @@ tmp[, `:=`(
   class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
   )]
 
-table_options(HTMLcaption="(#tab:propquadtab51) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2008/09, percent)")
+table_options(HTMLcaption="(#tab:propquadtab51) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS1, 2008/09, percent)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
   data=tmp), rmarkdown=T)
 
