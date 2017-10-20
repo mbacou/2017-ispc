@@ -26,7 +26,7 @@ secOrder,section,sortOrder,varCode,varLabel,unit,source,notes
 2,geography,15,ward,ward ID used in raw data,varies by country,raw data,
 2,geography,16,ez,agroecological zone,label,RIGA,
 2,geography,17,lc_esa,"ESA land cover classification, dominant",code,calculated,
-2,geography,18,suit_gaez,"FAO/GAEZ suitability, 9-class","0-no data, 1-very high (> 85%), 2-high (> 70%), 3- good (> 55%), 4-medium (> 40%), 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water",calculated,
+2,geography,18,suit_gaez,"FAO/GAEZ suitability, 9-class","0-no data, 1-very high (> 85%), 2-high (> 70%), 3-good (> 55%), 4-medium (> 40%), 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water",calculated,
 2,geography,19,suit_glues,"GLUES suitability (point, mean, or median)",,calculated,
 2,geography,20,cell5m,HarvestChoice 5-arc-minute grid CELL5M ID,integer,calculated,
 3,demographics,1,hhsize,hh size,person,RIGA,

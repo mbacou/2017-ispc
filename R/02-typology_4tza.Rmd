@@ -258,6 +258,7 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
 ```
 
 ```{r tza-proptab54, results="asis"}
+
 # NPS1
 tmp <- svymean(~I(interaction(croparea_3clas, class5)), tza.svy.farm[["tza1"]], na.rm=T)
 tmp.cv <- confint(tmp)
@@ -304,4 +305,80 @@ html(tabular((`Year`=year)*(mean+CI)~Heading("Farm Types")*class5*Heading()*iden
 ```
 
 
+### Farm Segmentation along Farm Types (5-class) and Spatial Quadrants
+
+```{r tza-propquad5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)", dev="png"}
+
+par(mfrow=c(1,3), mar=c(3,0.25,2,.25))
+plot(svytable(~seg_quad+class5, tza.svy[["tza3"]]), main=NA, las=2, col=viridis(5),
+  ylab=NA, xlab="5-types and Quadrants (2012/13)")
+plot(svytable(~seg_quad+class5, tza.svy[["tza2"]]), main=NA, las=2, col=viridis(5),
+  ylab=NA, xlab="5-types and Quadrants (2010/11)")
+plot(svytable(~seg_quad+class5, tza.svy[["tza1"]]), main=NA, las=2, col=viridis(5),
+  ylab=NA, xlab="5-types and Quadrants (2008/09)")
+
+```
+
+```{r tza-propquadtab53, results="asis"}
+
+# NPS3
+tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.farm[["tza3"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab53) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2012/13, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r tza-propquadtab52, results="asis"}
+
+# NPS2
+tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.farm[["tza2"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab52) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2010/2011, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r tza-propquadtab51, results="asis"}
+
+# NPS1
+tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.farm[["tza1"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab51) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2008/09, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
 

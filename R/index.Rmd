@@ -60,6 +60,9 @@ theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", 
 # Compare crop income/sales with total farm income/sales
 # Replicate AGRA-AASR tables with 5 farm types across spatial quadrants
 
+# Level lists
+quad <- c("agpot-lo / mkt-lo", "agpot-lo / mkt-hi", "agpot-hi / mkt-lo", "agpot-hi / mkt-hi")
+
 # Load codebook
 lbl <- fread("./data/codebook.csv")
 
@@ -487,7 +490,120 @@ ifpri[, .N, by=svyCode]
 
 
 ###############################################
-# Comparisons with EPAR
+# QUADRANTS
+# Received hhld classification across CELL5M and agpot from World Bank on 2017.10.16
+wb <- lapply(list.files("./out/WB", full.names=TRUE), fread, integer64="character")
+wb <- lapply(seq_along(wb), function(x) {
+  wb[[x]][, source := basename(list.files("./out/WB")[x])]
+  setnames(wb[[x]], 1, "hhid")
+  })
+wb <- rbindlist(wb)
+wb[, .N, by=source]
+#             source    N
+# 1: ETH_ERSS_Y1.csv 3969
+# 2:  ETH_ESS_Y2.csv 5290
+# 3:  ETH_ESS_Y3.csv 4954
+# 4:  TZA_NPS_Y1.csv 3265
+# 5:  TZA_NPS_Y2.csv 3924
+# 6:  TZA_NPS_Y3.csv 4988
+
+tza[, .N, by=svyCode]
+#         svyCode    N
+# 1: tza-nps-2012 4995
+# 2: tza-nps-2010 3913
+# 3: tza-nps-2008 3255
+
+wb[, svyCode := factor(source)]
+levels(wb$svyCode)
+# [1] "ETH_ERSS_Y1.csv" "ETH_ESS_Y2.csv"  "ETH_ESS_Y3.csv"  "TZA_NPS_Y1.csv"  "TZA_NPS_Y2.csv"  "TZA_NPS_Y3.csv"
+levels(wb$svyCode) <- c("eth-erss-2011", "eth-ess-2013", "eth-ess-2015", 
+  "tza-nps-2008", "tza-nps-2010", "tza-nps-2012")
+
+# Merge raster values into `tza`
+setkey(tza, svyCode, hhid)
+setkey(wb, svyCode, hhid)
+tza[wb, `:=`(
+  cell5m = hc_seq_5m,
+  suit_gaez = res03_crav6190l_silr_cer
+  )]
+
+# Verify
+tza[, .N, by=.(svyCode, is.na(cell5m))]
+#         svyCode is.na    N
+# 1: tza-nps-2012 FALSE 4973
+# 2: tza-nps-2012  TRUE   22
+# 3: tza-nps-2010 FALSE 3913
+# 4: tza-nps-2008 FALSE 3255
+
+tza[, .N, by=.(svyCode, is.na(suit_gaez))]
+#         svyCode is.na    N
+# 1: tza-nps-2012 FALSE 4586
+# 2: tza-nps-2012  TRUE  409
+# 3: tza-nps-2010 FALSE 3584
+# 4: tza-nps-2010  TRUE  329
+# 5: tza-nps-2008 FALSE 2969
+# 6: tza-nps-2008  TRUE  286
+
+# Merge in HarvestChoice travel times `tt20k_mean`
+# Load CELL5M
+load("~/Projects/hc-cell5m/rdb/2016.03/cell5m.rda")
+dt <- dt[, .SD, .SDcols=c("CELL5M", names(dt)[names(dt) %like% "tt10_"])]
+setnames(dt, 2:6, c("tt20k_mean", "tt50k_mean", "tt100k_mean", "tt250k_mean", "tt500k_mean"))
+setkey(dt, CELL5M)
+setkey(tza, cell5m)
+tza <- dt[tza]
+rm(dt)
+summary(tza$tt100k_mean)
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+# 0.2026  1.7276  3.8615  5.4971  7.6794 51.7875     644
+# => why 644 NAs, since no NA in `wb`, and only 22 hhlds didn't merge?
+setnames(tza, "CELL5M", "cell5m")
+summary(tza$cell5m)
+
+# Classify GAEZ suitability into `seg_suit_gaez` (agpot-hi, agpot-lo, agpot-no)
+# GAEZ suitability is coded from 1 to 9:
+# 0-no data, 1-very high (> 85%), 2-high (> 70%), 3-good (> 55%), 4-medium (> 40%), 
+# 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water
+tza[suit_gaez %between% c(1,4), seg_suit_gaez := "agpot-hi"]
+tza[suit_gaez %between% c(5,7), seg_suit_gaez := "agpot-lo"]
+tza[suit_gaez %between% c(8,9), seg_suit_gaez := "agpot-no"]
+tza[, seg_suit_gaez := factor(seg_suit_gaez, levels=c("agpot-hi", "agpot-lo", "agpot-no"))]
+tza[, .N, keyby=.(svyCode, seg_suit_gaez)]
+# Note there is no suit_gaez==0 but there are missing values 
+
+# Classify market access into `seg_mkt20k` (mkt-lo, mkt-hi) using 4hr cutoff 
+tza[, `:=`(
+  seg_mkt20k = factor(tt20k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt50k = factor(tt50k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt100k = factor(tt100k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt250k = factor(tt250k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt500k = factor(tt500k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi"))
+)]
+tza[, .N, keyby=.(svyCode, seg_mkt100k)]
+
+# Make quadrants `seg_quad` using 100K market size
+# (agpot-lo / mkt-lo, agpot-lo / mkt-hi, agpot-hi / mkt-lo, agpot-hi / mkt-hi)
+tza[, seg_quad := factor(paste(seg_suit_gaez, seg_mkt100k, sep=" / "))]
+# Arbitrarily classify seg_mkt100k==NA into "mkt-lo"
+# Arbitrarily classify seg_suit_gaez==NA and seg_suit_gaez="agpot-no" into "agpot-lo"
+levels(tza$seg_quad)
+#  [1] "agpot-hi / mkt-hi" "agpot-hi / mkt-lo" "agpot-hi / NA"     "agpot-lo / mkt-hi" "agpot-lo / mkt-lo"
+#  [6] "agpot-lo / NA"     "agpot-no / mkt-hi" "agpot-no / mkt-lo" "NA / mkt-hi"       "NA / mkt-lo"      
+# [11] "NA / NA"  
+levels(tza$seg_quad) <- c(
+  "agpot-hi / mkt-hi", "agpot-hi / mkt-lo", "agpot-hi / mkt-lo", "agpot-lo / mkt-hi", 
+  "agpot-lo / mkt-lo", "agpot-lo / mkt-lo", "agpot-lo / mkt-hi", "agpot-lo / mkt-lo", 
+  "agpot-lo / mkt-hi", "agpot-lo / mkt-lo", "agpot-lo / mkt-lo")
+# Reorder levels
+tza[, seg_quad := factor(seg_quad, levels=quad)]
+table(tza$seg_quad)
+# agpot-lo / mkt-lo agpot-lo / mkt-hi agpot-hi / mkt-lo agpot-hi / mkt-hi 
+#              2193              2774              4256              2940 
+
+
+
+###############################################
+# COMPARISONS WITH EPAR
 # Need to re-estimate proportions for farms <= 4 ha across waves
 # Load EPAR hhld proportions across categories (these are obviously unweighted)
 # I only have the 3x3 classification counts
@@ -1019,7 +1135,7 @@ setcolorder(tza, c(tmp, setdiff(names(tza), tmp)))
 setkey(lbl, varCode)
 write.dta(
   setattr(tza, "var.labels", lbl[names(tza), paste0(varLabel, " (", unit, ")")]),
-  "./out/tza-nps_merged_2017.10.01.dta", version=12L, convert.factors="string")
+  "./out/tza-nps_merged_2017.10.20.dta", version=12L, convert.factors="string")
 
 ###############################################
 # ETH

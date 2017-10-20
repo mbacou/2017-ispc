@@ -229,3 +229,80 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
   data=tmp), rmarkdown=T)
 
 ```
+
+### Farm Segmentation along Farm Types (5-class) and Spatial Quadrants
+
+```{r gha-propquad5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)", dev="png"}
+
+par(mfrow=c(1,3), mar=c(3,0.25,2,.25))
+plot(svytable(~seg_quad+class5, gha.svy[["gha6"]]), main=NA, las=2, col=viridis(5),
+  ylab=NA, xlab="5-types and Quadrants (2012/13)")
+plot(svytable(~seg_quad+class5, gha.svy[["gha5"]]), main=NA, las=2, col=viridis(5),
+  ylab=NA, xlab="5-types and Quadrants (2005/06)")
+# plot(svytable(~seg_quad+class5, gha.svy[["gha4"]]), main=NA, las=2, col=viridis(5),
+#   ylab=NA, xlab="5-types and Quadrants (1998/99)")
+
+```
+
+```{r gha-propquadtab53, results="asis"}
+
+# GLSS6
+tmp <- svymean(~I(interaction(seg_quad, class5)), gha.svy.farm[["gha6"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(gha$class5), each=4, 1), levels=levels(gha$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab53) Est. Proportions of Farm Holdings across Types and Quadrants (GLSS6, 2012/13, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r gha-propquadtab52, results="asis"}
+
+# GLSS5
+tmp <- svymean(~I(interaction(seg_quad, class5)), gha.svy.farm[["gha5"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(gha$class5), each=4, 1), levels=levels(gha$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab52) Est. Proportions of Farm Holdings across Types and Quadrants (GLSS5, 2005/06, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r gha-propquadtab51, results="asis", eval=F}
+
+# GLSS4
+tmp <- svymean(~I(interaction(seg_quad, class5)), gha.svy.farm[["gha4"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(gha$class5), each=4, 1), levels=levels(gha$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab51) Est. Proportions of Farm Holdings across Types and Quadrants (GLSS4, 1998/99, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
