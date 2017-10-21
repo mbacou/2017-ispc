@@ -62,10 +62,34 @@ theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", 
 
 # Level lists
 quad <- c("agpot-lo / mkt-lo", "agpot-lo / mkt-hi", "agpot-hi / mkt-lo", "agpot-hi / mkt-hi")
+load("~/Projects/2017-agra-aasr/tmp/qd.agpot.lbl.rda")
 
 # Load codebook
 lbl <- fread("./data/codebook.csv")
 
+# Load GAEZ raster
+rgaez <- raster("~/Maps/GAEZ_res03crav6190lsilrcer/res03_crav6190l_silr_cer (copy).tif")
+
+# Load IFPRI 100K raster
+rtt100k <- raster("~/Maps/CELL5M/tt10_SSA_tiff/traveltimetomarket_ssa_100k.tif")
+
+# Make 10km quadrant raster
+# GAEZ suitability is coded from 1 to 9:
+# 0-no data, 1-very high (> 85%), 2-high (> 70%), 3-good (> 55%), 4-medium (> 40%), 
+# 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water
+rquad <- crop(rgaez, rtt100k)*10 + (rtt100k <= 4)
+tmp <- c(
+  10,10,3, 11,11,4, 20,20,3, 21,21,4, 30,30,3, 31,31,4, 40,40,3, 41,41,4,
+  50,50,1, 51,51,2, 60,60,1, 61,61,2, 70,70,1, 71,71,2, 80,80,1, 81,81,2, 90,90,1, 91,91,2)
+tmp <- matrix(tmp, ncol=3, byrow=TRUE)
+rquad <- reclassify(rquad, tmp, include.lowest=T, right=NA)
+hist(rquad)
+
+spplot(rquad, at=0:4, col.regions=viridis(4), 
+  colorkey=list(labels=list(labels=quad, at=0:4+.5)))
+
+
+###############################################
 # Import poverty and farm management vars from IFPRI replication datasets (1.2GB)
 ifpri <- read.dta13("~/Data/_global_codes/temp/2017.06/Final_SSA_HH_POV_shock_26jun17.dta")
 
@@ -573,11 +597,11 @@ tza[, .N, keyby=.(svyCode, seg_suit_gaez)]
 
 # Classify market access into `seg_mkt20k` (mkt-lo, mkt-hi) using 4hr cutoff 
 tza[, `:=`(
-  seg_mkt20k = factor(tt20k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
-  seg_mkt50k = factor(tt50k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
-  seg_mkt100k = factor(tt100k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
-  seg_mkt250k = factor(tt250k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
-  seg_mkt500k = factor(tt500k_mean > 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi"))
+  seg_mkt20k = factor(tt20k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt50k = factor(tt50k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt100k = factor(tt100k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt250k = factor(tt250k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt500k = factor(tt500k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi"))
 )]
 tza[, .N, keyby=.(svyCode, seg_mkt100k)]
 
@@ -598,9 +622,16 @@ levels(tza$seg_quad) <- c(
 tza[, seg_quad := factor(seg_quad, levels=quad)]
 table(tza$seg_quad)
 # agpot-lo / mkt-lo agpot-lo / mkt-hi agpot-hi / mkt-lo agpot-hi / mkt-hi 
-#              2193              2774              4256              2940 
+#              3131              1836              3227              3969
 
-
+# Verify visually
+tmap_mode("view")
+tmp <- tza[svyCode=="tza-nps-2012" & !is.na(lon_dd_mod)]
+tmp <- SpatialPointsDataFrame(tmp[, .(lon_dd_mod, lat_dd_mod)], 
+  data.frame(tmp[, .SD, .SDcols=c("seg_quad")]), proj4string=CRS("+init=epsg:4326"))
+tm_shape(rquad) + tm_raster(pal=viridis(4), breaks=0:4, labels=quad, alpha=.6) +
+  tm_shape(tmp, is.master=T) + tm_dots("seg_quad", pal=viridis(4))
+# => looks OK
 
 ###############################################
 # COMPARISONS WITH EPAR
@@ -824,7 +855,6 @@ tza[, 100*sum(croparea > 0 & croparea <= 4, na.rm=T)/.N, by=.(wave, rural)]
 # 5: wave 1 rural 78.15085
 # 6: wave 1 urban 20.66667
 
-
 # There are 908 hlds with some crop production but no land
 # I'm tempted to impute `croparea` in those cases
 tza[totcropprod>0, .N, by=.(wave, croparea>0)]
@@ -940,7 +970,7 @@ tza[, summary(farmrntimp)]
 tza[, summary(agr_wge)]
 tza[, summary(selfimp1)]
 # => ignore `selfimp1` for now
-tza[, aggross := rowSums(.SD[, .(totagprod, farmrntimp, agr_wge)], na.rm=T)]
+tza[, aggross := rowSums(.SD[, .(totagprod, farmrntimp, agr_wge, ifelse(selfimp1 < 0, NA, selfimp1))], na.rm=T)]
 tza[, 100*sum(aggross>0, na.rm=T)/.N, by=.(survey, rural)]
 
 # GROSS NON-FARM INCOME
@@ -955,11 +985,11 @@ tza[, totgross := rowSums(.SD[, .(aggross, naggross)], na.rm=T)]
 tza[, naggross_sh := naggross/totgross]
 tza[, 100*sum(naggross_sh>0, na.rm=T)/.N, by=.(survey, rural)]
 #     survey rural       V1
-# 1: 2012/13 rural 87.29595
-# 2: 2012/13 urban 97.91667
+# 1: 2012/13 urban 97.91667
+# 2: 2012/13 rural 87.29595
 # 3: 2010/11 rural 83.04883
-# 4: 2010/11 urban 95.26542
-# 5: 2008/09 rural 77.56691
+# 4: 2008/09 rural 77.56691
+# 5: 2010/11 urban 95.26542
 # 6: 2008/09 urban 93.00000
 
 tza[, sum(cropsales_sh > 0, na.rm=T), keyby=croparea_3clas]
@@ -1009,7 +1039,7 @@ tza[, naggross_3clas := NULL]
 tza[, naggross_3clas := cut(naggross_sh, c(-1,1/3,2/3,1.1), labels=c("LoD", "MeD", "HiD"), ordered=T, right=F)]
 summary(tza$naggross_3clas)
 #  LoD  MeD  HiD NA's 
-# 4588 1392 5983  200
+# 4603 1415 5945  200 
 
 ##########################################
 # Income diversification dummy `noaggross_2clas`
@@ -1017,7 +1047,7 @@ tza[, naggross_2clas := NULL]
 tza[, naggross_2clas := cut(naggross_sh, c(-1,1/3,1.1), labels=c("LoD", "HiD"), ordered=T, right=F)]
 summary(tza$naggross_2clas)
 #  LoD  HiD NA's 
-# 4588 7375  200 
+# 4603 7360  200
 
 ##########################################
 # Farm classification dummy `class9`
@@ -1027,7 +1057,7 @@ tza[, class9 := NULL]
 tza[, class9 := factor(paste0(cropsales_3clas, naggross_3clas), levels=class9)]
 summary(tza$class9)
 # LoCLoD LoCMeD LoCHiD MeCLoD MeCMeD MeCHiD HiCLoD HiCMeD HiCHiD   NA's 
-#   1376    508   2399   2100    517    267   1041    329    341   3285 
+#   1384    522   2377   2105    518    261   1043    330    338   3285 
 
 ##########################################
 # Classification dummy `class6`
@@ -1036,7 +1066,7 @@ tza[, class6 := NULL]
 tza[, class6 := factor(paste0(cropsales_3clas, naggross_2clas), levels=class6)]
 summary(tza$class6)
 # LoCLoD LoCHiD MeCLoD MeCHiD HiCLoD HiCHiD   NA's 
-#   1376   2907   2100    784   1041    670   3285 
+#   1384   2899   2105    779   1043    668   3285
 
 ##########################################
 # Farm classification dummy `class5`
@@ -1044,7 +1074,7 @@ tza[, class5 := class6]
 levels(tza$class5) <- c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
 summary(tza$class5)
 # subs.       trans.    pre-comm. specd. comm.  divf. comm.         NA's 
-#  1376         3691         2100         1041          670         3285 
+#  1384         3678         2105         1043          668         3285
 
 
 ```
@@ -1210,3 +1240,40 @@ kable(g2.dt[, .(
   caption="Constructed Survey Maps (in progress)")
 
 ```
+
+## Agricultural Potential Quadrants
+
+In the delineation of farm segments we construct areas of high and low agricultural potential. These areas are obtained by combining areas of high/low agricultural suitability (FAO/GAEZ 2007) with high/low market access (IFPRI 2016). These input maps and the resulting quadrants are shown here.
+
+```{r maps-suit, fig.cap="Agricultural Suitability (FAO/GAEZ 2007)", out.width="99%"}
+
+i <- c("eth2010", "gha-glss6", "tza2012")
+
+tm_shape(rgaez) + tm_raster(n=9, pal=qd.agpot.lbl$col, labels=qd.agpot.lbl$code,
+  title="Agricultural\nSuitability") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+```
+
+```{r maps-tt100k, fig.cap="Market Access (100K market size, IFPRI 2016)", out.width="99%"}
+
+tm_shape(rtt100k) + tm_raster(breaks=c(0,.5,1,2,4,6,8,12,88),
+  title="Travel\nTime\n(100K, hrs)") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+```
+
+```{r maps-quad, fig.cap="Low/High Agricultural Potential Quadrants", out.width="99%"}
+
+tm_shape(rquad) + tm_raster(pal=viridis(4), n=4, labels=quad,
+  title="Agricultural\nPotential\nQuadrants") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+```
+
+
+
+
