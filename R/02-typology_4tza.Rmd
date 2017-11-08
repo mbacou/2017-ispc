@@ -48,7 +48,7 @@ The combination of these two dimensions yields **16 strata** (note that this str
 tm_shape(g2[g2$svyCode=="tza-nps-2012",]) + tm_polygons("grey90", border.col="grey50") +
   tm_shape(tza.pts) + 
   tm_dots("strata", size=0.08, breaks=0:16, labels=paste("strata", 1:16), palette=viridis(16), title="Survey\nStratification") + 
-  tm_facets("survey", ncol=3) + tm_layout(legend.outside.size=.1)
+  tm_facets("survey", ncol=3) + tm_layout(legend.outside=T)
 
 ```
 

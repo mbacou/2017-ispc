@@ -468,20 +468,6 @@ table_options(HTMLcaption="(#tab:tab6) Est. Agricultural Input Use in Farms belo
 html(tabular(Variable*(Mean+Q50)~Heading()*By*Heading()*Stat*Heading()*identity*Format(digits=0, big.mark=",", scientific=F),
   data=tmp), rmarkdown=T)
 
-```as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
-  class5 = factor(rep(levels(gha$class5), each=4, 1), levels=levels(gha$class5))
-  )]
-
-table_options(HTMLcaption="(#tab:propquadtab51sh) Est. Proportions of Farm Holdings across Types and Quadrants (GLSS4, 1998/99, percent, farms below 4 ha)")
-html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
-  data=tmp), rmarkdown=T)
-
 ```
 
 ## Farm Characteristics across Types (5-class)

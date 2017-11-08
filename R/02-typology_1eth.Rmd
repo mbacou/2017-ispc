@@ -14,20 +14,25 @@ The 2nd wave ESS 2013/14 adds samples from large town areas. The population fram
 
 Note that FAO RIGA-H database is not yet available for ESS Wave 3 (as of Nov 8, 2017).
 
+## Household Sampling and Stratification
+
 ```{r eth-samples}
 
 tmp <- eth[, .(
-  Regions = uniqueN(svyL1Nm),
-  Districts = uniqueN(paste(svyL1Cd, svyL2Cd)),
+  Regions = uniqueN(region),
+  Districts = uniqueN(paste(region, district_cd)),
   Sample = .N,
-  Population = sum(weight, na.rm=T),
-  Rural = sum(c(rural=="rural") * weight, na.rm=T),
-  Urban = sum(c(rural=="urban") * weight, na.rm=T)
-), keyby=.(Survey=svyCode)]
+  Rural = sum(rural=="rural", na.rm=T),
+  Urban = sum(rural=="urban", na.rm=T)
+  ), keyby=.(Survey=svyCode)]
+
+  # Population = sum(weight, na.rm=T),
+  # Rural = sum(c(rural=="rural") * weight, na.rm=T),
+  # Urban = sum(c(rural=="urban") * weight, na.rm=T)
 
 tmp[, `:=`(
-  `Rural (pct)` = 100*Rural/Population,
-  `Urban (pct)` = 100*Urban/Population
+  `Rural (pct)` = 100*Rural/Sample,
+  `Urban (pct)` = 100*Urban/Sample
 )]
 
 kable(tmp,
@@ -42,7 +47,7 @@ kable(tmp,
 tm_shape(g2[g2$svyCode=="eth-erss-2011",]) + tm_polygons("grey90", border.col="grey50") +
   tm_shape(eth.pts) + 
   tm_dots("strata", size=0.08, palette=viridis(11), title="Survey\nStratification") + 
-  tm_facets("survey", ncol=2) + tm_layout(legend.outside.size=.1)
+  tm_facets("survey", ncol=2) + tm_layout(legend.outside=T)
 
 ```
 
