@@ -11,7 +11,7 @@ bibliography: biblio.bib
 csl: apa.csl
 link-citations: yes
 nocite: |
-  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs, @buckwell2008biasr, @tnps2016doco, @tnps2014report, @tnps2010report
+  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs, @buckwell2008biasr, @tnps2016doco, @tnps2014report, @tnps2010report, @ess2014eth, @erss2012eth
   
 ---
 
@@ -1117,29 +1117,39 @@ g2.dt[svyCode=="eth-erss-2011", range(svyL2Cd)]
 # However, estimates can be produced for a combination of all smaller regions as one
 # “other region” category. Note that "large towns" sampling frame was added to 2013/14
 # panel
+tmp <- data.table(read.dta("~/Data/ETH-ESS-13/raw/sect_cover_hh_w2.dta"))
+tmp[, svyCode := "eth-ess-2013"]
 setkey(tmp, svyCode, household_id2)
 setkey(eth, svyCode, hhid)
 eth[tmp, rural := i.rural]
 eth[, res := rural]
+levels(eth$res)
+eth[, .N, keyby=.(svyCode, res)]
+#          svyCode                res    N
+# 1: eth-erss-2011              rural 3466
+# 2: eth-erss-2011              urban  503
+# 3:  eth-ess-2013              Rural 3211
+# 4:  eth-ess-2013 Small town (urban)  444
+# 5:  eth-ess-2013 Large town (urban) 1473
 levels(eth$res) <- c("rural", "urban", "rural", "urban - small town", "urban - large town")
 levels(eth$rural) <- c("rural", "urban", "rural", "urban", "urban")
 
 eth[, strata := region]
+levels(eth$strata) 
 levels(eth$strata) <- c("Tigray", "other regions", "Amhara", "Oromiya", "other regions", 
   "other regions", "SNNP", "other regions", "other regions", "Addis Ababa", "other regions")
 eth[, strata := factor(strata, levels=levels(strata)[c(6,1,3:5,2)])]
 setorder(eth, strata, res)
-eth[, strata := paste0(as.character(strata), " (", res, ")")]
 # => note that strata needs to be combined with `res` for actual sampling frames
+eth[, strata := paste0(as.character(strata), " (", res, ")")]
 eth[, strata := factor(strata, levels=unique(strata))]
 # Also add `survey` for printing and tables
 eth[, survey := factor(svyCode, levels=c("eth-ess-2015", "eth-ess-2013", "eth-erss-2011"))]
 levels(eth$survey) <- c("2015/16", "2013/14", "2011/12")
 
 # Map household across strata to verify
-eth[, .N, keyby=.(wave, strata)]
 eth.pts <- SpatialPointsDataFrame(eth[!is.na(lon_dd_mod), .(lon_dd_mod, lat_dd_mod)], 
-  data.frame(eth[!is.na(lon_dd_mod), .(survey, wave, svyCode, hhid, strata, region, district, ward)]),
+  data.frame(eth[!is.na(lon_dd_mod), .(survey, wave, svyCode, hhid, strata, region, district_cd, ward)]),
   proj4string=CRS("+init=epsg:4326"))
 
 
