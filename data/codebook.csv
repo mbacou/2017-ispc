@@ -1,18 +1,21 @@
 secOrder,section,sortOrder,varCode,varLabel,unit,source,notes
-1,sampling,1,hhid,unique hhld identifier,,raw data,
-1,sampling,2,clust,unique cluster identifier,,raw data,
+1,sampling,1,hhid,unique hhld identifier,character,raw data,
+1,sampling,2,clust,unique cluster identifier,integer,raw data,
 1,sampling,3,svyCode,survey code,"gha-glss4, gha-glss5, gha-glss6, tza-nps-2008, tza-nps-2010, tza-nps-2012, tza-nps-14, eth-ess-2015, eth-ess-2013, eth-erss-2011",calculated,
 1,sampling,4,wave,survey round,"wave 1, wave 2, etc.",calculated,
-1,sampling,5,survey,survey short label (for printing),,calculated,
+1,sampling,5,survey,survey short label (for printing),character,calculated,
 1,sampling,6,year,survey year,integer,raw data,
 1,sampling,7,month,survey month,integer,raw data,
-1,sampling,8,strata,unique strata identifier,integer,raw data,
-1,sampling,10,zone,other stratification,,raw data,
-1,sampling,11,weight,replication weight (by wave),decimal,raw data,
-1,sampling,12,nh,hhld identifier (used in raw data),,raw data,
-1,sampling,13,rural,locality,"rural, urban",raw data,
+1,sampling,8,strata,unique strata identifier (see doco for details),varies by country,calculated,
+1,sampling,11,weight,population weight (by wave),decimal,raw data,
+1,sampling,12,phhid,unique hhld identifer for panel analysis,integer,raw data,
+1,sampling,13,pweight,panel weight,decimal,raw data,
+1,sampling,14,pcount,number of revisits (for panel analysis),integer,calculated,
+1,sampling,15,nh,hhld identifier (used in raw data),integer,raw data,
+1,sampling,16,rural,locality (rural/urban),"rural, urban",raw data,
+1,sampling,17,res,locality (other),character,raw data,
 2,geography,3,svyL1Cd,level-1 admin unit code (linked to survey map),integer,calculated,
-2,geography,4,svyL1Nm,level-1 admin unit label (linked to survey map),label,calculated,
+2,geography,4,svyL1Nm,level-1 admin unit label (linked to survey map),character,calculated,
 2,geography,5,svyL2Cd,level-2 admin unit code (linked to survey map),integer,calculated,
 2,geography,6,svyL2Nm,level-2 admin unit label (linked to survey map),label,calculated,
 2,geography,7,svyL3Cd,level-3 admin unit code (linked to survey map),integer,calculated,
@@ -21,14 +24,19 @@ secOrder,section,sortOrder,varCode,varLabel,unit,source,notes
 2,geography,10,Y,hhld GPS latitude,decimal,raw data,
 2,geography,11,lon_dd_mod,anonymized longitude,decimal,raw data,
 2,geography,12,lat_dd_mod,anonymized latitude,decimal,raw data,
-2,geography,13,region,region ID used in RIGA,varies by country,RIGA,
-2,geography,14,district,district ID used in RIGA,varies by country,RIGA,
-2,geography,15,ward,ward ID used in raw data,varies by country,raw data,
-2,geography,16,ez,agroecological zone,label,RIGA,
-2,geography,17,lc_esa,"ESA land cover classification, dominant",code,calculated,
-2,geography,18,suit_gaez,"FAO/GAEZ suitability, 9-class","0-no data, 1-very high (> 85%), 2-high (> 70%), 3-good (> 55%), 4-medium (> 40%), 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water",calculated,
-2,geography,19,suit_glues,"GLUES suitability (point, mean, or median)",,calculated,
-2,geography,20,cell5m,HarvestChoice 5-arc-minute grid CELL5M ID,integer,calculated,
+2,geography,13,region,region label used in raw data,character,raw data,
+2,geography,14,region_cd,region code used in raw data,integer,raw data,
+2,geography,15,district,district/woreda label used in raw data,character,raw data,
+2,geography,16,district_cd,district/woreda code used in raw data,integer,raw data,
+2,geography,17,ward,ward/kebele label used in raw data,character,raw data,
+2,geography,18,ward_cd,ward/kebele code used in raw data,integer,raw data,
+2,geography,19,zone,other zoning label,character,raw data,
+2,geography,20,zone_cd,other zoning code,integer,raw data,
+2,geography,21,ez,agroecological zone,character,RIGA,
+2,geography,22,lc_esa,"ESA land cover classification, dominant",code,calculated,
+2,geography,23,suit_gaez,"FAO/GAEZ suitability, 9-class","0-no data, 1-very high (> 85%), 2-high (> 70%), 3-good (> 55%), 4-medium (> 40%), 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water",calculated,
+2,geography,24,suit_glues,"GLUES suitability (point, mean, or median)",decimal,calculated,
+2,geography,25,cell5m,HarvestChoice 5-arc-minute grid CELL5M ID,integer,calculated,
 3,demographics,1,hhsize,hh size,person,RIGA,
 3,demographics,2,msize,number of males in the hh,person,RIGA,
 3,demographics,3,fsize,number of females in the hh,person,RIGA,
@@ -94,41 +102,50 @@ secOrder,section,sortOrder,varCode,varLabel,unit,source,notes
 5,income,18,totcropsold,value total annual crop production sold,lcu,RIGA,
 5,income,19,totlivsold,value total annual livestock production sold,lcu,RIGA,
 5,income,20,totlvstprod,value of total annual livestock production,lcu,RIGA,
-5,income,31,aggross,value of total annual farm income,lcu,calculated,totagprod + farmrntimp + agr_wge + selfimp1 (if>0)
-5,income,32,naggross,value of total annual non-farm income,lcu,calculated,transfersgrossimp + otherincimp + nonfarmrntimp + nonagr_wge + selfemp (if>0)
-5,income,33,naggross_sh,share of non-farm income in total income,"share, 0-1",calculated,naggross/totgross
-5,income,34,cropsales,value of annual crop sales,lcu,calculated,totcropsold
-5,income,34,totgross,value of total annual gross income,lcu,calculated,aggross + naggross
-5,income,35,cropsales_sh,share of annual crop production sold,"share, 0-1",calculated,cropsales/cropvalue
-5,income,36,cropvalue,value of annual crop production,lcu,calculated,totcropprod
-5,income,37,agsales,value of annual farm sales,lcu,calculated,totagsold
-5,income,38,agsales_sh,share of annual farm production sold,,calculated,totagsold/totagprod
-5,income,39,transfersgrossimp,"annual total incoming public and private transfers, imputed",lcu,RIGA,
-5,income,40,pcexp,"pc expenditures, hhexp2/hhsize",lcu,RIGA,
-5,income,41,quintile,rural pcexp quintiles,"qtl, 1-5",RIGA,
-5,income,42,quinturb,urban pcexp quintiles,"qtl, 1-5",RIGA,
-5,income,43,quinttot,rural & urban pcexp quintiles,"qtl, 1-5",RIGA,
-5,income,44,decile,rural pcexp deciles,"dec, 1-10",RIGA,
-5,income,45,decilurb,urban pcexp deciles,"dec, 1-10",RIGA,
+5,income,21,share_agtot,"share of income from crop, livestock and agricultural wages (net)","share, 0-1",RIGA,Ethiopia only
+5,income,22,share_nonagtot,"share of income from non-ag wage, selfemp, transfers, other (net)","share, 0-1",RIGA,Ethiopia only
+5,income,34,share_onfarm,"share of income from crop, livestock activities (net)","share, 0-1",RIGA,Ethiopia only
+5,income,24,share_offarm,"share of income from ag-wage, non-ag wage, selfemp, transfers, other (net)","share, 0-1",RIGA,Ethiopia only
+5,income,25,share_nonfarm,share of income from non-ag wage and selfemp (net),"share, 0-1",RIGA,Ethiopia only
+5,income,26,sh2crop2,share of crop production in totincome1,"share, 0-1",RIGA,Ethiopia only
+5,income,27,cropincome1grossimp,gross crop income (crop1),lcu,RIGA,Ethiopia only
+5,income,28,cropincome2grossimp,gross crop income (crop2),lcu,RIGA,Ethiopia only
+5,income,29,livestockgrossimp,"gross livestock income, imputed",lcu,RIGA,Ethiopia only
+5,income,31,transfersgrossimp,"annual total incoming public and private transfers, imputed",lcu,RIGA,
+5,income,33,pcexp,"pc expenditures, hhexp2/hhsize",lcu,RIGA,
+5,income,34,quintile,rural pcexp quintiles,"qtl, 1-5",RIGA,
+5,income,35,quinturb,urban pcexp quintiles,"qtl, 1-5",RIGA,
+5,income,36,quinttot,rural & urban pcexp quintiles,"qtl, 1-5",RIGA,
+5,income,37,decile,rural pcexp deciles,"dec, 1-10",RIGA,
+5,income,38,decilurb,urban pcexp deciles,"dec, 1-10",RIGA,
+5,income,39,aggross,value of total annual farm income,lcu,calculated,totagprod + farmrntimp + agr_wge + selfimp1 (if>0)
+5,income,40,naggross,value of total annual non-farm income,lcu,calculated,transfersgrossimp + otherincimp + nonfarmrntimp + nonagr_wge + selfemp (if>0)
+5,income,41,naggross_sh,share of non-farm income in total income,"share, 0-1",calculated,naggross/totgross
+5,income,42,cropsales,value of annual crop sales,lcu,calculated,totcropsold
+5,income,43,totgross,value of total annual gross income,lcu,calculated,aggross + naggross
+5,income,44,cropsales_sh,share of annual crop production sold,"share, 0-1",calculated,cropsales/cropvalue
+5,income,45,cropvalue,value of annual crop production,lcu,calculated,totcropprod
+5,income,46,agsales,value of annual farm sales,lcu,calculated,totagsold
+5,income,47,agsales_sh,share of annual farm production sold,"share, 0-1",calculated,totagsold/totagprod
 6,infrastructure,1,infraindex,RURAL: index of access to infrastructure,index,RIGA,
 6,infrastructure,2,infraindex_natl,NATIONAL: index of access to infrastructure,index,RIGA,
 6,infrastructure,3,infraindex_urb,URBAN: index of access to infrastructure,index,RIGA,
-6,infrastructure,,distbank,km from community to bank,km,RIGA,
-6,infrastructure,,disthealth,km from community to health facility,km,RIGA,
-6,infrastructure,,disthsrschool,km from community to nearest senior secondary school,km,RIGA,
-6,infrastructure,,distjsschool,km from community to nearest junior secondary school,km,RIGA,
-6,infrastructure,,distpost,km from community to post office,km,RIGA,
-6,infrastructure,,distprschool,km from community to nearest primary school,km,RIGA,
-6,infrastructure,,distpubphone,km from community to public phone,km,RIGA,
-6,infrastructure,,distpubtrans,km from community to public transport,km,RIGA,
-6,infrastructure,,distroad,km from community to nearest motorable road,km,RIGA,
-6,infrastructure,,distwater,km from household to nearest water source,km,RIGA,
-6,infrastructure,,distprivprschool,km from community to nearest private primary school,km,RIGA,
-6,infrastructure,,distsecschool,km from community to nearest government secondary school,km,RIGA,
-6,infrastructure,,distprivsecschool,km from community to nearest private secondary school,km,RIGA,
-6,infrastructure,,disthosptl,km from community to nearest hospital,km,RIGA,
-6,infrastructure,,distpolice,km from community to nearest police station,km,RIGA,
-6,infrastructure,,distmarket,km from community to nearest market,km,RIGA,
+6,infrastructure,4,distbank,km from community to bank,km,RIGA,
+6,infrastructure,5,disthealth,km from community to health facility,km,RIGA,
+6,infrastructure,6,distprschool,km from community to nearest primary school,km,RIGA,
+6,infrastructure,7,distjsschool,km from community to nearest junior secondary school,km,RIGA,
+6,infrastructure,8,disthsrschool,km from community to nearest senior secondary school,km,RIGA,
+6,infrastructure,9,distsecschool,km from community to nearest government secondary school,km,RIGA,
+6,infrastructure,10,distprivprschool,km from community to nearest private primary school,km,RIGA,
+6,infrastructure,11,distprivsecschool,km from community to nearest private secondary school,km,RIGA,
+6,infrastructure,12,distpost,km from community to post office,km,RIGA,
+6,infrastructure,13,distpubphone,km from community to public phone,km,RIGA,
+6,infrastructure,14,distpubtrans,km from community to public transport,km,RIGA,
+6,infrastructure,15,distroad,km from community to nearest motorable road,km,RIGA,
+6,infrastructure,16,distwater,km from household to nearest water source,km,RIGA,
+6,infrastructure,17,disthosptl,km from community to nearest hospital,km,RIGA,
+6,infrastructure,18,distpolice,km from community to nearest police station,km,RIGA,
+6,infrastructure,19,distmarket,km from community to nearest market,km,RIGA,
 7,market access,1,tt20k_mean,"IFPRI travel time to nearest market, 20K (point or area mean)",hrs,IFPRI,
 7,market access,2,tt50k_mean,"IFPRI travel time to nearest market, 50K (point or area mean)",hrs,IFPRI,
 7,market access,3,tt100k_mean,"IFPRI travel time to nearest market, 100K (point or area mean)",hrs,IFPRI,

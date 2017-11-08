@@ -11,8 +11,8 @@ bibliography: biblio.bib
 csl: apa.csl
 link-citations: yes
 nocite: |
-  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs
-
+  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs, @buckwell2008biasr, @tnps2016doco, @tnps2014report, @tnps2010report
+  
 ---
 
 # Data Preparation
@@ -26,6 +26,7 @@ library(knitr)
 library(tables)
 library(viridis)
 library(stringr)
+library(raster)
 
 load("../tmp/2017-ispc.RData")
 
@@ -42,6 +43,7 @@ opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
 ```{r ifpri, eval=FALSE}
 
 library(readstata13)
+library(foreign)
 library(raster)
 
 setwd("~/Projects/2017-ispc")
@@ -60,12 +62,13 @@ theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", 
 # Compare crop income/sales with total farm income/sales
 # Replicate AGRA-AASR tables with 5 farm types across spatial quadrants
 
+# Load harmonized codebook
+lbl <- fread("./data/codebook.csv")
+setorder(lbl, secOrder, sortOrder)
+
 # Level lists
 quad <- c("agpot-lo / mkt-lo", "agpot-lo / mkt-hi", "agpot-hi / mkt-lo", "agpot-hi / mkt-hi")
 load("~/Projects/2017-agra-aasr/tmp/qd.agpot.lbl.rda")
-
-# Load codebook
-lbl <- fread("./data/codebook.csv")
 
 # Load GAEZ raster
 rgaez <- raster("~/Maps/GAEZ_res03crav6190lsilrcer/res03_crav6190l_silr_cer (copy).tif")
@@ -133,12 +136,13 @@ g2.dt[, unique(svyCode)]
 # [1] "tza2012"   "eth2012"   "eth2010"   "gha-glss6" "gha-glss5"
 g2.dt[, svyCode := factor(svyCode, 
   levels=c("tza2012",   "eth2012",   "eth2010",   "gha-glss6", "gha-glss5"), 
-  labels=c("tza-nps-2012",   "eth-ess-2012",   "eth-erss-2010",   "gha-glss6", "gha-glss5"))]
+  labels=c("tza-nps-2012",   "eth-ess-2013",   "eth-erss-2011",   "gha-glss6", "gha-glss5"))]
+g2 <- SpatialPolygonsDataFrame(g2, data.frame(g2.dt), match.ID="rn")
 
 # TODO BMGF/SDI ag. potential quadrants
 
 
-# RIGA components
+# Required RIGA components
 vars.chr <- c("totcropprod", "totcropsold", "totagprod", "totagsold", "totlvstprod",
 "totlivsold", "agowncons", "agmisc", "shagprodsold", "shagowncons",
 "shagmisc", "shcropsold", "shlvstsold")
@@ -163,12 +167,9 @@ setnames(gha,
   c("croparea_clas", "naggross_clas", "cropsales_clas", "seg_quad"), 
   c("croparea_3clas", "naggross_3clas", "cropsales_3clas", "seg_quad_4"))
 
-# Other recodes
-gha[, `:=`(
-  clust_pam3 = NULL,
-  clust_pam5 = NULL,
-  clust_pam5_2var = NULL
-)]
+# Other fixes
+gha[, `:=`(clust_pam3 = NULL, clust_pam5 = NULL, clust_pam5_2var = NULL)]
+setnames(gha, "district", "district_cd")
 
 ```
 
@@ -195,15 +196,15 @@ tza.raw.lbl <- tmp
 tza.f.adm <- c(
   "~/Data/TZA-NPS-12/riga/Tanzania13_HH_ADMIN_V12.dta",
   "~/Data/TZA-NPS-10/riga/Tanzania11_HH_ADMIN_V12.dta",
-  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_ADMIN_V8.dta")
+  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_ADMIN.dta")
 tza.f.chr <- c(
   "~/Data/TZA-NPS-12/riga/Tanzania13_HHCHAR_V12.dta",
   "~/Data/TZA-NPS-10/riga/Tanzania11_HHCHAR_V12.dta",
-  "~/Data/TZA-NPS-08/riga/Tanzania09_HHCHAR_V8.dta")
+  "~/Data/TZA-NPS-08/riga/Tanzania09_HHCHAR.dta")
 tza.f.inc <- c(
   "~/Data/TZA-NPS-12/riga/Tanzania13_HH_INCOME_V12.dta",
   "~/Data/TZA-NPS-10/riga/Tanzania11_HH_INCOME_V12.dta",
-  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_INCOME_V8.dta")
+  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_INCOME.dta")
 tza.f.hh <- c(
   "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta",
   "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
@@ -219,9 +220,11 @@ table(tmp)
 # There are `locality` and `weight_trimmed` vars in tza09, but can be ignored
 tza.adm[[3]][, `:=`(locality=NULL, weight_trimmed=NULL)]
 # Add survey codes
-tza.adm[[1]][, `:=`(svyCode="tza-nps-2012", wave="tza13")]
-tza.adm[[2]][, `:=`(svyCode="tza-nps-2010", wave="tza11")]
-tza.adm[[3]][, `:=`(svyCode="tza-nps-2008", wave="tza09")]
+tza.adm[[1]][, `:=`(svyCode="tza-nps-2012", wave="wave 3")]
+tza.adm[[2]][, `:=`(svyCode="tza-nps-2010", wave="wave 2")]
+tza.adm[[3]][, `:=`(svyCode="tza-nps-2008", wave="wave 1")]
+# Wave 2 has codes for region instead of labels
+setnames(tza.adm[[2]], "region", "region_cd")
 # Check unique IDs
 tza.adm[[3]][, .(range(hh), range(hhid))]
 #                V1             V2
@@ -237,12 +240,12 @@ tza.adm[[1]][, .(range(hh), range(hhid))]
 # 2: 3924-001 3924-001
 
 # Combine all waves
-tza <- rbindlist(tza.adm)
+tza.adm <- rbindlist(tza.adm, fill=TRUE)
 
 # Add admin codes and labels
 # Recodes
-setnames(tza, c("hhid", "hh"), c("hh", "hhid"))
-tza[, unique(urban), by=wave]
+setnames(tza.adm, c("hhid", "hh", "ea"), c("hh", "hhid", "clust"))
+tza.adm[, unique(urban), by=wave]
 #     wave    V1
 # 1: tza09 Rural
 # 2: tza09 Urban
@@ -250,11 +253,13 @@ tza[, unique(urban), by=wave]
 # 4: tza11 Urban
 # 5: tza13 Rural
 # 6: tza13 Urban
-tza[, rural := factor(urban, levels=c("Rural", "Urban"), labels=c("rural", "urban"))]
-tza[, urban := NULL]
-tza[, unique(region), by=wave]
-tza[, unique(district), by=.(wave, region)]
-tza[, .N, by=wave]
+tza.adm[, rural := factor(urban, levels=c("Rural", "Urban"), labels=c("rural", "urban"))]
+tza.adm[, urban := NULL]
+tza.adm[, unique(region), by=wave]
+# => wave 2 has codes for region instead of labels
+tza.adm[, unique(district), by=.(wave, region)]
+View(tza.adm[, unique(district), by=.(wave, region_cd)])
+tza.adm[, .N, by=wave]
 #     wave    N
 # 1: tza13 4995
 # 2: tza11 3913
@@ -262,19 +267,30 @@ tza[, .N, by=wave]
 # tza09 regions are coded 1-5 (should be 8)?
 # tza districts are coded 1-8, will need to merge district details from another source
 
+# Merge admin vars into `tza`
+# tza <- tza.adm
+setnames(tza.adm, "district")
+tza <- tza[, .SD, .SDcols=c("hhid", setdiff(names(tza), names(tza.adm)))]
+setkey(tza, hhid)
+setkey(tza.adm, hhid)
+tza <- tza[tza.adm]
+
+#############################################
+# Fix tza13 admin codes
 unique(tza, by="hhid")
 tza[, `:=`(
   region=as.character(region),
   district=as.character(district)
   )]
+
 tza[, `:=`(svyL1Nm=NULL, svyL2Nm=NULL, svyL1Cd=NULL, svyL2Cd=NULL)]
+
 x <- c(
   "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta",
   "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
   "~/Data/TZA-NPS-08/raw/SEC_A_T.dta"
 )
 
-# Fix tza13 admin codes
 tmp <- read.dta13(x[1], convert.factors=F)
 tmp <- data.table(tmp)
 tmp[, range(y3_hhid)]
@@ -331,6 +347,7 @@ setkey(tza, svyCode, svyL1Cd)
 tza[tmp,  svyL1Nm := i.svyL1Nm]
 
 # Verify
+setnames(tza, c("district", "ward"), c("district_cd", "ward_cd"))
 tza[, sum(is.na(svyL1Nm))/.N, by=wave]
 tza[, sum(is.na(svyL1Cd))/.N, by=wave]
 tza[, sum(is.na(svyL2Nm))/.N, by=wave]
@@ -466,7 +483,6 @@ tza[svyL3Nm=="", svyL3Nm := NA]
 
 # urban/rural breakdown is weird for wave 3 (was `mixed` recoded `urban`)?
 
-
 # Verify
 tza[, range(clust), by=wave]
 #      wave       V1
@@ -595,6 +611,14 @@ tza[, seg_suit_gaez := factor(seg_suit_gaez, levels=c("agpot-hi", "agpot-lo", "a
 tza[, .N, keyby=.(svyCode, seg_suit_gaez)]
 # Note there is no suit_gaez==0 but there are missing values 
 
+# Encode `suit_gaez` labels
+tza[, suit_gaez := factor(suit_gaez, levels=0:9, 
+  labels=c(
+    "0-no data", "1-very high (> 85%)", "2-high (> 70%)", 
+    "3-good (> 55%)", "4-medium (> 40%)", "5-moderate (> 25%)", 
+    "6-marginal (> 10%)", "7-very marginal (> 0%)", "8-not suitable (0%)", "9-water"))]
+
+
 # Classify market access into `seg_mkt20k` (mkt-lo, mkt-hi) using 4hr cutoff 
 tza[, `:=`(
   seg_mkt20k = factor(tt20k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
@@ -632,6 +656,121 @@ tmp <- SpatialPointsDataFrame(tmp[, .(lon_dd_mod, lat_dd_mod)],
 tm_shape(rquad) + tm_raster(pal=viridis(4), breaks=0:4, labels=quad, alpha=.6) +
   tm_shape(tmp, is.master=T) + tm_dots("seg_quad", pal=viridis(4))
 # => looks OK
+
+
+###############################################
+# RURAL/URBAN splits
+# Verify all definitions across panels. The split in 2012 seems problematic.
+# Ignore RIGA, pull in data from raw tables instead.
+# In 2008, 2 vars `hhid`, `rural` and `locailty`
+# In 2010, 2 vars `y2_hhid`, `y2_rural` and `hh_a14`
+# In 2012, 2 vars `y3_hhid`, `y3_rural`, and `hh_a11`
+tza.f.rur <- c(
+  "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta", 
+  "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
+  "~/Data/TZA-NPS-08/raw/SEC_A_T.dta"
+  )
+tza.rur <- lapply(tza.f.rur, function(x) data.table(read.dta(x)))
+tza.rur[[1]] <- tza.rur[[1]][, .SD, .SDcols=c("y3_hhid", "y3_rural", "hh_a11")]
+tza.rur[[2]] <- tza.rur[[2]][, .SD, .SDcols=c("y2_hhid", "y2_rural", "hh_a14")]
+tza.rur[[3]] <- tza.rur[[3]][, .SD, .SDcols=c("hhid", "rural", "locality")]
+tza.rur <- lapply(tza.rur, setnames, c("hhid", "rural", "locality"))
+tza.rur[[1]][, svyCode := "tza-nps-2012"]
+tza.rur[[2]][, svyCode := "tza-nps-2010"]
+tza.rur[[3]][, svyCode := "tza-nps-2008"]
+tza.rur <- rbindlist(tza.rur)
+tza.rur[, .N, keyby=.(svyCode, rural)]
+#         svyCode rural    N
+# 1: tza-nps-2008 Rural 2063
+# 2: tza-nps-2008 Urban 1202
+# 3: tza-nps-2010 urban 1295
+# 4: tza-nps-2010 rural 2629
+# 5: tza-nps-2012 URBAN 1791
+# 6: tza-nps-2012 RURAL 3219
+
+tza[, .N, keyby=.(svyCode, rural)]
+#         svyCode rural    N
+# 1: tza-nps-2012 rural 4227
+# 2: tza-nps-2012 urban  768
+# 3: tza-nps-2010 rural 2519
+# 4: tza-nps-2010 urban 1394
+# 5: tza-nps-2008 rural 2055
+# 6: tza-nps-2008 urban 1200
+
+tza.rur[, .N, keyby=.(svyCode, rural, locality)]
+#          svyCode rural          locality    N
+#  1: tza-nps-2008 Rural             Rural 1591
+#  2: tza-nps-2008 Rural           Mixture  472
+#  3: tza-nps-2008 Urban             Urban  794
+#  4: tza-nps-2008 Urban           Mixture  408
+#  5: tza-nps-2010 urban               YES 1295
+#  6: tza-nps-2010 rural                NA    1
+#  7: tza-nps-2010 rural               YES 2628
+#  8: tza-nps-2012 URBAN  IN SAME LOCATION  985
+#  9: tza-nps-2012 URBAN    LOCAL TRACKING  464
+# 10: tza-nps-2012 URBAN DISTANCE TRACKING  342
+# 11: tza-nps-2012 RURAL  IN SAME LOCATION 2148
+# 12: tza-nps-2012 RURAL    LOCAL TRACKING  663
+# 13: tza-nps-2012 RURAL DISTANCE TRACKING  408
+
+# => merge in `rural` into `tza`
+setkey(tza, svyCode, hhid)
+setkey(tza.rur, svyCode, hhid)
+tza[tza.rur, rural := i.rural]
+
+# Recode
+tza[, .N, keyby=.(svyCode, rural)]
+tza[, rural := factor(rural)]
+levels(tza$rural) <- c("rural", "urban", "rural", "urban", "rural", "urban")
+tza[, .N, keyby=.(svyCode, rural)]
+#         svyCode rural    N
+# 1: tza-nps-2012 rural 3209
+# 2: tza-nps-2012 urban 1786
+# 3: tza-nps-2010 rural 2622
+# 4: tza-nps-2010 urban 1291
+# 5: tza-nps-2008 rural 2055
+# 6: tza-nps-2008 urban 1200
+
+
+###############################################
+# PANEL/POPULATION WEIGHTS, `phhid`, `pweight`, `pcount`
+# Bring in household concordance across panels from `NPSY3.PANEL.KEY.dta`
+tza.panel <- data.table(read.dta("~/Data/TZA-NPS-12/raw/NPSY3.PANEL.KEY.dta"))
+tza[, `:=`(y1_hhid=NULL, y2_hhid=NULL, y3_hhid=NULL, phhid=NULL, pweight=NULL, pcount=NULL)]
+# Remove empty strings
+tza.panel[, `:=`(
+  y1_hhid = ifelse(y1_hhid=="", NA, y1_hhid),
+  y2_hhid = ifelse(y2_hhid=="", NA, y2_hhid),
+  y3_hhid = ifelse(y3_hhid=="", NA, y3_hhid)
+)]
+setkey(tza, hhid)
+
+setkey(tza.panel, y1_hhid)
+tza[tza.panel, `:=`(y1_hhid = hhid, y2_hhid = i.y2_hhid, y3_hhid = i.y3_hhid, 
+  phhid = i.UPI3)]
+
+setkey(tza.panel, y2_hhid)
+tza[tza.panel, `:=`(y1_hhid = i.y1_hhid, y2_hhid = hhid, y3_hhid = i.y3_hhid, 
+  phhid = i.UPI3)]
+
+setkey(tza.panel, y3_hhid)
+tza[tza.panel, `:=`(y1_hhid = i.y1_hhid, y2_hhid = i.y2_hhid, y3_hhid = hhid, 
+  phhid = i.UPI3)]
+
+# Bring in adjusted panel weights from `Y3_weights.dta`
+tmp <- data.table(read.dta("~/Data/TZA-NPS-12/raw/Y3_weights.dta"))
+setkey(tmp, y3_hhid)
+setkey(tza, y3_hhid)
+tza[tmp, pweight := i.y3_panelweight]
+
+# Verify
+tza[, pcount := .N, by=phhid]
+dcast(tza, svyCode~pcount)
+        svyCode    1    2    3
+1: tza-nps-2012 1486  926 2583
+2: tza-nps-2010  127 1203 2583
+3: tza-nps-2008  329  343 2583
+
 
 ###############################################
 # COMPARISONS WITH EPAR
@@ -687,7 +826,471 @@ eth.f.hh <- c(
   "~/Data/ETH-ESS-15/raw/Geovariables/ETH_HouseholdGeovars_y3.dta",
   "~/Data/ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta",
   "~/Data/ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta")
+eth.f.xtra <- c(
+  "~/Data/ETH-ESS-15/raw/Household/sect_cover_hh_w3.dta",
+  "~/Data/ETH-ESS-13/raw/sect_cover_hh_w2.dta",
+  "~/Data/ETH-ERSS-11/raw/HH/sect_cover_hh_w1.dta")
 
+
+###############################################
+# ADMIN
+eth.adm <- lapply(eth.f.adm[-1], function(x) data.table(read.dta13(x, generate.factors=T)))
+
+# Harmonize var codes
+tmp <- unlist(lapply(eth.adm, names))
+table(tmp)
+
+# Diff between `hh` and `household_id2`?
+eth.adm[[1]][, .N, by=is.na(hh)]
+eth.adm[[2]][, .N, by=is.na(hhid)]
+eth.adm[[1]][, sum(hh != household_id2), by=region]
+eth.adm[[2]][, sum(hhid != household_id), by=region]
+eth.adm[[1]][, range(woreda)]
+eth.adm[[2]][, range(woreda)]
+# => all equal
+eth.adm[[1]][, household_id2 := NULL]
+eth.adm[[2]][, household_id := NULL]
+setnames(eth.adm[[1]], "hh", "hhid")
+
+eth.adm[[1]][, svyCode := "eth-ess-2013"]
+eth.adm[[2]][, svyCode := "eth-erss-2011"]
+eth.adm[[1]][, wave := "wave 2"]
+eth.adm[[2]][, wave := "wave 1"]
+
+eth.adm[[1]][, range(hhid)]
+# [1] "010101088801601002" "150102088803102121"
+eth.adm[[2]][, range(hhid)]
+# [1] "01010101601002" "15010203102121"
+
+# Combine all waves
+eth.adm <- rbindlist(eth.adm)
+
+# Recodes
+setnames(eth.adm, "ea_id", "clust")
+setnames(eth.adm, "woreda", "district")
+setnames(eth.adm, "urban", "rural")
+levels(eth.adm$rural) <- c("rural", "urban", "rural")
+
+# Verify admin codes and labels
+eth.adm[, .N, keyby=.(svyCode, region, rural)]
+eth.adm[, .N, keyby=.(svyCode, region, district)]
+# => woredas are coded, we need labels
+levels(eth.adm$region)
+
+eth.adm[svyCode=="eth-ess-2013", range(district)]
+eth.adm[svyCode=="eth-erss-2011", range(district)]
+
+# Verify `clust`
+eth.adm[, .N, by=.(svyCode, region, clust=="")]
+# => it's messed up, lots of empty strings, bring in raw data later
+
+# Merge all admin vars
+# eth <- eth.adm
+eth <- eth[, .SD, .SDcols=c("hhid", setdiff(names(eth), names(eth.adm)))]
+setkey(eth, hhid)
+setkey(eth.adm, hhid)
+eth <- eth[eth.adm]
+
+###############################################
+# HHCHAR
+eth.chr <- lapply(eth.f.chr[-1], function(x) data.table(read.dta13(x, generate.factors=T)))
+
+# Harmonize var codes
+tmp <- unlist(lapply(eth.chr, names))
+tmp <- table(tmp)
+# Only `cellphone` var is missing from 2011
+eth.chr[[2]][, cellphone := NA]
+vars.chr[!vars.chr %in% names(tmp)]
+tmp <- unlist(lapply(eth.chr, names))
+tmp <- table(tmp)
+vars.chr <- names(tmp)[tmp==2]
+eth.chr <- lapply(eth.chr, function(x) x[, .SD, .SDcols=vars.chr])
+eth.chr <- rbindlist(eth.chr)
+
+setnames(eth.chr, "hh", "hhid")
+anyDuplicated(eth.chr, by="hhid")
+# => OK
+anyDuplicated(eth, by="hhid")
+# => OK
+eth[!hhid %in% eth.chr$hhid, .(svyCode, hhid)]
+# Empty data.table (0 rows) of 2 cols: svyCode,hhid
+
+# Merge into `eth`
+eth <- eth[, .SD, .SDcols=c("hhid", setdiff(names(eth), names(eth.chr)))]
+setkey(eth.chr, hhid)
+setkey(eth, hhid)
+eth <- eth.chr[eth]
+
+# Recode TLU
+eth[, TLU_sheep := rowSums(cbind(TLU_sheep, TLU_goats), na.rm=T)]
+eth[, TLU_small := rowSums(cbind(TLU_chicken, TLU_otheranim), na.rm=T)]
+eth[, `:=`(TLU_goats=NULL, TLU_chicken=NULL, TLU_otheranim=NULL)]
+setnames(eth, "TLU_donkeyhorses", "TLU_horse")
+
+###############################################
+# INCOME
+eth.inc <- lapply(eth.f.inc[-1], function(x) data.table(read.dta13(x, generate.factors=T)))
+
+# Harmonize var codes
+tmp <- unlist(lapply(eth.inc, names))
+tmp <- table(tmp)
+names(tmp)[tmp==1]
+# [1] "socialtransfer"    "socialtransferimp"
+vars.inc <- lbl[section=="income" & source=="RIGA", varCode]
+vars.inc <- vars.inc[-c(22:27)]
+# => note that some inc variables from TZA and GHA seem missing or might be labelled
+# differently, we need to locate them:
+#  [1] "agmisc"       "agowncons"    "shagmisc"     "shagowncons"  "shagprodsold" "shcropsold"  
+#  [7] "shlvstsold"   "totagprod"    "totagsold"    "totcropprod"  "totcropsold"  "totlivsold"  
+# [13] "totlvstprod" 
+vars.inc <- vars.inc[vars.inc %in% names(tmp)]
+
+# share_agtot - Share of income from crop, livestock and agricultural wages (net)
+# share_nonagtot - Share of income from non-ag wage, selfemp, transfers, other (net)
+# share_onfarm - Share of income from crop, livestock activities (net)
+# share_offarm - Share of income from ag-wage, non-ag wage, selfemp, transfers, other (net)
+# share_nonfarm - Share of income from non-ag wage and selfemp (net)
+# sh2crop2 - Share of crop production in totincome1
+
+# Also add gross values
+vars.inc <- c(vars.inc, "hhid",
+  "cropincome1grossimp", "cropincome2grossimp", "livestockgrossimp",
+  "share_agtot", "share_nonagtot", "share_onfarm", "share_offarm", "share_nonfarm", "sh2crop2")
+eth.inc <- lapply(eth.inc, function(x) x[, .SD, .SDcols=vars.inc])
+eth.inc <- rbindlist(eth.inc)
+
+anyDuplicated(eth.inc, by="hhid")
+eth[!hhid %in% eth.inc$hhid, .(svyCode, hhid)]
+# 178 households with no income variables
+setkey(eth.inc, hhid)
+setkey(eth, hhid)
+eth <- eth.inc[eth]
+
+# Verify share units
+eth[, summary(share_agtot)]
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+# -2.0412  0.0155  0.8525  0.6124  1.0000  3.4568     320
+# => obvisously net shares
+eth[, summary(share_nonagtot)]
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+# -2.4568  0.0000  0.1475  0.3876  0.9845  3.0412     320
+# => obvisously net shares, we need to use gross values instead
+
+
+##############################################
+# TODO AGRICULTURAL SALES `cropsales_sh`, `agsales_sh`
+# RIGA is missing all sales variables!
+# To save time we choose to manually generate these shares using quantities (not values)
+
+
+
+
+
+##############################################
+# STRATIFICATION
+
+# Add geo vars from RIGA
+eth.hh <- lapply(eth.f.hh[-1], function(x) data.table(read.dta13(x, generate.factors=T)))
+
+# Harmonize var codes
+tmp <- unlist(lapply(eth.hh, names))
+tmp <- table(tmp)
+names(tmp)[tmp==1]
+setnames(eth.hh[[1]], "household_id2", "hhid")
+setnames(eth.hh[[2]], "household_id", "hhid")
+setnames(eth.hh[[2]], c("LAT_DD_MOD", "LON_DD_MOD"), c("lat_dd_mod", "lon_dd_mod"))
+
+tmp <- unlist(lapply(eth.hh, names))
+tmp <- table(tmp)
+vars.hh <- names(tmp)[tmp==2]
+eth.hh <- lapply(eth.hh, function(x) x[, .SD, .SDcols=vars.hh])
+eth.hh <- rbindlist(eth.hh)
+
+# Recodes
+setnames(eth.hh, c("dist_road", "dist_market", "ssa_aez09"), c("distroad", "distmarket", "ez"))
+# Drop
+eth.hh <- eth.hh[, .SD, .SDcols=names(eth.hh) %in% lbl$varCode]
+
+anyDuplicated(eth.hh, by="hhid")
+eth[!hhid %in% eth.hh$hhid, .(svyCode, hhid)]
+# 52 households with no geo variables?
+eth <- eth[, .SD, .SDcols=c("hhid", setdiff(names(eth), names(eth.hh)))]
+setkey(eth.hh, hhid)
+setkey(eth, hhid)
+eth <- eth.hh[eth]
+
+# Add `zone` (`saq02`), Kebele `ward` (`saq06`), and `clust` (ea_id) vars
+eth.hh <- lapply(eth.f.xtra[-1], function(x) data.table(read.dta13(x, generate.factors=T)))
+setnames(eth.hh[[1]], c("household_id", "household_id2", "ea_id2"), 
+  c("y1_hhid", "hhid", "clust"))
+setnames(eth.hh[[2]], c("household_id", "ea_id"), c("hhid", "clust"))
+eth.hh <- list(
+  eth.hh[[1]][, .SD, .SDcols=c("hhid", "saq02", "saq06", "clust")],
+  eth.hh[[2]][, .SD, .SDcols=c("hhid", "saq02", "saq06", "clust")]
+)
+eth.hh <- rbindlist(eth.hh, fill=TRUE)
+setnames(eth.hh, c("saq02", "saq06"), c("zone", "ward"))
+
+# Merge into `eth`
+eth <- eth[, .SD, .SDcols=c("hhid", setdiff(names(eth), names(eth.hh)))]
+setkey(eth.hh, hhid)
+setkey(eth, hhid)
+eth <- eth.hh[eth]
+eth[, summary(zone)]
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 1.000   2.000   5.000   6.358   9.000  22.000
+eth[, summary(ward)]
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 1.00    3.00    8.00   12.03   15.00  403.00
+eth[, unique(district), by=zone]
+#  Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 1.000   2.000   4.000   5.571   8.000  25.000
+
+###############################################
+# ETH-ERSS-2011 `region_cd`, `zone`, `zone_cd`
+# Region and Zone codes/labels are available in the doco, Woreda and Kebele are not present
+tmp <- fread("~/Data/ETH-ERSS-11/raw/eth-erss-11_geo-labels.csv")
+tmp[, svyCode := "eth-erss-2011"]
+# Fix typos
+levels(eth$region) <- c("Tigray", "Afar", "Amhara", "Oromiya", "Somali", 
+  "Benshangul Gumuz", "SNNP", "Gambella", "Harari", "Addis Ababa", "Dire Dawa")
+# Merge region codes into `eth`
+setkey(eth, svyCode, region)
+setkey(tmp, svyCode, reglabel)
+eth[tmp, region_cd := i.regcode]
+eth[svyCode=="eth-erss-2011", .N, by=.(svyCode, is.na(region_cd))]
+#          svyCode is.na    N
+# 1: eth-erss-2011 FALSE 3969
+
+# Merge zone labels into `eth`
+setnames(eth, "zone", "zone_cd")
+setkey(tmp, svyCode, regcode, zonecode)
+setkey(eth, svyCode, region_cd, zone_cd)
+eth[tmp, zone := i.zonelabel]
+eth[svyCode=="eth-erss-2011", .N, by=.(svyCode, is.na(zone))]
+
+# TODO ETH-ESS-2013 `region_cd` (`saq01`), `zone`, `zone_cd` (`saq02`)
+eth[svyCode=="eth-ess-2013", .N, by=.(region, region_cd, zone, zone_cd)]
+tmp <- data.table(read.dta("~/Data/ETH-ESS-13/raw/sect_cover_hh_w2.dta"))
+tmp[, svyCode := "eth-ess-2013"]
+
+# Merge region/zone codes into `eth`
+setkey(eth, svyCode, hhid)
+setkey(tmp, svyCode, household_id2)
+eth[tmp, `:=`(region_cd = i.saq01, zone_cd = i.saq02)]
+eth[svyCode=="eth-ess-2013", .N, by=.(svyCode, is.na(region_cd))]
+#         svyCode is.na    N
+# 1: eth-ess-2013 FALSE 5128
+
+# Merge zone labels into `eth`
+# There are new zones in the ESS, we need those labels as well from the doco
+tmp <- fread("~/Data/ETH-ESS-13/raw/eth-ess-13_geo-labels.csv")
+tmp[, svyCode := "eth-ess-2013"]
+tmp[, range(zonecode), by=reglabel]
+eth[, range(zone_cd), by=region]
+setkey(tmp, svyCode, reglabel, zonecode)
+setkey(eth, svyCode, region, zone_cd)
+eth[tmp, zone := i.zonelabel]
+eth[svyCode=="eth-ess-2013", .N, by=.(svyCode, is.na(zone))]
+
+
+# TODO bring in woreda and kebele labels
+setnames(eth, c("district", "ward"), c("district_cd", "ward_cd"))
+# Pull `svyL1*` and `svyL2*` from existing maps
+levels(g2.dt$svyCode) <- c("tza-nps-2012", "eth-ess-2013", "eth-erss-2011",
+  "gha-glss6", "gha-glss5")
+g2.dt[svyCode=="eth-ess-2013", .N, by=svyL2Nm]
+# => 79 districts
+g2.dt[svyCode=="eth-ess-2013", range(svyL2Cd)]
+# [1]    0 1501
+g2.dt[svyCode=="eth-erss-2011", .N, by=svyL2Nm]
+# => 702 districts
+g2.dt[svyCode=="eth-erss-2011", range(svyL2Cd)]
+# [1]  10101 508061
+
+
+###############################################
+# Sampling `strata`
+# Rep for rural and small town areas in the most populous regions (Amhara, Oromiya,
+# SNNP, and Tigray). The sample is not representative for each of the small regions
+# including Afar, Benshangul Gumuz, Dire Dawa, Gambella, Harari, and Somalie regions.
+# However, estimates can be produced for a combination of all smaller regions as one
+# “other region” category. Note that "large towns" sampling frame was added to 2013/14
+# panel
+setkey(tmp, svyCode, household_id2)
+setkey(eth, svyCode, hhid)
+eth[tmp, rural := i.rural]
+eth[, res := rural]
+levels(eth$res) <- c("rural", "urban", "rural", "urban - small town", "urban - large town")
+levels(eth$rural) <- c("rural", "urban", "rural", "urban", "urban")
+
+eth[, strata := region]
+levels(eth$strata) <- c("Tigray", "other regions", "Amhara", "Oromiya", "other regions", 
+  "other regions", "SNNP", "other regions", "other regions", "Addis Ababa", "other regions")
+eth[, strata := factor(strata, levels=levels(strata)[c(6,1,3:5,2)])]
+setorder(eth, strata, res)
+eth[, strata := paste0(as.character(strata), " (", res, ")")]
+# => note that strata needs to be combined with `res` for actual sampling frames
+eth[, strata := factor(strata, levels=unique(strata))]
+# Also add `survey` for printing and tables
+eth[, survey := factor(svyCode, levels=c("eth-ess-2015", "eth-ess-2013", "eth-erss-2011"))]
+levels(eth$survey) <- c("2015/16", "2013/14", "2011/12")
+
+# Map household across strata to verify
+eth[, .N, keyby=.(wave, strata)]
+eth.pts <- SpatialPointsDataFrame(eth[!is.na(lon_dd_mod), .(lon_dd_mod, lat_dd_mod)], 
+  data.frame(eth[!is.na(lon_dd_mod), .(survey, wave, svyCode, hhid, strata, region, district, ward)]),
+  proj4string=CRS("+init=epsg:4326"))
+
+
+###############################################
+# PANEL/POPULATION WEIGHTS `phhid`, `pweight`, `pcount`
+# Hhld mapping is present in wave 3
+eth.panel <- data.table(read.dta(eth.f.xtra[2]))
+eth[, `:=`(y1_hhid=NULL, y2_hhid=NULL, phhid=NULL, pweight=NULL, pcount=NULL)]
+# Remove empty strings
+eth.panel[, `:=`(
+  y1_hhid = ifelse(household_id=="", NA, household_id),
+  y2_hhid = ifelse(household_id2=="", NA, household_id2)
+)]
+
+setkey(eth, hhid)
+setkey(eth.panel, y1_hhid)
+eth[eth.panel, `:=`(y1_hhid = i.y1_hhid, y2_hhid = i.y2_hhid)]
+setkey(eth.panel, y2_hhid)
+eth[eth.panel, `:=`(y1_hhid = i.y1_hhid, y2_hhid = i.y2_hhid)]
+
+# Verify
+eth[svyCode=="eth-erss-2011" & is.na(y1_hhid), y1_hhid := hhid]
+eth[svyCode=="eth-ess-2013" & is.na(y2_hhid), y2_hhid := hhid]
+eth[, phhid := .GRP, keyby=.(y1_hhid, y2_hhid)]
+eth[, pcount := .N, by=phhid]
+dcast(eth, svyCode~pcount)
+#          svyCode    1    2
+# 1: eth-erss-2011  314 3655
+# 2:  eth-ess-2013 1473 3655
+
+# TODO Bring in or compute adjusted panel weights
+# Not clear if `pw_w3` is adjusted for panels
+
+
+###############################################
+# QUADRANTS
+# Merge raster values into `eth`
+wb[, range(hhid), keyby=svyCode]
+#          svyCode                 V1
+# 1: eth-erss-2011     01010101601002
+# 2: eth-erss-2011     15010203102121
+# 3:  eth-ess-2013 010101088801601002
+# 4:  eth-ess-2013 150102088803102121
+# 5:  eth-ess-2015 010101088801601002
+# 6:  eth-ess-2015 150102088803102121
+setkey(eth, svyCode, hhid)
+setkey(wb, svyCode, hhid)
+eth[, `:=`(cell5m=NULL, suit_gaez=NULL)]
+eth[wb, `:=`(
+  cell5m = hc_seq_5m,
+  suit_gaez = res03_crav6190l_silr_cer
+  )]
+
+# Verify
+eth[, .N, by=.(svyCode, is.na(cell5m))]
+eth[, .N, by=.(svyCode, is.na(suit_gaez))]
+# 7 missing in eth-ess-2013
+eth[is.na(cell5m), .(hhid, lat_dd_mod, lon_dd_mod)]
+
+# Let's plot those points
+tmp <- eth[is.na(cell5m) & !is.na(lat_dd_mod), hhid]
+tmap_mode("view")
+qtm(eth.pts[eth.pts$hhid %in% tmp,])
+# => there's no reason they should be missing, less impute values from the same `clust`
+eth[, `:=`(
+  cell5m_imp = modal(cell5m, na.rm=T),
+  suit_gaez_imp = modal(suit_gaez, na.rm=T)
+  ), by=.(svyCode, clust)]
+eth[is.na(cell5m), cell5m := cell5m_imp]
+eth[is.na(suit_gaez), suit_gaez := suit_gaez_imp]
+eth[, `:=`(cell5m_imp=NULL, suit_gaez_imp=NULL)]
+
+# Plot to verify
+eth.pts <- SpatialPointsDataFrame(eth[!is.na(lat_dd_mod), .(lon_dd_mod, lat_dd_mod)], 
+  data.frame(eth[!is.na(lat_dd_mod), 
+    .(hhid, svyCode, survey, wave, strata, region, district_cd, cell5m, suit_gaez)]))
+qtm(eth.pts, symbols.col="cell5m")
+
+
+# Merge in HarvestChoice travel times `tt20k_mean`
+# Load CELL5M
+load("~/Projects/hc-cell5m/rdb/2016.03/cell5m.rda")
+dt <- dt[, .SD, .SDcols=c("CELL5M", names(dt)[names(dt) %like% "tt10_"])]
+setnames(dt, 2:6, c("tt20k_mean", "tt50k_mean", "tt100k_mean", "tt250k_mean", "tt500k_mean"))
+setkey(dt, CELL5M)
+setkey(eth, cell5m)
+eth <- dt[eth]
+rm(dt)
+summary(eth$tt100k_mean)
+#   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.2251  2.5602  3.9945  4.3897  5.6089 20.5380
+setnames(eth, "CELL5M", "cell5m")
+
+# Classify GAEZ suitability into `seg_suit_gaez` (agpot-hi, agpot-lo, agpot-no)
+# GAEZ suitability is coded from 1 to 9:
+# 0-no data, 1-very high (> 85%), 2-high (> 70%), 3-good (> 55%), 4-medium (> 40%), 
+# 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water
+eth[suit_gaez %between% c(1,4), seg_suit_gaez := "agpot-hi"]
+eth[suit_gaez %between% c(5,7), seg_suit_gaez := "agpot-lo"]
+eth[suit_gaez %between% c(8,9), seg_suit_gaez := "agpot-no"]
+eth[, seg_suit_gaez := factor(seg_suit_gaez, levels=c("agpot-hi", "agpot-lo", "agpot-no"))]
+eth[, .N, keyby=.(svyCode, seg_suit_gaez)]
+# Note there is no suit_gaez==0 but there are missing values 
+
+# Encode `suit_gaez` labels
+eth[, suit_gaez := factor(suit_gaez, levels=0:9, 
+  labels=c(
+    "0-no data", "1-very high (> 85%)", "2-high (> 70%)", 
+    "3-good (> 55%)", "4-medium (> 40%)", "5-moderate (> 25%)", 
+    "6-marginal (> 10%)", "7-very marginal (> 0%)", "8-not suitable (0%)", "9-water"))]
+
+# Classify market access into `seg_mkt20k` (mkt-lo, mkt-hi) using 4hr cutoff 
+eth[, `:=`(
+  seg_mkt20k = factor(tt20k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt50k = factor(tt50k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt100k = factor(tt100k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt250k = factor(tt250k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi")),
+  seg_mkt500k = factor(tt500k_mean <= 4, levels=c(FALSE, TRUE), labels=c("mkt-lo", "mkt-hi"))
+)]
+eth[, .N, keyby=.(svyCode, seg_mkt100k)]
+
+# Make quadrants `seg_quad` using 100K market size
+# (agpot-lo / mkt-lo, agpot-lo / mkt-hi, agpot-hi / mkt-lo, agpot-hi / mkt-hi)
+eth[, seg_quad := factor(paste(seg_suit_gaez, seg_mkt100k, sep=" / "))]
+# Arbitrarily classify seg_mkt100k==NA into "mkt-lo"
+# Arbitrarily classify seg_suit_gaez==NA and seg_suit_gaez="agpot-no" into "agpot-lo"
+levels(eth$seg_quad)
+levels(eth$seg_quad) <- c(
+  "agpot-hi / mkt-hi", "agpot-hi / mkt-lo", "agpot-lo / mkt-hi", "agpot-lo / mkt-lo",
+  "agpot-lo / mkt-hi", "agpot-lo / mkt-lo")
+# Reorder levels
+eth[, seg_quad := factor(seg_quad, levels=quad)]
+table(eth$seg_quad)
+# agpot-lo / mkt-lo agpot-lo / mkt-hi agpot-hi / mkt-lo agpot-hi / mkt-hi 
+#              3352              2715              1130              1900 
+
+# Verify visually
+eth.pts <- SpatialPointsDataFrame(eth[!is.na(lat_dd_mod), .(lon_dd_mod, lat_dd_mod)], 
+  data.frame(eth[!is.na(lat_dd_mod), 
+    .(hhid, svyCode, survey, wave, strata, region, district_cd, cell5m, suit_gaez,
+      seg_suit_gaez, seg_mkt100k, seg_quad)]))
+tm_shape(rquad) + tm_raster(pal=viridis(4), breaks=0:4, labels=quad, alpha=.6) +
+  tm_shape(eth.pts, is.master=T) + tm_dots("seg_quad", pal=viridis(4))
+# => looks OK
+
+
+###############################################
+# TODO FARM MANAGEMENT
+# Include IFPRI recodes (last wave only unfortunately)
+ifpri[, .N, by=svyCode]
+# => only has data for eth-erss-2011
 
 
 
@@ -702,7 +1305,7 @@ eth.f.hh <- c(
 ##########################################
 # CROP SALES
 # Options #1 `totcropsold`
-gha[, summary(totcropsold)]
+gha[, summary(totcropsold)] 
 gha[, median(totcropsold, na.rm=T), by=croparea_3clas]
 #    croparea_clas   V1
 # 1:            NA    0
@@ -1083,6 +1686,72 @@ summary(tza$class5)
 
 ```
 
+```{r gha-table, eval=FALSE}
+
+# Need to generate results by wave, class5, rural, farm sizes, and margins
+gha.table <- 
+  # by wave
+  lapply(gha.svy.farm[1:2], function(x) {
+    # by farm size
+    lapply(levels(gha$croparea_4ha), function(i) {
+      svyCrossTab(list(
+        
+        # Demographics
+        ~hhsize_imp, ~agehead, ~I(100*femhead), ~I(100*widowhead), ~hhlabor,
+        ~educhead, ~educave15_60, ~educhigh,
+        ~I(100*ownhome), ~I(100*cellphone), ~I(100*telephone), ~I(100*electricity), 
+        ~distwater, ~distroad, ~distpost, ~distbank, ~disthealth,
+        # Land
+        ~landown, ~landshare, ~croparea_imp,
+        #~landrent,
+        # Income
+        ~aggross, ~totgross, ~I(100*naggross_sh), ~cropvalue, ~cropsales,
+        ~I(100*cropsales_sh), ~totlvstprod, ~totlivsold,
+        # Livestock
+        ~I(1E3*TLU_horse), ~I(1E3*TLU_cattle), ~I(1E3*TLU_pigs), ~I(1E3*TLU_sheep),
+        ~I(1E3*TLU_small), ~I(1E3*TLU_total), 
+        # Input
+        ~I(100*seeds), ~I(100*fert_any), ~I(100*fert_inorg), ~I(100*fert_org), 
+        ~I(100*herb), ~I(100*pest), ~I(100*irr), ~I(100*fuel), ~I(100*hired_labor)
+        
+      ), ~class5, subset(x, croparea_4ha==i), quantiles=c(.5, .9))
+    })
+  })
+
+gha.table.rur <- 
+  # by wave
+  lapply(gha.svy.farm[1:2], function(x) {
+    # by rural
+    lapply(levels(gha$rural), function(r) {
+      svyCrossTab(list(
+        
+        # Demographics
+        ~hhsize_imp, ~agehead, ~I(100*femhead), ~I(100*widowhead), ~hhlabor,
+        ~educhead, ~educave15_60, ~educhigh,
+        ~I(100*ownhome), ~I(100*cellphone), ~I(100*telephone), ~I(100*electricity), 
+        ~distwater, ~distroad, ~distpost, ~distbank, ~disthealth,
+        # Land
+        ~landown, ~landshare, ~croparea_imp,
+        #~landrent,
+        # Income
+        ~aggross, ~totgross, ~I(100*naggross_sh), ~cropvalue, ~cropsales,
+        ~I(100*cropsales_sh), ~totlvstprod, ~totlivsold,
+        # Livestock
+        ~I(1E3*TLU_horse), ~I(1E3*TLU_cattle), ~I(1E3*TLU_pigs), ~I(1E3*TLU_sheep),
+        ~I(1E3*TLU_small), ~I(1E3*TLU_total), 
+        # Input
+        ~I(100*seeds), ~I(100*fert_any), ~I(100*fert_inorg), ~I(100*fert_org), 
+        ~I(100*herb), ~I(100*pest), ~I(100*irr), ~I(100*fuel), ~I(100*hired_labor)
+        
+      ), ~class5, subset(x, rural==r), quantiles=c(.5, .9))
+    })
+  })
+
+
+    
+
+```
+
 
 ```{r designs, eval=FALSE}
 
@@ -1123,8 +1792,8 @@ tza.svy.shf <- lapply(tza.svy, subset, croparea_4ha=="<= 4 ha")
 ###############################################
 # ETH
 eth.svy <- list(
-  `eth3` = svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
-    data=eth[survey=="2015/16"]),
+  # `eth3` = svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
+  #   data=eth[survey=="2015/16"]),
   `eth2` =  svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
     data=eth[survey=="2013/14"]),  
   `eth1` = svydesign(~clust+hhid, strata=~strata, w=~weight, nest=T,
@@ -1138,7 +1807,8 @@ eth.svy.shf <- lapply(eth.svy, subset, croparea_4ha=="<= 4 ha")
 
 ```{r save, eval=FALSE}
 
-rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, tmp.cv)
+rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, 
+  eth.adm, eth.chr, eth.inc, eth.hh, tmp.cv)
 save.image("./tmp/2017-ispc.RData")
 
 #####################################################################################
@@ -1151,9 +1821,13 @@ setorder(tmp, secOrder, sortOrder)
 tmp <- tmp$varCode
 setcolorder(gha, c(tmp, setdiff(names(gha), tmp)))
 setkey(lbl, varCode)
-write.dta(
-  setattr(gha, "var.labels", lbl[names(gha), paste0(varLabel, " (", unit, ")")]),
-  "./out/gha-glss_merged_2017.10.01.dta", version=12L, convert.factors="string")
+
+gha %>%
+  setorder(svyCode, hhid) %>%
+  setattr("var.labels", lbl[names(gha), paste0(varLabel, " (", unit, ")")]) %>%
+  setattr("datalabel", "Prepared by BACOU, Melanie <mel@mbacou.com> for BMGF") %>%
+  write.dta("./out/gha-glss_merged_2017.11.08.dta", version=12L, convert.factors="labels")
+
 
 ###############################################
 # TZA
@@ -1163,9 +1837,13 @@ setorder(tmp, secOrder, sortOrder)
 tmp <- tmp$varCode
 setcolorder(tza, c(tmp, setdiff(names(tza), tmp)))
 setkey(lbl, varCode)
-write.dta(
-  setattr(tza, "var.labels", lbl[names(tza), paste0(varLabel, " (", unit, ")")]),
-  "./out/tza-nps_merged_2017.10.20.dta", version=12L, convert.factors="string")
+
+tza %>%
+  setorder(svyCode, hhid) %>%
+  setattr("var.labels", lbl[names(tza), paste0(varLabel, " (", unit, ")")]) %>%
+  setattr("datalabel", "Prepared by BACOU, Melanie <mel@mbacou.com> for BMGF") %>%
+  write.dta("./out/tza-nps_merged_2017.11.08.dta", version=12L, convert.factors="labels")
+
 
 ###############################################
 # ETH
@@ -1175,9 +1853,12 @@ setorder(tmp, secOrder, sortOrder)
 tmp <- tmp$varCode
 setcolorder(eth, c(tmp, setdiff(names(eth), tmp)))
 setkey(lbl, varCode)
-write.dta(
-  setattr(eth, "var.labels", lbl[names(eth), paste0(varLabel, " (", unit, ")")]),
-  "./out/eth-ess_merged_2017.10.01.dta", version=12L, convert.factors="string")
+
+eth %>%
+  setorder(svyCode, hhid) %>%
+  setattr("var.labels", lbl[names(eth), paste0(varLabel, " (", unit, ")")]) %>%
+  setattr("datalabel", "Prepared by BACOU, Melanie <mel@mbacou.com> for BMGF") %>%
+  write.dta("./out/eth-ess_merged_2017.11.08.dta", version=12L, convert.factors="labels")
 
 
 ```
@@ -1247,7 +1928,7 @@ In the delineation of farm segments we construct areas of high and low agricultu
 
 ```{r maps-suit, fig.cap="Agricultural Suitability (FAO/GAEZ 2007)", out.width="99%"}
 
-i <- c("eth2010", "gha-glss6", "tza2012")
+i <- c("eth-erss-2011", "gha-glss6", "tza-nps-2012")
 
 tm_shape(rgaez) + tm_raster(n=9, pal=qd.agpot.lbl$col, labels=qd.agpot.lbl$code,
   title="Agricultural\nSuitability") +
@@ -1273,7 +1954,3 @@ tm_shape(rquad) + tm_raster(pal=viridis(4), n=4, labels=quad,
   tm_facets("ISO3", ncol=3, free.coords=T)
 
 ```
-
-
-
-

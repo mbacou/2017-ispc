@@ -36,6 +36,7 @@ vignettes/*.pdf
 *.dta
 /tmp/
 /in/
+/out/
 *_bookdown_files/
 *docs-devel/
 *rsconnect/

@@ -4,12 +4,12 @@ Relevant sources of household-level micro records for Tanzania include the last 
 
 * **2007/2008 National Sample Census of Agriculture (NSCA)** -- small-holder questionnaire covers household information, land ownership/tenure, land use, crop production and marketing, use of credit for agricultural purposes, livestock, investment activities and services and core poverty indicators. The data were collected from a sample of 52,635 rural households (incl. mainland and Zanzibar).   
 * **2012 Population and Housing Census (PHC)** -- only summary report and tables are available
-* **2008/2009 NPS Panel, Wave 1** --  a sample of 3,280 households spanning all regions and all districts of Tanzania, both mainland and Zanzibar. The sample is sufficient to produce national estimates of poverty, agricultural production and other key indicators. It is also possible to produce estimates for 4 strata: 1) Dar es Salaam, 2) other urban areas on mainland Tanzania, 3) rural mainland Tanzania, and 4) Zanzibar, and/or across 7 zones (as used in the DHS). These are: North, Central, Eastern, South, Southern Highlands, West and Lake. Due to the limits of the sample size it is typically not possible to produce reliable statistics at the regional or district level.  
+* **2008/2009 NPS Panel, Wave 1** --  a sample of 3,265 households spanning all regions and all districts of Tanzania, both mainland and Zanzibar. The sample is sufficient to produce national estimates of poverty, agricultural production and other key indicators. It is also possible to produce estimates for 4 strata: 1) Dar es Salaam, 2) other urban areas on mainland Tanzania, 3) rural mainland Tanzania, and 4) Zanzibar, and/or across 7 zones (as used in the DHS). These are: North, Central, Eastern, South, Southern Highlands, West and Lake. Due to the limits of the sample size it is typically not possible to produce reliable statistics at the regional or district level.  
 * **2010-2011 NPS Panel, Wave 2** -- the sample design for the second round of the NPS revisits all the households interviewed in the first round, as well as tracking adult split-off household members. The original sample size of 3,265 households was designed to be representative at the national, urban/rural, and major agro-ecological zones. The total sample size was 3,265 households in 409 EAs (2,063 households in rural areas and 1,202 urban areas).    
 * **2012/2013 NPS Panel, Wave 3** -- the sample design includes the originally sampled 3,265 households plus split-off households added into the sample in the second round of the NPS. Thus the total sample at the onset of the NPS 2012/2013 consisted of 3,924 target households.  
 * **2014/2015, NPS Panel, Wave 4** --  in all 4 panels the sample design allows analysis at 4 primary domains of inference and 7 zones. The sample design is a stratified two-stage design. The design consists of 51 design strata corresponding to a rural/urban designation for each of the 26 regions. Wave 4 sample design consists of a new selection of 3,360 households corresponding to 420 EAs from the 2012 PHC. This new cohort in NPS 2014/2015 will be maintained and tracked in all future rounds between national censuses.  
 
-Note that FAO RIGA-H database is not yet available for NPS Wave 4 (as of Oct 1, 2017).
+Note that FAO RIGA-H database is not yet available for NPS Wave 4 (as of Oct 30, 2017).
 
 ## Household Sampling and Stratification
 
@@ -19,12 +19,18 @@ tmp <- tza[, .(
   Regions = uniqueN(svyL1Nm),
   Districts = uniqueN(paste(svyL1Cd, svyL2Cd)),
   Sample = .N,
-  Urban = sum(rural=="urban", na.rm=T),
-  Rural = sum(rural=="rural", na.rm=T)
+  Population = sum(weight, na.rm=T),
+  Rural = sum(c(rural=="rural") * weight, na.rm=T),
+  Urban = sum(c(rural=="urban") * weight, na.rm=T)
 ), keyby=.(Survey=svyCode)]
 
+tmp[, `:=`(
+  `Rural (pct)` = 100*Rural/Population,
+  `Urban (pct)` = 100*Urban/Population
+)]
+
 kable(tmp,
-  justify="ccrrrrrrrr", format.args=list(big.mark=","),
+  justify="ccrrrrrrrrrrr", format.args=list(big.mark=","), digits=0,
   caption="Composition of Tanzania NPS Harmonized Survey Samples")
 
 ```
@@ -32,19 +38,32 @@ kable(tmp,
 The first round of the NPS sample is a multi-stage clustered sample design. First stage sampling involves the selection of survey clusters with the probability of selection proportional to cluster size within a stratum. The sampling of these clusters is stratified along two dimensions:
 
 - **8 administrative zones** (seven on Mainland Tanzania plus Zanzibar as an eighth zone), and  
-- **rural** versus **urban** clusters within each administrative zone.  
+- **rural** vs. **urban** clusters within each administrative zone.  
 
-The combination of these two dimensions yields **16 strata** (note that this stratification strategy was modifed in NPS Wave 5).
+The combination of these two dimensions yields **16 strata** (note that this stratification strategy was modifed in NPS Wave 5 with 51 strata).
 
-```{r tza-strata, fig.cap="(Appoximate) Household Locations and Stratification across Survey Waves", fig.height=3}
+```{r tza-strata, fig.cap="(Appoximate) Household Locations and Stratification across Survey Waves. Tanzania", fig.height=3}
 
 # Map household by strata to verify
-tm_shape(g2[g2$svyCode=="tza2012",]) + tm_polygons("grey90", border.col="grey50") +
+tm_shape(g2[g2$svyCode=="tza-nps-2012",]) + tm_polygons("grey90", border.col="grey50") +
   tm_shape(tza.pts) + 
   tm_dots("strata", size=0.08, breaks=0:16, labels=paste("strata", 1:16), palette=viridis(16), title="Survey\nStratification") + 
   tm_facets("survey", ncol=3) + tm_layout(legend.outside.size=.1)
 
 ```
+
+```{r, tza-panels}
+
+# Panels
+tmp <- dcast(tza, svyCode~pcount)
+setnames(tmp, 2:4, c("1 visit", "2 visits", "3 visits"))
+kable(tmp,
+  justify="lrrr", format.args=list(big.mark=","), digits=0,
+  caption="Attrition of Households across Panels, Tanzania")
+
+```
+
+Out of the *`r prty(tza[svyCode=="tza-nps-2008", .N])` households* recorded in the 2008 NPS *`r prty(tmp[1,4])` households* were re-visited in all 3 waves, while *`r prty(tmp[1,2])`* out of `r prty(tza[svyCode=="tza-nps-2012", .N])` households in the final NPS 2012 sample were only interviewed once, and *`r prty(tmp[1,3])`* were interviewed twice. This is due to attrition and tracking of split households across waves.
 
 ## Distribution of Farm Holdings across Farm Sizes and Farm Types
 
@@ -314,16 +333,26 @@ html(tabular((`Year`=year)*(mean+CI)~Heading("Farm Types")*class5*Heading()*iden
 
 ## Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants
 
+```{r tza-figquad, fig.cap="Agricultural Potential Quadrants, Tanzania"}
+
+tmp <- g2[g2$svyCode=="tza-nps-2012",]
+tm_shape(mask(rquad, tmp)) + tm_raster(pal=viridis(4), n=4, labels=quad,
+  title="Agricultural\nPotential\nQuadrants, \nTanzania") +
+  tm_shape(tmp, is.master=T) + tm_borders("grey", lwd=.4) +
+  tm_layout(legend.outside=T)
+
+```
+
 ### All Farms
 
 ```{r tza-propquad5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)", dev.args=list(pointsize=14)}
 
-par(mfrow=c(1,3), mar=c(3,0.25,2,.25))
-plot(svytable(~seg_quad+class5, tza.svy[["tza3"]]), main=NA, las=2, col=viridis(5),
+par(mfrow=c(1,3), mar=c(3,0.25,0.25,.25))
+plot(svytable(~class5+seg_quad, tza.svy[["tza3"]]), main=NA, las=2, col=viridis(4),
   ylab=NA, xlab="5-types and Quadrants (2012/13)")
-plot(svytable(~seg_quad+class5, tza.svy[["tza2"]]), main=NA, las=2, col=viridis(5),
+plot(svytable(~class5+seg_quad, tza.svy[["tza2"]]), main=NA, las=2, col=viridis(4),
   ylab=NA, xlab="5-types and Quadrants (2010/11)")
-plot(svytable(~seg_quad+class5, tza.svy[["tza1"]]), main=NA, las=2, col=viridis(5),
+plot(svytable(~class5+seg_quad, tza.svy[["tza1"]]), main=NA, las=2, col=viridis(4),
   ylab=NA, xlab="5-types and Quadrants (2008/09)")
 
 ```
@@ -396,11 +425,11 @@ html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5
 ```{r tza-propquad5sh, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (farms below 4 ha)", dev.args=list(pointsize=14)}
 
 par(mfrow=c(1,3), mar=c(3,0.25,2,.25))
-plot(svytable(~seg_quad+class5, tza.svy.shf[["tza3"]]), main=NA, las=2, col=viridis(5),
+plot(svytable(~class5+seg_quad, tza.svy.shf[["tza3"]]), main=NA, las=2, col=viridis(4),
   ylab=NA, xlab="5-types and Quadrants (2012/13)")
-plot(svytable(~seg_quad+class5, tza.svy.shf[["tza2"]]), main=NA, las=2, col=viridis(5),
+plot(svytable(~class5+seg_quad, tza.svy.shf[["tza2"]]), main=NA, las=2, col=viridis(4),
   ylab=NA, xlab="5-types and Quadrants (2010/11)")
-plot(svytable(~seg_quad+class5, tza.svy.shf[["tza1"]]), main=NA, las=2, col=viridis(5),
+plot(svytable(~class5+seg_quad, tza.svy.shf[["tza1"]]), main=NA, las=2, col=viridis(4),
   ylab=NA, xlab="5-types and Quadrants (2008/09)")
 
 ```

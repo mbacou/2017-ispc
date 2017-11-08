@@ -3,7 +3,7 @@ bookdown::gitbook:
   css: css/book.css
   split_by: chapter
   split_bib: yes
-  download: [../docs/main.docx]
+  download: [main.docx]
   config:
     toc:
       collapse: subsection
