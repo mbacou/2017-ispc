@@ -64,6 +64,279 @@ kable(tmp,
 
 Out of the *`r prty(eth[svyCode=="eth-erss-2011", .N])` households* recorded in the 2011 ERSS *`r prty(tmp[1,3])` households* were re-visited in all 2 waves, while *`r prty(tmp[1,2])`* out of `r prty(eth[svyCode=="eth-ess-2013", .N])` households in the second ESS 2013 sample were only interviewed once. This is due to attrition and tracking of split households across waves.
 
+## Distribution of Farm Holdings across Farm Sizes and Farm Types
+
+The plots below show the distribution of key variables in the unweighted sample of households across survey waves. The median line is in red, mean line in green, and the blue region is the inferred 95% confidence interval of the mean.
+
+### Land Holding
+
+```{r eth-land, fig.cap="Trends in Farm Sizes across Survey Waves (ha)"}
+
+par(mfrow=c(1,2))
+pplot(croparea_imp~survey, eth[croparea_4ha=="<= 4 ha"],
+  xlab="Farms below 4 ha", ylab="Farm Size (ha)",
+  note=eth[, 100*sum(is.na(croparea_imp)|croparea_imp==0)/.N])
+
+pplot(croparea_imp~survey, eth[croparea_4ha=="> 4 ha"],
+  xlab="Farms above 4 ha", ylab="Farm Size (ha)", ylim=c(4,25),
+  note=eth[, 100*sum(is.na(croparea_imp)|croparea_imp==0)/.N])
+
+```
+
+
+
+### Trends in Commercialization
+
+```{r eth-cc, fig.cap="Crop Commercialization across Survey Waves (percent of crop production)"}
+
+par(mfrow=c(1,2))
+pplot(100*cropsales_sh~croparea_4ha+survey, eth,
+  ylab="Crop Comm. (vol., source: authors)",
+  note=eth[, 100*sum(is.na(cropsales_sh)|cropsales_sh==0)/.N])
+
+pplot(100*shcropsold~croparea_4ha+survey, eth,
+  ylab="Crop Comm. (val., source: RIGA)",
+  note=eth[, 100*sum(is.na(cropsales_sh)|cropsales_sh==0)/.N])
+
+```
+
+```{r eth-ac, fig.cap="Agricultural Commercialization across Survey Waves (percent of ag. production)"}
+
+pplot(100*agsales_sh~croparea_4ha+survey, eth,
+  ylab="Agricultural Commercialization",
+  note=eth[, 100*sum(is.na(agsales_sh)|agsales_sh==0)/.N])
+
+```
+
+### Trends in Income Diversification
+
+The shares of farm and non-farm income are derived from RIGA components, namely:
+
+```
+aggross = totagprod + farmrntimp + agr_wge+ ifelse(selfimp1 < 0, NA, selfimp1)
+naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr_wge + ifelse(selfemp < 0, NA, selfemp)
+```
+
+```{r eth-div, fig.cap="Non-Farm Income (percent of gross income)"}
+
+pplot(100*naggross_sh~croparea_4ha+survey, eth,
+  ylab="Non-Farm Income Share",
+  note=eth[, 100*sum(is.na(naggross_sh)|naggross_sh==0)/.N])
+```
+
+
+### 3x3 Farm Classification
+
+```{r eth-prop9, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Categories", fig.height=3}
+
+par(mfrow=c(1,2), mar=c(3,3,0,.25))
+# plot(svytable(~croparea_3clas+class9, eth.svy[["eth3"]]), main=NA, las=1, col=viridis(9),
+#   ylab=NA, xlab="Typology 9-class (2012/13)")
+plot(svytable(~croparea_3clas+class9, eth.svy[["eth2"]]), main=NA, las=1, col=viridis(9),
+  ylab=NA, xlab="Typology 9-class (2013/14)")
+plot(svytable(~croparea_3clas+class9, eth.svy[["eth1"]]), main=NA, las=1, col=viridis(9),
+  ylab=NA, xlab="Typology 9-class (2011/12)")
+
+```
+
+```{r eth-proptab93, results="asis", eval=FALSE}
+
+# ESS3
+tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), eth.svy.farm[["eth3"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(eth$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  cropsales_3clas = factor(rep(levels(eth$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
+  naggross_3clas = factor(rep(levels(eth$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab93) Est. Proportions of Farm Holdings across Categories (ESS, 2015/16, percent)")
+html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-proptab92, results="asis"}
+
+# ESS2
+tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), eth.svy.farm[["eth2"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(eth$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  cropsales_3clas = factor(rep(levels(eth$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
+  naggross_3clas = factor(rep(levels(eth$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab92) Est. Proportions of Farm Holdings across Categories (ESS, 2013/14, percent)")
+html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-proptab91, results="asis"}
+# ERSS1
+tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), eth.svy.farm[["eth1"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(eth$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  cropsales_3clas = factor(rep(levels(eth$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
+  naggross_3clas = factor(rep(levels(eth$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab91) Est. Proportions of Farm Holdings across Categories (ERSS, 2011/12, percent)")
+html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+Proportions of **small holdings** across categories (farms below 4 ha).
+
+```{r eth-proptab59b, results="asis"}
+
+# To ease comparisons with EPAR
+tmp1 <- lapply(eth.svy.shf, function(x) {
+  tmp <- svymean(~I(interaction(cropsales_3clas, naggross_3clas)), x, na.rm=T)
+  tmp.cv <- confint(tmp)
+  tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+  tmp[`2.5 %`<0, `2.5 %` := 0]
+  tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+  tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+  tmp[, `:=`(
+    cropsales_3clas = factor(rep(levels(eth$cropsales_3clas), 3), levels=c("LoC", "MeC", "HiC")),
+    naggross_3clas = factor(rep(levels(eth$naggross_3clas), each=3, 1), levels=c("LoD", "MeD", "HiD"))
+  )]
+})
+tmp <- rbindlist(tmp1)
+tmp2 <- c("2013/2014", "2011/2012")
+tmp[, year := rep(tmp2, each=9)]
+tmp[, year := factor(year, levels=tmp2)]
+
+table_options(HTMLcaption="(#tab:proptab59b) Est. Proportions of Farm Holdings across Categories (ESS all waves, percent, farms below 4 ha)")
+html(tabular((`Year`=year)*Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*cropsales_3clas*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+
+### Simplified Farm Classification (5-class)
+
+```{r eth-prop5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Categories"}
+
+par(mfrow=c(1,2), mar=c(3,3,0,.25))
+# plot(svytable(~croparea_3clas+class5, eth.svy[["eth3"]]), main=NA, las=1, col=viridis(5),
+#   ylab=NA, xlab="Typology 5-class (2015/16)")
+plot(svytable(~croparea_3clas+class5, eth.svy[["eth2"]]), main=NA, las=1, col=viridis(5),
+  ylab=NA, xlab="Typology 5-class (2013/14)")
+plot(svytable(~croparea_3clas+class5, eth.svy[["eth1"]]), main=NA, las=1, col=viridis(5),
+  ylab=NA, xlab="Typology 5-class (2011/12)")
+
+```
+
+```{r eth-proptab56, results="asis", eval=FALSE}
+
+# ESS3
+tmp <- svymean(~I(interaction(croparea_3clas, class5)), eth.svy.farm[["eth3"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(eth$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  class5 = factor(rep(levels(eth$class5), each=3, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab56) Est. Proportions of Farm Holdings across Categories (ESS, 2015/16, percent)")
+html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-proptab55, results="asis"}
+
+# ESS2
+tmp <- svymean(~I(interaction(croparea_3clas, class5)), eth.svy.farm[["eth2"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(eth$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  class5 = factor(rep(levels(eth$class5), each=3, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab55) Est. Proportions of Farm Holdings across Categories (ESS, 2013/14, percent)")
+html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-proptab54, results="asis"}
+
+# ERSS1
+tmp <- svymean(~I(interaction(croparea_3clas, class5)), eth.svy.farm[["eth1"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  croparea_3clas = factor(rep(levels(eth$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
+  class5 = factor(rep(levels(eth$class5), each=3, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:proptab54) Est. Proportions of Farm Holdings across Categories (ERSS, 2011/12, percent)")
+html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+Proportions of **small holdings** across categories (farms below 4 ha)
+
+
+```{r eth-proptab56b, results="asis"}
+
+# To ease comparisons with EPAR
+tmp1 <- lapply(eth.svy.shf, function(x) {
+  tmp <- svymean(~class5, x, na.rm=T)
+  tmp.cv <- confint(tmp)
+  tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+  tmp[`2.5 %`<0, `2.5 %` := 0]
+  tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+  tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+  tmp[, `:=`(class5 = factor(levels(eth$class5), labels=levels(eth$class5)))]
+})
+tmp <- rbindlist(tmp1)
+tmp2 <- c("2013/2014", "2011/2012")
+tmp[, year := rep(tmp2, each=5)]
+tmp[, year := factor(year, levels=tmp2)]
+
+table_options(HTMLcaption="(#tab:proptab56) Est. Proportions of Farm Holdings across Categories (TNPS all waves, percent, farms below 4 ha)")
+html(tabular((`Year`=year)*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+
 ## Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants
 
 ```{r eth-figquad, fig.cap="Agricultural Potential Quadrants, Ethiopia"}
@@ -76,10 +349,159 @@ tm_shape(mask(rquad, tmp)) + tm_raster(pal=viridis(4), n=4, labels=quad,
 
 ```
 
-## Distribution of Farm Holdings across Farm Sizes and Farm Types
+### All Farms
 
-The plots below show the distribution of key variables in the unweighted sample of households across survey waves. The median line is in red, mean line in green, and the blue region is the inferred 95% confidence interval of the mean.
+```{r eth-propquad5, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)", dev.args=list(pointsize=14)}
 
-[pending]
+par(mfrow=c(1,2), mar=c(3,0.25,0.25,.25))
+# plot(svytable(~class5+seg_quad, eth.svy[["eth3"]]), main=NA, las=2, col=viridis(4),
+#   ylab=NA, xlab="5-types and Quadrants (2012/13)")
+plot(svytable(~class5+seg_quad, eth.svy[["eth2"]]), main=NA, las=2, col=viridis(4),
+  ylab=NA, xlab="5-types and Quadrants (2013/14)")
+plot(svytable(~class5+seg_quad, eth.svy[["eth1"]]), main=NA, las=2, col=viridis(4),
+  ylab=NA, xlab="5-types and Quadrants (2011/12)")
+
+```
+
+```{r eth-propquadtab53, results="asis", eval=FALSE}
+
+# ESS3
+tmp <- svymean(~I(interaction(seg_quad, class5)), eth.svy.farm[["eth3"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(eth$class5), each=4, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab53) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2012/13, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-propquadtab52, results="asis"}
+
+# ESS2
+tmp <- svymean(~I(interaction(seg_quad, class5)), eth.svy.farm[["eth2"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(eth$class5), each=4, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab52) Est. Proportions of Farm Holdings across Types and Quadrants (ESS2, 2013/2014, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-propquadtab51, results="asis"}
+
+# ERSS1
+tmp <- svymean(~I(interaction(seg_quad, class5)), eth.svy.farm[["eth1"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(eth$class5), each=4, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab51) Est. Proportions of Farm Holdings across Types and Quadrants (ERSS, 2011/2012, percent)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+### Small Farms (below 4 ha)
+
+```{r eth-propquad5sh, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (farms below 4 ha)", dev.args=list(pointsize=14)}
+
+par(mfrow=c(1,2), mar=c(3,0.25,2,.25))
+# plot(svytable(~class5+seg_quad, eth.svy.shf[["eth3"]]), main=NA, las=2, col=viridis(4),
+#   ylab=NA, xlab="5-types and Quadrants (2012/13)")
+plot(svytable(~class5+seg_quad, eth.svy.shf[["eth2"]]), main=NA, las=2, col=viridis(4),
+  ylab=NA, xlab="5-types and Quadrants (2013/14)")
+plot(svytable(~class5+seg_quad, eth.svy.shf[["eth1"]]), main=NA, las=2, col=viridis(4),
+  ylab=NA, xlab="5-types and Quadrants (2011/12)")
+
+```
+
+```{r eth-propquadtab53sh, results="asis", eval=FALSE}
+
+# ESS3
+tmp <- svymean(~I(interaction(seg_quad, class5)), eth.svy.shf[["eth3"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(eth$class5), each=4, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab53sh) Est. Proportions of Farm Holdings across Types and Quadrants (ESS, 2015/16, percent, farms below 4 ha)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-propquadtab52sh, results="asis"}
+
+# ESS2
+tmp <- svymean(~I(interaction(seg_quad, class5)), eth.svy.shf[["eth2"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(eth$class5), each=4, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab52sh) Est. Proportions of Farm Holdings across Types and Quadrants (ESS, 2013/2014, percent, farms below 4 ha)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
+```{r eth-propquadtab51sh, results="asis"}
+
+# ERSS
+tmp <- svymean(~I(interaction(seg_quad, class5)), eth.svy.shf[["eth1"]], na.rm=T)
+tmp.cv <- confint(tmp)
+tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
+tmp[`2.5 %`<0, `2.5 %` := 0]
+tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
+tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
+
+tmp[, `:=`(
+  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
+  class5 = factor(rep(levels(eth$class5), each=4, 1), levels=levels(eth$class5))
+  )]
+
+table_options(HTMLcaption="(#tab:propquadtab51sh) Est. Proportions of Farm Holdings across Types and Quadrants (ERSS, 2011/2012, percent, farms below 4 ha)")
+html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
 
 

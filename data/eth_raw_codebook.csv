@@ -1537,8 +1537,8 @@ dist_popcenter,"HH Distance in (KMs) to Nearest Population Center with +20,000",
 dist_market,HH Distance in (KMs) to Nearest Market,ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
 dist_borderpost,HH Distance in (KMs) to Nearest Border Crossing,ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
 dist_admctr,HH Distance in (KMs) to Capital of Zone of Residence,ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
-af_bio_1,Annual Mean Temperature (閹虹煰 * 10),ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
-af_bio_8,Mean Temperature of Wettest Quarter (閹虹煰 * 10),ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
+af_bio_1,Annual Mean Temperature (闁硅櫣鐓 * 10),ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
+af_bio_8,Mean Temperature of Wettest Quarter (闁硅櫣鐓 * 10),ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
 af_bio_12,Annual Precipitation (mm),ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
 af_bio_13,Precipitation of Wettest Month (mm),ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
 af_bio_16,Precipitation of Wettest Quarter,ETH-ERSS-11,ETH-ERSS-11/raw/Pub_ETH_HouseholdGeovariables_Y1.dta
@@ -1643,8 +1643,8 @@ dist_market,HH Distance in (KMs) to Nearest Market,ETH-ESS-13,ETH-ESS-13/raw/Pub
 dist_borderpost,HH Distance in (KMs) to Nearest Border Crossing,ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
 dist_admctr,HH Distance in (KMs) to Capital of Zone of Residence,ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
 pop_density,Population Density (per KM2),ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
-af_bio_1,Annual Mean Temperature (閹虹煰 * 10),ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
-af_bio_8,Mean Temperature of Wettest Quarter (閹虹煰 * 10),ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
+af_bio_1,Annual Mean Temperature (闁硅櫣鐓 * 10),ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
+af_bio_8,Mean Temperature of Wettest Quarter (闁硅櫣鐓 * 10),ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
 af_bio_12,Annual Precipitation (mm),ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
 af_bio_13,Precipitation of Wettest Month (mm),ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
 af_bio_16,Precipitation of Wettest Quarter,ETH-ESS-13,ETH-ESS-13/raw/Pub_ETH_HouseholdGeovars_Y2.dta
@@ -3274,7 +3274,7 @@ hh_s3q20c_1,Was [NAME] given any of the following to drink:ORAL REHYDRATION SALT
 hh_s3q20c_2,Was [NAME] given any of the following to drink:FLUID RECOMMENDED BY HEALTH WORKE,ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
 hh_s3q20d,Was [NAME] ever breastfed?,ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
 hh_s3q20e,"Since the time of birth, for how many months was [NAME] breastfed?",ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
-hh_s3q20f,"Since the time of birth, for how many months was [NAME]閼辩禍xclusively閼辩禉reastfed (w",ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
+hh_s3q20f,"Since the time of birth, for how many months was [NAME]闁艰京绂峹clusively闁艰京绂塺eastfed (w",ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
 hh_s3q21_a,"In what day, month, year was [Name] born? (Day)",ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
 hh_s3q21_b,"In waht day, month, year was [Name] born? (Month)",ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
 hh_s3q21_c,"In what day, month, year was [Name] born? (Year)",ETH-ESS-13,ETH-ESS-13/raw/sect3_hh_w2.dta
@@ -5652,7 +5652,7 @@ hh_s3q20c_1,Was [NAME] given any of the following to drink:ORAL REHYDRATION SALT
 hh_s3q20c_2,Was [NAME] given any of the following to drink:FLUID RECOMMENDED BY HEALTH WORKE,ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta
 hh_s3q20d,Was [NAME] ever breastfed?,ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta
 hh_s3q20e,"Since the time of birth, for how many months was [NAME] breastfed?",ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta
-hh_s3q20f,"Since the time of birth, for how many months was [NAME]閼辩禍xclusively閼辩禉reastfed (w",ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta
+hh_s3q20f,"Since the time of birth, for how many months was [NAME]闁艰京绂峹clusively闁艰京绂塺eastfed (w",ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta
 hh_s3q21_a,"In what day, month, year was [Name] born? (Day)",ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta
 hh_s3q21_b,"In waht day, month, year was [Name] born? (Month)",ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta
 hh_s3q21_c,"In what day, month, year was [Name] born? (Year)",ETH-ESS-15,ETH-ESS-15/raw/Household/sect3_hh_w3.dta

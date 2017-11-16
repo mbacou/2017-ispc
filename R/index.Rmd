@@ -9,7 +9,7 @@ output:bookdown::gitbook:
   github-repo: "mbacou/2017-ispc"
 bibliography: biblio.bib
 csl: apa.csl
-link-citations: yes
+link-ph_s11q03_a + ph_s12q07)citations: yes
 nocite: |
   @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs, @buckwell2008biasr, @tnps2016doco, @tnps2014report, @tnps2010report, @ess2014eth, @erss2012eth
   
@@ -980,10 +980,141 @@ eth[, summary(share_nonagtot)]
 ##############################################
 # TODO AGRICULTURAL SALES `cropsales_sh`, `agsales_sh`
 # RIGA is missing all sales variables!
-# To save time we choose to manually generate these shares using quantities (not values)
+# Extract volume shares (not values) from the raw survey records
+#
+# In `ETH-ESS-13/raw/sect11_ph_w2.dta`
+# crop_name	Crop Name
+# crop_code	Crop Code
+# ph_s11q03_a	How much of the harvest [Crop] was sold in total? (Kilo)
+# ph_s11q10a_3	Kgs. of harvested [CROP] used for household consumption
+# ph_s11q10_3	Kgs. of harvested [CROP] given for gifts as reimbursement for labor
+# ph_s11q11_3	Kgs. of harvested [CROP] used as reimbursements for inputs borrowed
+# ph_s11q12_3	Kgs. of harvested [CROP] used for animal feed
+# ph_s11q14_3	Kgs. of harvested [CROP] saved for seed
+# ph_s11q15_3	Kgs. of harvested [CROP] lost to rotting, insects, rodents, theft, etc.
+# ph_s11q22_a	What proportion of your crop product have you used for HOUSEHOLD CONSUMPTION
+# ph_s11q22_b	What proportion of your crop product have you used for IN-KIND WAGES, PAYMENTS
+# ph_s11q22_c	What proportion of your crop product have you used for ANIMAL FEED
+# ph_s11q22_d	What proportion of your crop product have you used for SEED
+# ph_s11q22_e	What proportion of your crop product have you used for SALE
+# ph_s11q22_f	What proportion of your crop product have you used for OTHERS
+#
+# in `ETH-ESS-13/raw/sect12_ph_w2.dta`
+# crop_name	Crop Name
+# crop_code	Tree/Fruit/Root Crop Code
+# ph_s12q03	What was the total amount of [TREES/FRUIT/ROOT CROP] harvested in this harvest
+# ph_s12q07	What was the total quantity sold? (KG)
+#
+# In `ETH-ERSS-11/raw/PH/sect11_ph_w1.dta`
+# crop_name	Crop Name
+# crop_code	Crop Code
+# ph_s11q03_a	How much of the harvest [Crop] was sold in total? (Kilo)
+# ph_s11q10_a	How much of the harvest [Crop] during [Current Agriculture Season] was given out
+# ph_s11q11_a	How much of the harvest [Crop] was given out as reimbursements for inputs borrow
+# ph_s11q12_a	How much of the harvest [Crop] was used for animal feed? (Kilo)
+# ph_s11q13_a	How much of the harvested [Crop] was used as inputs for [Crop] by-products that 
+# ph_s11q14_a	How much of the harvested [Crop] was saved for seed? (Kilo)
+# ph_s11q15_a	How much of the harvested [Crop] was lost to rotting, insects, rodents, theft, e
+# ph_s11q22_a	What proportion of your crop product have you used for [HH Consumption]?
+# ph_s11q22_b	What proportion of your crop product have you used for [Seed]?
+# ph_s11q22_c	What proportion of your crop product have you used for [Sale]?
+# ph_s11q22_d	What proportion of your crop product have you used for [Kind]?
+# ph_s11q22_e	What proportion of your crop product have you used for [Animal Feed]?
+# ph_s11q22_f	What proportion of your crop product have you used for [Others]?
+#
+# In `ETH-ERSS-11/raw/PH/sect12_ph_w1.dta`
+# crop_name	Crop Name
+# crop_code	Tree/Fruit/Root Crop Code
+# ph_s12q03	What was the total amount of [Fruit/Root Crop] harvested in the past 12 months?
+# ph_s12q07	What was the total quantity sold? (KG)
+
+eth.f.crop <- c(
+  "~/Data/ETH-ESS-13/raw/sect11_ph_w2.dta",
+  "~/Data/ETH-ESS-13/raw/sect12_ph_w2.dta",
+  "~/Data/ETH-ERSS-11/raw/PH/sect11_ph_w1.dta",
+  "~/Data/ETH-ERSS-11/raw/PH/sect12_ph_w1.dta")
+
+x <- c("crop_code", "crop_name", "")
+
+eth.crop <- lapply(eth.f.crop, read.dta13, generate.factors=T)
+eth.crop <- lapply(eth.crop, data.table)
+# Verify crop sales shares `ph_s11q22_c`
+eth.crop[[1]][, summary(ph_s11q22_e)]
+pplot(ph_s11q22_e~crop_name, data=eth.crop[[1]], ylim=c(0,100))
+# => max to 500, but it's an outlier graph it
+eth.crop[[3]][, summary(ph_s11q22_c)]
+# => OK, max to 100
+# Combine crop datasets along household/crop
+eth.crop[[1]] <- eth.crop[[1]][, .SD, 
+  .SDcols=c("household_id2", "crop_name", "crop_code", "ph_s11q22_e", "ph_s11q03_a")]
+eth.crop[[2]] <- eth.crop[[2]][, .SD, 
+  .SDcols=c("household_id2", "crop_name", "crop_code", "ph_s12q03", "ph_s12q07")]
+eth.crop[[3]] <- eth.crop[[3]][, .SD, 
+  .SDcols=c("household_id", "crop_name", "crop_code", "ph_s11q03_a", "ph_s11q22_c")]
+eth.crop[[4]] <- eth.crop[[4]][, .SD, 
+  .SDcols=c("household_id", "crop_name", "crop_code", "ph_s12q03", "ph_s12q07")]
+
+setnames(eth.crop[[3]], "ph_s11q22_c", "ph_s11q22_e")
+eth.crop <- lapply(eth.crop, setnames, 1, "hhid")
+eth.crop[[1]][, svyCode := "eth-ess-2013"]
+eth.crop[[2]][, svyCode := "eth-ess-2013"]
+eth.crop[[3]][, svyCode := "eth-erss-2011"]
+eth.crop[[4]][, svyCode := "eth-erss-2011"]
+eth.crop <- rbindlist(eth.crop, fill=TRUE)
+pplot(ph_s11q22_e~crop_name, data=eth.crop[[1]], ylim=c(0,100))
+
+setnames(eth.crop, c(4:5,7:8), c("cropsold_sh", "cropsold_kg", "hortprod_kg", "hortsold_kg"))
+eth.crop[, cropsold_sh_imp := ifelse(cropsold_sh > 100, 100, cropsold_sh)]
+eth.crop[, cropprod_kg := cropsold_kg * 100 / cropsold_sh_imp]
+eth.crop[, cropprod_kg := ifelse(cropprod_kg %in% c(Inf, NaN), NA, cropprod_kg)]
+eth.crop[, totcropprod_kg := rowSums(cbind(cropprod_kg, hortprod_kg), na.rm=T)]
+eth.crop[, totcropsold_kg := rowSums(cbind(cropsold_kg, hortsold_kg), na.rm=T)]
+eth.crop[, totcropprod_kg := sum(totcropprod_kg, na.rm=T), by=.(svyCode, hhid)]
+eth.crop[, totcropsold_kg := sum(totcropsold_kg, na.rm=T), by=.(svyCode, hhid)]
+eth.crop[, summary(totcropprod_kg)]
+eth.crop[, summary(totcropsold_kg)]
+eth.crop[, cropsales_sh := totcropsold_kg/totcropprod_kg]
+eth.crop[, cropsales_sh := ifelse(cropsales_sh %in% c(Inf, NaN), NA, cropsales_sh)]
+eth.crop[, cropsales_sh := ifelse(cropsales_sh > 1, 1, cropsales_sh)]
+eth.crop[, summary(cropsales_sh)]
+eth.crop[is.na(cropsales_sh), uniqueN(hhid), by=svyCode]
+#          svyCode  V1
+# 1: eth-erss-2011 696
+# 2:  eth-ess-2013 464
+
+# Merge into `eth`
+setkey(eth.crop, svyCode, hhid)
+setkey(eth, svyCode, hhid)
+eth[eth.crop, `:=`(
+  totcropprod_kg = i.totcropprod_kg, 
+  totcropsold_kg = i.totcropsold_kg, 
+  cropsales_sh = i.cropsales_sh
+  )]
+eth[is.na(cropsales_sh), uniqueN(hhid), by=.(svyCode, rural)]
+#          svyCode rural   V1
+# 1:  eth-ess-2013 rural  823
+# 2:  eth-ess-2013 urban 1747
+# 3: eth-erss-2011 rural 1287
+# 4: eth-erss-2011 urban  426
+# => quite a few rural hhlds missing production and sales data
+eth[is.na(totcropprod_kg), uniqueN(hhid), by=.(svyCode, rural)]
+
+# Actually these vars seem to have data, and `shagprodsold` has no NA
+eth[, summary(shagprodsold), by=svyCode]
+eth[, summary(shcropsold), by=svyCode]
 
 
+# Verify
+par(mfrow=c(1,2))
+pplot(cropsales_sh~svyCode, data=eth)
+pplot(shcropsold~svyCode, data=eth)
+pplot(shagprodsold~svyCode, data=eth)
+# But these shares are much lower than `cropsales_sh`, problem with net/gross?
 
+par(mfrow=c(1,3))
+pplot(cropsales_sh~svyCode, data=tza)
+pplot(shcropsold~svyCode, data=tza)
+pplot(shagprodsold~svyCode, data=tza)
 
 
 ##############################################
@@ -1694,6 +1825,212 @@ summary(tza$class5)
 
 ```{r eth-typo, eval=FALSE}
 
+# CULTIVATED AREA
+# TODO Construct cultivated area from Ag module
+pplot(landown~survey, data=eth, ylim=c(0,10))
+pplot(landrent~survey, data=eth, ylim=c(0,10))
+eth[, .N, by=.(wave, pos=landown-landrent >= 0)]
+eth[totcropprod_kg > 0 & is.na(landown), .N, by=wave]
+# Empty data.table (0 rows) of 2 cols: wave,N
+eth[totcropprod_kg > 0 & (landown==0 & landrent==0), .N, by=wave]
+#      wave   N
+# 1: wave 2 153
+# 2: wave 1 208
+eth[cropsales_sh > 0 & (landown==0 & landrent==0), .N, by=wave]
+#      wave   N
+# 1: wave 2  97
+# 2: wave 1 149
+# There are NAs in landown, but most hhlds with any cropprod have land
+
+eth[, croparea := rowSums(cbind(landown, landrent), na.rm=T)]
+eth[, 100*sum(croparea > 0 & croparea <= 4, na.rm=T)/.N, by=.(wave, rural)]
+
+# There are hlds with some crop production but no land
+# I'm tempted to impute `croparea` in those cases
+eth[totcropprod_kg > 0, .N, by=.(wave, croparea > 0)]
+
+# What is the median crop production per ha per survey/region. Use that to impute `croparea`.
+eth[, croparea_imp := croparea]
+eth[, qtl := cut(totcropprod_kg, 
+  unique(quantile(totcropprod_kg, seq(0,1,.2), na.rm=T)), include.lowest=T),
+  by=svyCode]
+eth[, q := median(ifelse(croparea==0, NA, croparea), na.rm=T),  by=.(svyCode, qtl)]
+eth[totcropprod_kg > 0 & (is.na(croparea_imp) | croparea_imp==0), croparea_imp := q]
+
+# Verify
+eth[totcropprod_kg > 0, .N, by=.(wave, croparea_imp > 0)]
+eth[cropsales_sh > 0, .N, by=.(wave, croparea_imp > 0)]
+
+# Clean up
+eth[, `:=`(qtl=NULL, q=NULL)]
+
+##########################################
+# SHF 4ha dummy `croparea_4ha` (2-class)
+eth[, croparea_4ha := NULL]
+eth[croparea_imp > 0, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
+summary(eth$croparea_4ha)
+# <= 4 ha  > 4 ha    NA's 
+#    5999      80    3018 
+
+##########################################
+# SHF 4ha dummy `croparea_3clas`
+eth[, croparea_3clas := NULL]
+eth[, max(croparea, na.rm=T)]
+eth[croparea_imp > 0, croparea_3clas := cut(croparea_imp, c(-1,2,4,51), labels=c("<= 2 ha", "2-4 ha", "> 4 ha"), ordered=T, right=F)]
+summary(eth$croparea_3clas)
+# <= 2 ha  2-4 ha  > 4 ha    NA's 
+#    5404     595      80    3018 
+
+
+##########################################
+# CROP SALES
+# Computed from raw data (higher shares than recorded in RIGA, but lots of NAs)
+eth[, summary(shcropsold)]
+eth[, summary(cropsales_sh)]
+eth[, 100*sum(shcropsold > 0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural        V1
+# 1: 2013/14 rural 44.409841
+# 2: 2013/14 urban  2.869066
+# 3: 2011/12 rural 30.929025
+# 4: 2011/12 urban  5.168986
+eth[, 100*sum(cropsales_sh > 0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural        V1
+# 1: 2013/14 rural 62.254749
+# 2: 2013/14 urban  4.225352
+# 3: 2011/12 rural 51.298327
+# 4: 2011/12 urban  6.759443
+
+##########################################
+# AG SALES
+eth[, summary(totagsold)]
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#    0       0     100    1459    1600  173977
+eth[, summary(shagprodsold)]
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+# 0.00000 0.00000 0.01362 0.11132 0.15076 1.00000  
+
+eth[, agsales := totagsold]
+eth[, agsales_sh := shagprodsold]
+eth[, 100*sum(agsales_sh>0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural       V1
+# 1: 2013/14 rural 78.82280
+# 2: 2013/14 urban 10.90245
+# 3: 2011/12 rural 63.18523
+# 4: 2011/12 urban 14.71173
+
+
+##########################################
+# GROSS FARM INCOME
+eth[, summary(totagprod)]
+eth[, summary(farmrntimp)]
+eth[, summary(agr_wge)]
+eth[, summary(selfimp1)]
+# => ignore `selfimp1` for now
+eth[, aggross := rowSums(.SD[, .(totagprod, farmrntimp, agr_wge, ifelse(selfimp1 < 0, NA, selfimp1))], na.rm=T)]
+eth[, 100*sum(aggross>0, na.rm=T)/.N, by=.(survey, rural)]
+
+# GROSS NON-FARM INCOME
+eth[, summary(transfersgrossimp)]
+eth[, summary(otherincimp)]
+eth[, summary(nonfarmrntimp)]
+eth[, summary(nonagr_wge)]
+eth[, summary(selfemp)]
+boxplot(selfemp~svyCode, eth)
+eth[, naggross := rowSums(.SD[, .(transfersgrossimp, otherincimp, nonfarmrntimp, nonagr_wge, ifelse(selfemp < 0, NA, selfemp))], na.rm=T)]
+eth[, totgross := rowSums(.SD[, .(aggross, naggross)], na.rm=T)]
+eth[, naggross_sh := naggross/totgross]
+eth[, 100*sum(naggross_sh>0, na.rm=T)/.N, by=.(survey, rural)]
+#     survey rural       V1
+# 1: 2013/14 rural 51.82186
+# 2: 2013/14 urban 91.23631
+# 3: 2011/12 rural 45.26832
+# 4: 2011/12 urban 84.09543
+
+eth[, sum(cropsales_sh > 0, na.rm=T), keyby=croparea_3clas]
+eth[, sum(aggross > 0, na.rm=T), keyby=croparea_3clas]
+# some `aggross` with no land
+eth[, sum(naggross_sh > 0, na.rm=T), keyby=croparea_3clas]
+
+# HHlds with ag share but no/na aggross?
+eth[shagprodsold>0, .N, by=aggross>0]
+#    aggross     N
+# 1:    TRUE  5004
+# => OK
+
+# Other internal consistency checks
+# HHlds with crop share but no/null croparea?
+eth[, sum(shcropsold>0, na.rm=T), keyby=croparea_3clas]
+#    croparea_3clas   V1
+# 1:             NA    0
+# 2:        <= 2 ha 3178
+# 3:         2-4 ha 1127
+# 4:         > 4 ha  733
+# => OK
+
+pplot(shcropsold~survey+croparea_4ha, eth)
+pplot(cropsales_sh~survey+croparea_4ha, eth)
+pplot(cropsales_sh~survey+croparea_4ha, tza)
+pplot(agsales_sh~survey+croparea_4ha, eth)
+# => `cropsales_sh` shares derived from KG seem to make more sense, but `agsales_sh` has much fewer NAs...
+# NOTE `cropsales_sh` is NOT derived from RIGA but from raw production/sales volumes
+# we might need to adust results from TZA accordingly
+
+##########################################
+# Crop commercialization dummy `cropsales_3clas`
+eth[, cropsales_3clas := NULL]
+eth[, cropsales_3clas := cut(cropsales_sh, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
+summary(eth$cropsales_3clas)
+#  LoC  MeC  HiC NA's 
+# 1062 2319 1417 4299
+
+##########################################
+# Ag commercialization dummy `agsales_3clas`
+eth[, agsales_3clas := NULL]
+eth[, agsales_3clas := cut(agsales_sh, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
+summary(eth$agsales_3clas)
+#  LoC  MeC  HiC 
+# 5406 3213  478 
+
+##########################################
+# Income diversification dummy `naggross_3clas`
+eth[, naggross_3clas := NULL]
+eth[, naggross_3clas := cut(naggross_sh, c(-1,1/3,2/3,1.1), labels=c("LoD", "MeD", "HiD"), ordered=T, right=F)]
+summary(eth$naggross_3clas)
+#  LoD  MeD  HiD NA's 
+# 5746  691 2425  235 
+
+##########################################
+# Income diversification dummy `noaggross_2clas`
+eth[, naggross_2clas := NULL]
+eth[, naggross_2clas := cut(naggross_sh, c(-1,1/3,1.1), labels=c("LoD", "HiD"), ordered=T, right=F)]
+summary(eth$naggross_2clas)
+#  LoD  HiD NA's 
+# 5746 3116  235
+
+##########################################
+# Farm classification dummy `class9`
+eth[, class9 := NULL]
+eth[, class9 := factor(paste0(cropsales_3clas, naggross_3clas), levels=class9)]
+summary(eth$class9)
+# LoCLoD LoCMeD LoCHiD MeCLoD MeCMeD MeCHiD HiCLoD HiCMeD HiCHiD   NA's 
+#    820    106    126   2100    147     63   1249     95     52   4339 
+
+##########################################
+# Classification dummy `class6`
+eth[, class6 := NULL]
+eth[, class6 := factor(paste0(cropsales_3clas, naggross_2clas), levels=class6)]
+summary(eth$class6)
+# LoCLoD LoCHiD MeCLoD MeCHiD HiCLoD HiCHiD   NA's 
+#    820    232   2100    210   1249    147   4339
+
+##########################################
+# Farm classification dummy `class5`
+eth[, class5 := class6]
+levels(eth$class5) <- c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
+Summary(eth$class5)
+# subs.       trans.    pre-comm. specd. comm.  divf. comm.         NA's 
+#   820          442         2100         1249          147         4339 
+
 ```
 
 ```{r gha-table, eval=FALSE}
@@ -1868,7 +2205,7 @@ eth %>%
   setorder(svyCode, hhid) %>%
   setattr("var.labels", lbl[names(eth), paste0(varLabel, " (", unit, ")")]) %>%
   setattr("datalabel", "Prepared by BACOU, Melanie <mel@mbacou.com> for BMGF") %>%
-  write.dta("./out/eth-ess_merged_2017.11.08.dta", version=12L, convert.factors="labels")
+  write.dta("./out/eth-ess_merged_2017.11.16.dta", version=12L, convert.factors="labels")
 
 
 ```
