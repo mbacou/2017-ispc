@@ -1,0 +1,37 @@
+# Clustering of Farm Households
+
+[in progress] Along segmenting variables.
+
+Using DBScan clustering
+
+```{r eth-dbscan}
+
+library(dbscan)
+library(cluster)
+
+# Method 3) DBSCAN (vary `epsilon` distance and check visually til results make sense)
+# Tried other approaches (SD, PAM, spatial.outliers) but DBSCAN seems to work better
+Y <- c("croparea_imp", "naggross_sh", "cropsales_sh")
+tmp <- eth[wave=="wave 2" & farm==TRUE, .SD, .SDcols=c("hhid", "weight", Y)]
+tmp <- na.omit(tmp)
+
+tmp1 <- dbscan(tmp[, .SD, .SDcols=Y[-1]], eps=0.01, minPts=50000, weights=tmp$weight)
+hullplot(tmp[, .SD, .SDcols=Y], tmp1, col=c("black", viridis(max(tmp1$cluster))))
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(max(tmp1$cluster))[tmp1$cluster])
+
+```
+
+Using PAM clustering (with and without cultivated area)
+
+```{r eth-pam}
+
+tmp2 <- pam(tmp[, .SD, .SDcols=Y], k=5)
+tmp2$medoids
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp2$cluster])
+
+tmp3 <- pam(tmp[, .SD, .SDcols=Y[-1]], k=5)
+tmp3$medoids
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp3$cluster])
+
+```
+

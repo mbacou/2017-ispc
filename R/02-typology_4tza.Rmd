@@ -21,16 +21,18 @@ tmp <- tza[, .(
   Sample = .N,
   Population = sum(weight, na.rm=T),
   Rural = sum(c(rural=="rural") * weight, na.rm=T),
-  Urban = sum(c(rural=="urban") * weight, na.rm=T)
+  Urban = sum(c(rural=="urban") * weight, na.rm=T),
+  `Farm hhlds` = sum(farm==TRUE)
 ), keyby=.(Survey=svyCode)]
 
 tmp[, `:=`(
   `Rural (pct)` = 100*Rural/Population,
-  `Urban (pct)` = 100*Urban/Population
+  `Urban (pct)` = 100*Urban/Population,
+  `Farm hhlds (pct)` = 100*`Farm hhlds`/Sample
 )]
 
 kable(tmp,
-  justify="ccrrrrrrrrrrr", format.args=list(big.mark=","), digits=0,
+  justify="ccrrrrrrrrrrrr", format.args=list(big.mark=","), digits=0,
   caption="Composition of Tanzania NPS Harmonized Survey Samples")
 
 ```
@@ -73,11 +75,11 @@ The plots below show the distribution of key variables in the unweighted sample 
 
 ```{r tza-land, fig.cap="Trends in Farm Sizes across Survey Waves (ha)"}
 
-pplot(croparea_imp~survey, tza[croparea_4ha=="<= 4 ha"],
+pplot(croparea_imp~survey, tza[farm==T & croparea_4ha=="<= 4 ha"],
   xlab="Farms below 4 ha", ylab="Farm Size (ha)",
   note=tza[, 100*sum(is.na(croparea_imp)|croparea_imp==0)/.N])
 
-pplot(croparea_imp~survey, tza[croparea_4ha=="> 4 ha"],
+pplot(croparea_imp~survey, tza[farm==T & croparea_4ha=="> 4 ha"],
   xlab="Farms above 4 ha", ylab="Farm Size (ha)", ylim=c(4,25),
   note=tza[, 100*sum(is.na(croparea_imp)|croparea_imp==0)/.N])
 
@@ -89,14 +91,14 @@ pplot(croparea_imp~survey, tza[croparea_4ha=="> 4 ha"],
 
 ```{r tza-cc, fig.cap="Crop Commercialization across Survey Waves (percent of crop production)"}
 
-pplot(100*cropsales_sh~croparea_4ha+survey, tza,
+pplot(100*cropsales_sh~croparea_4ha+survey, tza[farm==T],
   ylab="Crop Commercialization",
   note=tza[, 100*sum(is.na(cropsales_sh)|cropsales_sh==0)/.N])
 ```
 
 ```{r tza-ac, fig.cap="Agricultural Commercialization across Survey Waves (percent of ag. production)"}
 
-pplot(100*agsales_sh~croparea_4ha+survey, tza,
+pplot(100*agsales_sh~croparea_4ha+survey, tza[farm==T],
   ylab="Agricultural Commercialization",
   note=tza[, 100*sum(is.na(agsales_sh)|agsales_sh==0)/.N])
 
@@ -113,9 +115,10 @@ naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr_wge + ifelse
 
 ```{r tza-div, fig.cap="Non-Farm Income (percent of gross income)"}
 
-pplot(100*naggross_sh~croparea_4ha+survey, tza,
+pplot(100*naggross_sh~croparea_4ha+survey, tza[farm==T],
   ylab="Non-Farm Income Share",
   note=tza[, 100*sum(is.na(naggross_sh)|naggross_sh==0)/.N])
+
 ```
 
 
@@ -124,11 +127,11 @@ pplot(100*naggross_sh~croparea_4ha+survey, tza,
 ```{r tza-prop9, fig.cap="Est. Proportions of Farm Holdings across Farm Sizes and Categories", fig.height=3, dev.args=list(pointsize=14)}
 
 par(mfrow=c(1,3), mar=c(3,3,0,.25))
-plot(svytable(~croparea_3clas+class9, tza.svy[["tza3"]]), main=NA, las=1, col=viridis(9),
+plot(svytable(~croparea_3clas+class9, tza.svy.farm[["tza3"]]), main=NA, las=1, col=viridis(9),
   ylab=NA, xlab="Typology 9-class (2012/13)")
-plot(svytable(~croparea_3clas+class9, tza.svy[["tza2"]]), main=NA, las=1, col=viridis(9),
+plot(svytable(~croparea_3clas+class9, tza.svy.farm[["tza2"]]), main=NA, las=1, col=viridis(9),
   ylab=NA, xlab="Typology 9-class (2010/11)")
-plot(svytable(~croparea_3clas+class9, tza.svy[["tza1"]]), main=NA, las=1, col=viridis(9),
+plot(svytable(~croparea_3clas+class9, tza.svy.farm[["tza1"]]), main=NA, las=1, col=viridis(9),
   ylab=NA, xlab="Typology 9-class (2008/09)")
 
 ```
@@ -136,18 +139,7 @@ plot(svytable(~croparea_3clas+class9, tza.svy[["tza1"]]), main=NA, las=1, col=vi
 ```{r tza-proptab93, results="asis"}
 
 # NPS3
-tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), tza.svy.farm[["tza3"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  croparea_3clas = factor(rep(levels(tza$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
-  cropsales_3clas = factor(rep(levels(tza$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
-  naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
-  )]
+tmp <- svyCrossProp(c("croparea_3clas", "cropsales_3clas", "naggross_3clas"), tza.svy.farm[["tza3"]])
 
 table_options(HTMLcaption="(#tab:proptab93) Est. Proportions of Farm Holdings across Categories (TNPS3, 2012/13, percent)")
 html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
@@ -158,18 +150,7 @@ html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading(
 ```{r tza-proptab92, results="asis"}
 
 # NPS2
-tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), tza.svy.farm[["tza2"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  croparea_3clas = factor(rep(levels(tza$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
-  cropsales_3clas = factor(rep(levels(tza$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
-  naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
-  )]
+tmp <- svyCrossProp(c("croparea_3clas", "cropsales_3clas", "naggross_3clas"), tza.svy.farm[["tza2"]])
 
 table_options(HTMLcaption="(#tab:proptab92) Est. Proportions of Farm Holdings across Categories (TNPS2, 2010/11, percent)")
 html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
@@ -179,18 +160,7 @@ html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading(
 
 ```{r tza-proptab91, results="asis"}
 # NPS1
-tmp <- svymean(~I(interaction(croparea_3clas, cropsales_3clas, naggross_3clas)), tza.svy.farm[["tza1"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  croparea_3clas = factor(rep(levels(tza$croparea_3clas), each=1, 9), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
-  cropsales_3clas = factor(rep(levels(tza$cropsales_3clas), each=3, 3), levels=c("LoC", "MeC", "HiC")),
-  naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=9, 1), levels=c("LoD", "MeD", "HiD"))
-  )]
+tmp <- svyCrossProp(c("croparea_3clas", "cropsales_3clas", "naggross_3clas"), tza.svy.farm[["tza1"]])
 
 table_options(HTMLcaption="(#tab:proptab91) Est. Proportions of Farm Holdings across Categories (TNPS1, 2008/09, percent)")
 html(tabular(Heading("Income Diversification")*naggross_3clas*(mean+CI)~Heading("Crop Commercialization")*croparea_3clas*Heading()*cropsales_3clas*Heading()*identity,
@@ -203,18 +173,7 @@ Proportions of **small holdings** across categories (farms below 4 ha).
 ```{r tza-proptab59b, results="asis"}
 
 # To ease comparisons with EPAR
-tmp1 <- lapply(tza.svy.shf, function(x) {
-  tmp <- svymean(~I(interaction(cropsales_3clas, naggross_3clas)), x, na.rm=T)
-  tmp.cv <- confint(tmp)
-  tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-  tmp[`2.5 %`<0, `2.5 %` := 0]
-  tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-  tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-  tmp[, `:=`(
-    cropsales_3clas = factor(rep(levels(tza$cropsales_3clas), 3), levels=c("LoC", "MeC", "HiC")),
-    naggross_3clas = factor(rep(levels(tza$naggross_3clas), each=3, 1), levels=c("LoD", "MeD", "HiD"))
-  )]
-})
+tmp1 <- lapply(tza.svy.shf, function(x) svyCrossProp(c("cropsales_3clas", "naggross_3clas"), x))
 tmp <- rbindlist(tmp1)
 tmp2 <- c("2012/2013", "2010/2011", "2008/2009")
 tmp[, year := rep(tmp2, each=9)]
@@ -244,17 +203,7 @@ plot(svytable(~croparea_3clas+class5, tza.svy[["tza1"]]), main=NA, las=1, col=vi
 ```{r tza-proptab56, results="asis"}
 
 # NPS3
-tmp <- svymean(~I(interaction(croparea_3clas, class5)), tza.svy.farm[["tza3"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  croparea_3clas = factor(rep(levels(tza$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
-  class5 = factor(rep(levels(tza$class5), each=3, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("croparea_3clas", "class5"), tza.svy.farm[["tza3"]])
 
 table_options(HTMLcaption="(#tab:proptab56) Est. Proportions of Farm Holdings across Categories (TNPS3, 2012/13, percent)")
 html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -265,17 +214,7 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
 ```{r tza-proptab55, results="asis"}
 
 # NPS2
-tmp <- svymean(~I(interaction(croparea_3clas, class5)), tza.svy.farm[["tza2"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  croparea_3clas = factor(rep(levels(tza$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
-  class5 = factor(rep(levels(tza$class5), each=3, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("croparea_3clas", "class5"), tza.svy.farm[["tza2"]])
 
 table_options(HTMLcaption="(#tab:proptab55) Est. Proportions of Farm Holdings across Categories (TNPS2, 2010/11, percent)")
 html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -286,17 +225,7 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
 ```{r tza-proptab54, results="asis"}
 
 # NPS1
-tmp <- svymean(~I(interaction(croparea_3clas, class5)), tza.svy.farm[["tza1"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  croparea_3clas = factor(rep(levels(tza$croparea_3clas), each=1, 5), levels=c("<= 2 ha", "2-4 ha", "> 4 ha")),
-  class5 = factor(rep(levels(tza$class5), each=3, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("croparea_3clas", "class5"), tza.svy.farm[["tza1"]])
 
 table_options(HTMLcaption="(#tab:proptab54) Est. Proportions of Farm Holdings across Categories (TNPS1, 2008/09, percent)")
 html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -310,15 +239,7 @@ Proportions of **small holdings** across categories (farms below 4 ha)
 ```{r tza-proptab56b, results="asis"}
 
 # To ease comparisons with EPAR
-tmp1 <- lapply(tza.svy.shf, function(x) {
-  tmp <- svymean(~class5, x, na.rm=T)
-  tmp.cv <- confint(tmp)
-  tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-  tmp[`2.5 %`<0, `2.5 %` := 0]
-  tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-  tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-  tmp[, `:=`(class5 = factor(levels(tza$class5), labels=levels(tza$class5)))]
-})
+tmp1 <- lapply(tza.svy.shf, function(x) svyCrossProp("class5", x))
 tmp <- rbindlist(tmp1)
 tmp2 <- c("2012/2013", "2010/2011", "2008/2009")
 tmp[, year := rep(tmp2, each=5)]
@@ -360,17 +281,7 @@ plot(svytable(~class5+seg_quad, tza.svy[["tza1"]]), main=NA, las=2, col=viridis(
 ```{r tza-propquadtab53, results="asis"}
 
 # NPS3
-tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.farm[["tza3"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
-  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("seg_quad", "class5"), tza.svy.farm[["tza3"]])
 
 table_options(HTMLcaption="(#tab:propquadtab53) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2012/13, percent)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -381,17 +292,7 @@ html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5
 ```{r tza-propquadtab52, results="asis"}
 
 # NPS2
-tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.farm[["tza2"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
-  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("seg_quad", "class5"), tza.svy.farm[["tza2"]])
 
 table_options(HTMLcaption="(#tab:propquadtab52) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS2, 2010/2011, percent)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -402,17 +303,7 @@ html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5
 ```{r tza-propquadtab51, results="asis"}
 
 # NPS1
-tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.farm[["tza1"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
-  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("seg_quad", "class5"), tza.svy.farm[["tza1"]])
 
 table_options(HTMLcaption="(#tab:propquadtab51) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS1, 2008/09, percent)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -437,17 +328,7 @@ plot(svytable(~class5+seg_quad, tza.svy.shf[["tza1"]]), main=NA, las=2, col=viri
 ```{r tza-propquadtab53sh, results="asis"}
 
 # NPS3
-tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.shf[["tza3"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
-  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("seg_quad", "class5"), tza.svy.shf[["tza3"]])
 
 table_options(HTMLcaption="(#tab:propquadtab53sh) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS3, 2012/13, percent, farms below 4 ha)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -458,17 +339,7 @@ html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5
 ```{r tza-propquadtab52sh, results="asis"}
 
 # NPS2
-tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.shf[["tza2"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
-  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("seg_quad", "class5"), tza.svy.shf[["tza2"]])
 
 table_options(HTMLcaption="(#tab:propquadtab52sh) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS2, 2010/2011, percent, farms below 4 ha)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
@@ -479,17 +350,7 @@ html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5
 ```{r tza-propquadtab51sh, results="asis"}
 
 # NPS1
-tmp <- svymean(~I(interaction(seg_quad, class5)), tza.svy.shf[["tza1"]], na.rm=T)
-tmp.cv <- confint(tmp)
-tmp <- cbind(as.data.table(tmp*100), as.data.table(tmp.cv*100))
-tmp[`2.5 %`<0, `2.5 %` := 0]
-tmp <- tmp[, lapply(.SD, function(x) format(x, digits=0, nsmall=1, scientific=F))]
-tmp[, CI := paste(`2.5 %`, `97.5 %`, sep=" - ")]
-
-tmp[, `:=`(
-  seg_quad = factor(rep(quad, each=1, 5), levels=quad),
-  class5 = factor(rep(levels(tza$class5), each=4, 1), levels=levels(tza$class5))
-  )]
+tmp <- svyCrossProp(c("seg_quad", "class5"), tza.svy.shf[["tza1"]])
 
 table_options(HTMLcaption="(#tab:propquadtab51sh) Est. Proportions of Farm Holdings across Types and Quadrants (TNPS1, 2008/09, percent, farms below 4 ha)")
 html(tabular(Heading("Quadrant")*seg_quad*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,

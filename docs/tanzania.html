@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="ghana.html">
-<link rel="next" href="references.html">
+<link rel="next" href="clustering-of-farm-households.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -114,6 +114,7 @@
 <li class="chapter" data-level="4.3.2" data-path="tanzania.html"><a href="tanzania.html#small-farms-below-4-ha-2"><i class="fa fa-check"></i><b>4.3.2</b> Small Farms (below 4 ha)</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html"><i class="fa fa-check"></i><b>5</b> Clustering of Farm Households</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
@@ -161,8 +162,10 @@
 <th align="right">Population</th>
 <th align="right">Rural</th>
 <th align="right">Urban</th>
+<th align="right">Farm hhlds</th>
 <th align="right">Rural (pct)</th>
 <th align="right">Urban (pct)</th>
+<th align="right">Farm hhlds (pct)</th>
 </tr>
 </thead>
 <tbody>
@@ -174,8 +177,10 @@
 <td align="right">7,227,306</td>
 <td align="right">5,316,724</td>
 <td align="right">1,910,581</td>
+<td align="right">2,426</td>
 <td align="right">74</td>
 <td align="right">26</td>
+<td align="right">75</td>
 </tr>
 <tr class="even">
 <td align="left">tza-nps-2010</td>
@@ -185,8 +190,10 @@
 <td align="right">8,872,894</td>
 <td align="right">6,132,042</td>
 <td align="right">2,740,851</td>
+<td align="right">2,677</td>
 <td align="right">69</td>
 <td align="right">31</td>
+<td align="right">68</td>
 </tr>
 <tr class="odd">
 <td align="left">tza-nps-2012</td>
@@ -196,8 +203,10 @@
 <td align="right">9,339,428</td>
 <td align="right">6,387,735</td>
 <td align="right">2,951,693</td>
+<td align="right">3,377</td>
 <td align="right">68</td>
 <td align="right">32</td>
+<td align="right">68</td>
 </tr>
 </tbody>
 </table>
@@ -377,31 +386,31 @@ LoD
 mean
 </th>
 <td>
-14.2
+14.65
 </td>
 <td>
-18.5
+18.04
 </td>
 <td>
-7.4
+7.19
 </td>
 <td>
-2.5
+2.39
 </td>
 <td>
-7.7
+7.50
 </td>
 <td>
-4.6
+4.50
 </td>
 <td>
-1.4
+1.40
 </td>
 <td>
-4.6
+4.48
 </td>
 <td>
-3.4
+3.36
 </td>
 </tr>
 <tr class="center">
@@ -412,31 +421,31 @@ mean
 CI
 </th>
 <td>
-12.0 - 16.4
+12.5 - 16.8
 </td>
 <td>
-16.3 - 20.6
+15.9 - 20.1
 </td>
 <td>
-6.1 - 8.6
+5.9 - 8.4
 </td>
 <td>
-1.7 - 3.2
+1.6 - 3.1
 </td>
 <td>
-6.5 - 8.9
+6.3 - 8.7
 </td>
 <td>
-3.6 - 5.7
+3.5 - 5.5
 </td>
 <td>
 0.7 - 2.1
 </td>
 <td>
-3.6 - 5.6
+3.5 - 5.5
 </td>
 <td>
-2.6 - 4.3
+2.5 - 4.2
 </td>
 </tr>
 <tr class="center">
@@ -447,31 +456,31 @@ MeD
 mean
 </th>
 <td>
-4.6
+ 4.86
 </td>
 <td>
-5.4
+ 5.24
 </td>
 <td>
-3.0
+2.95
 </td>
 <td>
-1.1
+1.03
 </td>
 <td>
-1.3
+1.29
 </td>
 <td>
-1.2
+1.20
 </td>
 <td>
-0.5
+0.48
 </td>
 <td>
-1.0
+0.94
 </td>
 <td>
-0.9
+0.90
 </td>
 </tr>
 <tr class="center">
@@ -482,19 +491,19 @@ mean
 CI
 </th>
 <td>
-3.6 - 5.5
+3.9 - 5.8
 </td>
 <td>
-4.4 - 6.4
+4.3 - 6.2
 </td>
 <td>
-2.2 - 3.9
+2.1 - 3.8
 </td>
 <td>
 0.6 - 1.5
 </td>
 <td>
-0.9 - 1.8
+0.8 - 1.7
 </td>
 <td>
 0.7 - 1.7
@@ -503,7 +512,7 @@ CI
 0.2 - 0.8
 </td>
 <td>
-0.6 - 1.4
+0.5 - 1.3
 </td>
 <td>
 0.5 - 1.3
@@ -517,31 +526,31 @@ HiD
 mean
 </th>
 <td>
-8.4
+ 9.31
 </td>
 <td>
-2.4
+ 2.32
 </td>
 <td>
-3.1
+3.08
 </td>
 <td>
-0.9
+0.88
 </td>
 <td>
-0.6
+0.63
 </td>
 <td>
-0.5
+0.51
 </td>
 <td>
-0.2
+0.21
 </td>
 <td>
-0.5
+0.49
 </td>
 <td>
-0.2
+0.19
 </td>
 </tr>
 <tr class="center">
@@ -552,25 +561,25 @@ mean
 CI
 </th>
 <td>
-7.1 - 9.8
+7.9 - 10.8
 </td>
 <td>
-1.7 - 3.1
+1.6 - 3
 </td>
 <td>
-2.2 - 4.1
+2.2 - 4
 </td>
 <td>
-0.4 - 1.4
+0.4 - 1.3
 </td>
 <td>
-0.3 - 1.0
+0.2 - 1
 </td>
 <td>
-0.3 - 0.8
+0.3 - 0.7
 </td>
 <td>
-0.0 - 0.4
+0 - 0.4
 </td>
 <td>
 0.2 - 0.8
@@ -658,31 +667,31 @@ LoD
 mean
 </th>
 <td>
-15.3
+15.65
 </td>
 <td>
-21.6
+21.24
 </td>
 <td>
-7.4
+7.30
 </td>
 <td>
-2.2
+2.21
 </td>
 <td>
-7.7
+7.57
 </td>
 <td>
-4.4
+4.37
 </td>
 <td>
-1.9
+1.83
 </td>
 <td>
-4.5
+4.47
 </td>
 <td>
-3.9
+3.86
 </td>
 </tr>
 <tr class="center">
@@ -693,31 +702,31 @@ mean
 CI
 </th>
 <td>
-13.1 - 17.4
+13.5 - 17.8
 </td>
 <td>
-19.3 - 23.9
+18.9 - 23.6
 </td>
 <td>
-6.1 - 8.8
+6 - 8.6
 </td>
 <td>
-1.6 - 2.9
+1.6 - 2.8
 </td>
 <td>
-6.3 - 9.1
+6.2 - 8.9
 </td>
 <td>
 3.3 - 5.5
 </td>
 <td>
-1.2 - 2.5
+1.2 - 2.4
 </td>
 <td>
-3.4 - 5.7
+3.3 - 5.6
 </td>
 <td>
-2.9 - 4.9
+2.9 - 4.8
 </td>
 </tr>
 <tr class="center">
@@ -728,31 +737,31 @@ MeD
 mean
 </th>
 <td>
-3.8
+ 4.19
 </td>
 <td>
-5.5
+ 5.40
 </td>
 <td>
-2.1
+2.04
 </td>
 <td>
-1.3
+1.31
 </td>
 <td>
-1.2
+1.20
 </td>
 <td>
-0.8
+0.83
 </td>
 <td>
-0.4
+0.43
 </td>
 <td>
-1.0
+0.99
 </td>
 <td>
-0.8
+0.79
 </td>
 </tr>
 <tr class="center">
@@ -763,10 +772,10 @@ mean
 CI
 </th>
 <td>
-2.9 - 4.8
+3.2 - 5.2
 </td>
 <td>
-4.3 - 6.6
+4.3 - 6.5
 </td>
 <td>
 1.4 - 2.7
@@ -778,13 +787,13 @@ CI
 0.7 - 1.7
 </td>
 <td>
-0.4 - 1.3
+0.4 - 1.2
 </td>
 <td>
 0.1 - 0.8
 </td>
 <td>
-0.5 - 1.5
+0.5 - 1.4
 </td>
 <td>
 0.4 - 1.2
@@ -798,31 +807,31 @@ HiD
 mean
 </th>
 <td>
-6.8
+ 7.30
 </td>
 <td>
-2.5
+ 2.42
 </td>
 <td>
-2.6
+2.55
 </td>
 <td>
-0.6
+0.60
 </td>
 <td>
-0.3
+0.32
 </td>
 <td>
-0.6
+0.62
 </td>
 <td>
-0.1
+0.07
 </td>
 <td>
-0.2
+0.20
 </td>
 <td>
-0.2
+0.24
 </td>
 </tr>
 <tr class="center">
@@ -833,31 +842,31 @@ mean
 CI
 </th>
 <td>
-5.4 - 8.2
+5.9 - 8.7
 </td>
 <td>
-1.7 - 3.2
+1.7 - 3.1
 </td>
 <td>
-1.7 - 3.5
+1.6 - 3.5
 </td>
 <td>
-0.3 - 1.0
+0.3 - 1
 </td>
 <td>
-0.0 - 0.6
+0 - 0.6
 </td>
 <td>
-0.3 - 1.0
+0.3 - 1
 </td>
 <td>
-0.0 - 0.2
+0 - 0.2
 </td>
 <td>
-0.0 - 0.4
+0 - 0.4
 </td>
 <td>
-0.0 - 0.4
+0 - 0.4
 </td>
 </tr>
 </tbody>
@@ -939,31 +948,31 @@ LoD
 mean
 </th>
 <td>
-16.0
+16.18
 </td>
 <td>
-18.8
+18.43
 </td>
 <td>
-7.8
+7.61
 </td>
 <td>
-2.8
+2.76
 </td>
 <td>
-6.9
+6.77
 </td>
 <td>
-3.5
+3.45
 </td>
 <td>
-1.2
+1.14
 </td>
 <td>
-3.4
+3.38
 </td>
 <td>
-1.7
+1.69
 </td>
 </tr>
 <tr class="center">
@@ -974,31 +983,31 @@ mean
 CI
 </th>
 <td>
-14.2 - 17.8
+14.3 - 18
 </td>
 <td>
-16.7 - 20.9
+16.4 - 20.5
 </td>
 <td>
-6.5 - 9.1
+6.3 - 8.9
 </td>
 <td>
-1.9 - 3.7
+1.9 - 3.6
 </td>
 <td>
-5.7 - 8.1
-</td>
-<td>
-2.7 - 4.4
-</td>
-<td>
-0.6 - 1.7
+5.6 - 7.9
 </td>
 <td>
 2.6 - 4.3
 </td>
 <td>
-1.1 - 2.4
+0.6 - 1.7
+</td>
+<td>
+2.6 - 4.2
+</td>
+<td>
+1.1 - 2.3
 </td>
 </tr>
 <tr class="center">
@@ -1009,31 +1018,31 @@ MeD
 mean
 </th>
 <td>
-5.6
+ 6.01
 </td>
 <td>
-4.8
+ 4.67
 </td>
 <td>
-2.4
+2.40
 </td>
 <td>
-0.9
+0.84
 </td>
 <td>
-1.4
+1.41
 </td>
 <td>
-1.1
+1.05
 </td>
 <td>
-0.3
+0.32
 </td>
 <td>
-0.4
+0.42
 </td>
 <td>
-0.6
+0.59
 </td>
 </tr>
 <tr class="center">
@@ -1044,31 +1053,31 @@ mean
 CI
 </th>
 <td>
-4.5 - 6.7
+4.9 - 7.1
 </td>
 <td>
-3.8 - 5.7
+3.7 - 5.6
 </td>
 <td>
-1.8 - 3.1
+1.7 - 3.1
 </td>
 <td>
-0.5 - 1.2
+0.4 - 1.2
 </td>
 <td>
-0.9 - 2.0
+0.9 - 1.9
 </td>
 <td>
 0.6 - 1.5
 </td>
 <td>
-0.0 - 0.6
+0 - 0.6
 </td>
 <td>
 0.1 - 0.7
 </td>
 <td>
-0.2 - 1.0
+0.2 - 1
 </td>
 </tr>
 <tr class="center">
@@ -1079,31 +1088,31 @@ HiD
 mean
 </th>
 <td>
-11.0
+11.65
 </td>
 <td>
-2.4
+ 2.34
 </td>
 <td>
-4.2
+4.13
 </td>
 <td>
-0.7
+0.69
 </td>
 <td>
-0.3
+0.28
 </td>
 <td>
-0.9
+0.84
 </td>
 <td>
-0.5
+0.48
 </td>
 <td>
-0.3
+0.29
 </td>
 <td>
-0.2
+0.18
 </td>
 </tr>
 <tr class="center">
@@ -1114,16 +1123,16 @@ mean
 CI
 </th>
 <td>
-9.3 - 12.6
+10 - 13.3
 </td>
 <td>
-1.7 - 3.0
+1.7 - 3
 </td>
 <td>
-3.3 - 5.1
+3.2 - 5
 </td>
 <td>
-0.3 - 1.1
+0.3 - 1
 </td>
 <td>
 0.1 - 0.5
@@ -1132,13 +1141,13 @@ CI
 0.4 - 1.3
 </td>
 <td>
-0.2 - 0.8
+0.1 - 0.8
 </td>
 <td>
 0.1 - 0.5
 </td>
 <td>
-0.0 - 0.3
+0 - 0.3
 </td>
 </tr>
 </tbody>
@@ -1195,13 +1204,13 @@ LoD
 mean
 </th>
 <td>
-19.0
+19.46
 </td>
 <td>
-30.0
+29.18
 </td>
 <td>
-13.7
+13.35
 </td>
 </tr>
 <tr class="center">
@@ -1215,13 +1224,13 @@ mean
 CI
 </th>
 <td>
-16.4 - 21.7
+16.9 - 22
 </td>
 <td>
-27.3 - 32.7
+26.5 - 31.9
 </td>
 <td>
-11.8 - 15.6
+11.5 - 15.2
 </td>
 </tr>
 <tr class="center">
@@ -1235,13 +1244,13 @@ MeD
 mean
 </th>
 <td>
-6.4
+ 6.72
 </td>
 <td>
-7.7
+ 7.46
 </td>
 <td>
-4.9
+ 4.73
 </td>
 </tr>
 <tr class="center">
@@ -1255,13 +1264,13 @@ mean
 CI
 </th>
 <td>
-5.2 - 7.6
+5.5 - 7.9
 </td>
 <td>
-6.4 - 8.9
+6.3 - 8.7
 </td>
 <td>
-3.8 - 6.0
+3.7 - 5.8
 </td>
 </tr>
 <tr class="center">
@@ -1275,13 +1284,13 @@ HiD
 mean
 </th>
 <td>
-10.7
+11.64
 </td>
 <td>
-3.5
+ 3.37
 </td>
 <td>
-4.2
+ 4.09
 </td>
 </tr>
 <tr class="center">
@@ -1295,13 +1304,13 @@ mean
 CI
 </th>
 <td>
-9.0 - 12.3
+9.9 - 13.4
 </td>
 <td>
-2.5 - 4.4
+2.5 - 4.3
 </td>
 <td>
-3.1 - 5.3
+3.1 - 5.1
 </td>
 </tr>
 <tr class="center">
@@ -1315,13 +1324,13 @@ LoD
 mean
 </th>
 <td>
-20.2
+20.50
 </td>
 <td>
-33.7
+33.07
 </td>
 <td>
-13.7
+13.39
 </td>
 </tr>
 <tr class="center">
@@ -1335,13 +1344,13 @@ mean
 CI
 </th>
 <td>
-17.6 - 22.7
+18 - 23
 </td>
 <td>
-30.9 - 36.6
+30.2 - 36
 </td>
 <td>
-11.7 - 15.6
+11.5 - 15.3
 </td>
 </tr>
 <tr class="center">
@@ -1355,13 +1364,13 @@ MeD
 mean
 </th>
 <td>
-5.9
+ 6.31
 </td>
 <td>
-7.7
+ 7.57
 </td>
 <td>
-3.4
+ 3.30
 </td>
 </tr>
 <tr class="center">
@@ -1375,13 +1384,13 @@ mean
 CI
 </th>
 <td>
-4.6 - 7.2
+5 - 7.7
 </td>
 <td>
-6.3 - 9.2
+6.2 - 9
 </td>
 <td>
-2.5 - 4.2
+2.4 - 4.2
 </td>
 </tr>
 <tr class="center">
@@ -1395,13 +1404,13 @@ HiD
 mean
 </th>
 <td>
-8.5
+ 9.07
 </td>
 <td>
-3.2
+ 3.15
 </td>
 <td>
-3.7
+ 3.63
 </td>
 </tr>
 <tr class="center">
@@ -1415,13 +1424,13 @@ mean
 CI
 </th>
 <td>
-6.9 - 10.2
+7.4 - 10.8
 </td>
 <td>
-2.3 - 4.1
+2.3 - 4
 </td>
 <td>
-2.5 - 4.9
+2.5 - 4.8
 </td>
 </tr>
 <tr class="center">
@@ -1435,13 +1444,13 @@ LoD
 mean
 </th>
 <td>
-20.6
+20.69
 </td>
 <td>
-28.1
+27.54
 </td>
 <td>
-12.3
+12.09
 </td>
 </tr>
 <tr class="center">
@@ -1455,13 +1464,13 @@ mean
 CI
 </th>
 <td>
-18.4 - 22.7
+18.5 - 22.8
 </td>
 <td>
-25.5 - 30.7
+25 - 30.1
 </td>
 <td>
-10.6 - 14.1
+10.4 - 13.8
 </td>
 </tr>
 <tr class="center">
@@ -1475,13 +1484,13 @@ MeD
 mean
 </th>
 <td>
-7.1
+ 7.48
 </td>
 <td>
-6.8
+ 6.65
 </td>
 <td>
-3.8
+ 3.77
 </td>
 </tr>
 <tr class="center">
@@ -1495,13 +1504,13 @@ mean
 CI
 </th>
 <td>
-5.8 - 8.3
+6.2 - 8.8
 </td>
 <td>
-5.6 - 7.9
+5.5 - 7.8
 </td>
 <td>
-2.9 - 4.8
+2.9 - 4.7
 </td>
 </tr>
 <tr class="center">
@@ -1515,13 +1524,13 @@ HiD
 mean
 </th>
 <td>
-12.8
+13.48
 </td>
 <td>
-2.9
+ 2.87
 </td>
 <td>
-5.6
+ 5.44
 </td>
 </tr>
 <tr class="center">
@@ -1535,13 +1544,13 @@ mean
 CI
 </th>
 <td>
-11.0 - 14.5
+11.7 - 15.3
 </td>
 <td>
-2.2 - 3.7
+2.1 - 3.6
 </td>
 <td>
-4.4 - 6.7
+4.3 - 6.6
 </td>
 </tr>
 </tbody>
@@ -1578,19 +1587,19 @@ Farm Size
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -1603,19 +1612,19 @@ divf. comm.
 mean
 </th>
 <td>
-14.2
+14.65
 </td>
 <td>
-20.7
+21.74
 </td>
 <td>
-18.5
+18.04
 </td>
 <td>
-7.4
+7.19
 </td>
 <td>
-6.2
+6.02
 </td>
 </tr>
 <tr class="center">
@@ -1626,19 +1635,19 @@ mean
 CI
 </th>
 <td>
-12.0 - 16.4
+12.5 - 16.8
 </td>
 <td>
-18.6 - 22.8
+19.6 - 23.9
 </td>
 <td>
-16.3 - 20.6
+15.9 - 20.1
 </td>
 <td>
-6.1 - 8.6
+5.9 - 8.4
 </td>
 <td>
-4.9 - 7.4
+4.8 - 7.3
 </td>
 </tr>
 <tr class="center">
@@ -1649,19 +1658,19 @@ CI
 mean
 </th>
 <td>
-2.5
+ 2.39
 </td>
 <td>
-3.9
+ 3.82
 </td>
 <td>
-7.7
+ 7.50
 </td>
 <td>
-4.6
+4.50
 </td>
 <td>
-1.7
+1.71
 </td>
 </tr>
 <tr class="center">
@@ -1672,19 +1681,19 @@ mean
 CI
 </th>
 <td>
-1.7 - 3.2
+1.6 - 3.1
 </td>
 <td>
-3.0 - 4.9
+2.9 - 4.7
 </td>
 <td>
-6.5 - 8.9
+6.3 - 8.7
 </td>
 <td>
-3.6 - 5.7
+3.5 - 5.5
 </td>
 <td>
-1.2 - 2.3
+1.2 - 2.2
 </td>
 </tr>
 <tr class="center">
@@ -1695,19 +1704,19 @@ CI
 mean
 </th>
 <td>
-1.4
+ 1.40
 </td>
 <td>
-2.2
+ 2.11
 </td>
 <td>
-4.6
+ 4.48
 </td>
 <td>
-3.4
+3.36
 </td>
 <td>
-1.1
+1.09
 </td>
 </tr>
 <tr class="center">
@@ -1721,16 +1730,16 @@ CI
 0.7 - 2.1
 </td>
 <td>
-1.5 - 2.8
+1.5 - 2.7
 </td>
 <td>
-3.6 - 5.6
+3.5 - 5.5
 </td>
 <td>
-2.6 - 4.3
+2.5 - 4.2
 </td>
 <td>
-0.7 - 1.6
+0.6 - 1.5
 </td>
 </tr>
 </tbody>
@@ -1758,19 +1767,19 @@ Farm Size
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -1783,19 +1792,19 @@ divf. comm.
 mean
 </th>
 <td>
-15.3
+15.65
 </td>
 <td>
-18.6
+19.31
 </td>
 <td>
-21.6
+21.24
 </td>
 <td>
-7.4
+7.30
 </td>
 <td>
-4.7
+4.59
 </td>
 </tr>
 <tr class="center">
@@ -1806,19 +1815,19 @@ mean
 CI
 </th>
 <td>
-13.1 - 17.4
+13.5 - 17.8
 </td>
 <td>
-16.4 - 20.7
+17.1 - 21.5
 </td>
 <td>
-19.3 - 23.9
+18.9 - 23.6
 </td>
 <td>
-6.1 - 8.8
+6 - 8.6
 </td>
 <td>
-3.5 - 5.9
+3.4 - 5.8
 </td>
 </tr>
 <tr class="center">
@@ -1829,19 +1838,19 @@ CI
 mean
 </th>
 <td>
-2.2
+ 2.21
 </td>
 <td>
-3.5
+ 3.43
 </td>
 <td>
-7.7
+ 7.57
 </td>
 <td>
-4.4
+4.37
 </td>
 <td>
-1.5
+1.45
 </td>
 </tr>
 <tr class="center">
@@ -1852,19 +1861,19 @@ mean
 CI
 </th>
 <td>
-1.6 - 2.9
+1.6 - 2.8
 </td>
 <td>
-2.5 - 4.5
+2.4 - 4.4
 </td>
 <td>
-6.3 - 9.1
+6.2 - 8.9
 </td>
 <td>
 3.3 - 5.5
 </td>
 <td>
-0.9 - 2.0
+0.9 - 2
 </td>
 </tr>
 <tr class="center">
@@ -1875,19 +1884,19 @@ CI
 mean
 </th>
 <td>
-1.9
+ 1.83
 </td>
 <td>
-1.7
+ 1.68
 </td>
 <td>
-4.5
+ 4.47
 </td>
 <td>
-3.9
+3.86
 </td>
 <td>
-1.0
+1.03
 </td>
 </tr>
 <tr class="center">
@@ -1898,16 +1907,16 @@ mean
 CI
 </th>
 <td>
-1.2 - 2.5
+1.2 - 2.4
 </td>
 <td>
-1.1 - 2.4
+1 - 2.3
 </td>
 <td>
-3.4 - 5.7
+3.3 - 5.6
 </td>
 <td>
-2.9 - 4.9
+2.9 - 4.8
 </td>
 <td>
 0.6 - 1.5
@@ -1938,19 +1947,19 @@ Farm Size
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -1963,19 +1972,19 @@ divf. comm.
 mean
 </th>
 <td>
-16.0
+16.18
 </td>
 <td>
-23.7
+24.67
 </td>
 <td>
-18.8
+18.43
 </td>
 <td>
-7.8
+7.61
 </td>
 <td>
-6.7
+6.53
 </td>
 </tr>
 <tr class="center">
@@ -1986,19 +1995,19 @@ mean
 CI
 </th>
 <td>
-14.2 - 17.8
+14.3 - 18
 </td>
 <td>
-21.6 - 25.8
+22.5 - 26.9
 </td>
 <td>
-16.7 - 20.9
+16.4 - 20.5
 </td>
 <td>
-6.5 - 9.1
+6.3 - 8.9
 </td>
 <td>
-5.5 - 7.9
+5.4 - 7.7
 </td>
 </tr>
 <tr class="center">
@@ -2009,19 +2018,19 @@ CI
 mean
 </th>
 <td>
-2.8
+ 2.76
 </td>
 <td>
-3.3
+ 3.22
 </td>
 <td>
-6.9
+ 6.77
 </td>
 <td>
-3.5
+3.45
 </td>
 <td>
-1.9
+1.89
 </td>
 </tr>
 <tr class="center">
@@ -2032,16 +2041,16 @@ mean
 CI
 </th>
 <td>
-1.9 - 3.7
+1.9 - 3.6
 </td>
 <td>
-2.5 - 4.1
+2.5 - 4
 </td>
 <td>
-5.7 - 8.1
+5.6 - 7.9
 </td>
 <td>
-2.7 - 4.4
+2.6 - 4.3
 </td>
 <td>
 1.3 - 2.5
@@ -2055,19 +2064,19 @@ CI
 mean
 </th>
 <td>
-1.2
+ 1.14
 </td>
 <td>
-1.5
+ 1.51
 </td>
 <td>
-3.4
+ 3.38
 </td>
 <td>
-1.7
+1.69
 </td>
 <td>
-0.8
+0.76
 </td>
 </tr>
 <tr class="center">
@@ -2084,10 +2093,10 @@ CI
 0.9 - 2.1
 </td>
 <td>
-2.6 - 4.3
+2.6 - 4.2
 </td>
 <td>
-1.1 - 2.4
+1.1 - 2.3
 </td>
 <td>
 0.4 - 1.2
@@ -2119,19 +2128,19 @@ Year
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -2144,19 +2153,19 @@ divf. comm.
 mean
 </th>
 <td>
-9.1
+19.46
 </td>
 <td>
-30.0
+29.18
 </td>
 <td>
-13.7
+29.18
 </td>
 <td>
-19.0
+13.35
 </td>
 <td>
-28.2
+8.83
 </td>
 </tr>
 <tr class="center">
@@ -2167,19 +2176,19 @@ mean
 CI
 </th>
 <td>
-7.5 - 10.6
+16.9 - 22
 </td>
 <td>
-27.3 - 32.7
+26.6 - 31.8
 </td>
 <td>
-11.8 - 15.6
+26.5 - 31.9
 </td>
 <td>
-16.4 - 21.7
+11.5 - 15.2
 </td>
 <td>
-25.7 - 30.8
+7.3 - 10.3
 </td>
 </tr>
 <tr class="center">
@@ -2190,19 +2199,19 @@ CI
 mean
 </th>
 <td>
-7.1
+20.50
 </td>
 <td>
-33.7
+26.10
 </td>
 <td>
-13.7
+33.07
 </td>
 <td>
-20.2
+13.39
 </td>
 <td>
-25.4
+6.93
 </td>
 </tr>
 <tr class="center">
@@ -2213,19 +2222,19 @@ mean
 CI
 </th>
 <td>
-5.6 - 8.6
+18 - 23
 </td>
 <td>
-30.9 - 36.6
+23.4 - 28.8
 </td>
 <td>
-11.7 - 15.6
+30.2 - 36
 </td>
 <td>
-17.6 - 22.7
+11.5 - 15.3
 </td>
 <td>
-22.8 - 28.0
+5.5 - 8.4
 </td>
 </tr>
 <tr class="center">
@@ -2236,19 +2245,19 @@ CI
 mean
 </th>
 <td>
-9.4
+20.69
 </td>
 <td>
-28.1
+30.48
 </td>
 <td>
-12.3
+27.54
 </td>
 <td>
-20.6
+12.09
 </td>
 <td>
-29.5
+9.20
 </td>
 </tr>
 <tr class="center">
@@ -2259,19 +2268,19 @@ mean
 CI
 </th>
 <td>
-7.9 - 10.9
+18.5 - 22.8
 </td>
 <td>
-25.5 - 30.7
+28.1 - 32.8
 </td>
 <td>
-10.6 - 14.1
+25 - 30.1
 </td>
 <td>
-18.4 - 22.7
+10.4 - 13.8
 </td>
 <td>
-27.2 - 31.9
+7.7 - 10.7
 </td>
 </tr>
 </tbody>
@@ -2317,19 +2326,19 @@ Quadrant
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -2342,19 +2351,19 @@ agpot-lo / mkt-lo
 mean
 </th>
 <td>
-6.3
+6.51
 </td>
 <td>
-8.4
+8.58
 </td>
 <td>
-11.9
+11.64
 </td>
 <td>
-4.5
+4.37
 </td>
 <td>
-2.6
+2.55
 </td>
 </tr>
 <tr class="center">
@@ -2365,19 +2374,19 @@ mean
 CI
 </th>
 <td>
-4.5 - 8.1
+4.7 - 8.3
 </td>
 <td>
-6.6 - 10.1
+6.8 - 10.4
 </td>
 <td>
-9.5 - 14.3
+9.3 - 14
 </td>
 <td>
-3.2 - 5.7
+3.2 - 5.6
 </td>
 <td>
-1.6 - 3.6
+1.6 - 3.5
 </td>
 </tr>
 <tr class="center">
@@ -2388,19 +2397,19 @@ agpot-lo / mkt-hi
 mean
 </th>
 <td>
-1.8
+1.87
 </td>
 <td>
-3.9
+4.00
 </td>
 <td>
-3.0
+ 2.92
 </td>
 <td>
-2.0
+1.94
 </td>
 <td>
-1.3
+1.30
 </td>
 </tr>
 <tr class="center">
@@ -2411,19 +2420,19 @@ mean
 CI
 </th>
 <td>
-1.0 - 2.6
+1.1 - 2.7
 </td>
 <td>
-2.4 - 5.5
+2.5 - 5.5
 </td>
 <td>
-1.6 - 4.4
+1.6 - 4.3
 </td>
 <td>
-1.1 - 2.9
+1 - 2.8
 </td>
 <td>
-0.6 - 2.0
+0.6 - 2
 </td>
 </tr>
 <tr class="center">
@@ -2434,19 +2443,19 @@ agpot-hi / mkt-lo
 mean
 </th>
 <td>
-6.4
+6.51
 </td>
 <td>
-8.1
+8.27
 </td>
 <td>
-11.2
+10.91
 </td>
 <td>
-7.2
+6.99
 </td>
 <td>
-3.2
+3.10
 </td>
 </tr>
 <tr class="center">
@@ -2457,19 +2466,19 @@ mean
 CI
 </th>
 <td>
-4.6 - 8.3
+4.7 - 8.3
 </td>
 <td>
-6.3 - 9.9
+6.5 - 10.1
 </td>
 <td>
-8.9 - 13.4
+8.7 - 13.1
 </td>
 <td>
-5.4 - 9.0
+5.2 - 8.7
 </td>
 <td>
-2.3 - 4.0
+2.3 - 3.9
 </td>
 </tr>
 <tr class="center">
@@ -2480,19 +2489,19 @@ agpot-hi / mkt-hi
 mean
 </th>
 <td>
-3.5
+3.55
 </td>
 <td>
-6.4
+6.82
 </td>
 <td>
-4.7
+ 4.56
 </td>
 <td>
-1.8
+1.75
 </td>
 <td>
-1.9
+1.87
 </td>
 </tr>
 <tr class="center">
@@ -2503,19 +2512,19 @@ mean
 CI
 </th>
 <td>
-1.9 - 5.2
+2 - 5.1
 </td>
 <td>
-4.5 - 8.4
+4.9 - 8.8
 </td>
 <td>
-3.1 - 6.3
+3 - 6.1
 </td>
 <td>
-1.0 - 2.6
+1 - 2.5
 </td>
 <td>
-1.2 - 2.7
+1.1 - 2.6
 </td>
 </tr>
 </tbody>
@@ -2543,19 +2552,19 @@ Quadrant
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -2568,19 +2577,19 @@ agpot-lo / mkt-lo
 mean
 </th>
 <td>
-6.5
+6.73
 </td>
 <td>
-7.4
+7.55
 </td>
 <td>
-13.0
+12.80
 </td>
 <td>
-3.9
+3.80
 </td>
 <td>
-1.7
+1.66
 </td>
 </tr>
 <tr class="center">
@@ -2591,19 +2600,19 @@ mean
 CI
 </th>
 <td>
-4.8 - 8.2
+5 - 8.5
 </td>
 <td>
-5.5 - 9.3
+5.5 - 9.6
 </td>
 <td>
-10.2 - 15.9
+10 - 15.6
 </td>
 <td>
-2.8 - 5.0
+2.7 - 4.9
 </td>
 <td>
-0.9 - 2.5
+0.9 - 2.4
 </td>
 </tr>
 <tr class="center">
@@ -2614,19 +2623,19 @@ agpot-lo / mkt-hi
 mean
 </th>
 <td>
-2.6
+2.56
 </td>
 <td>
-3.4
+3.53
 </td>
 <td>
-3.8
+ 3.77
 </td>
 <td>
-2.2
+2.12
 </td>
 <td>
-0.8
+0.80
 </td>
 </tr>
 <tr class="center">
@@ -2640,10 +2649,10 @@ CI
 1.3 - 3.8
 </td>
 <td>
-2.0 - 4.8
+2.1 - 4.9
 </td>
 <td>
-2.2 - 5.5
+2.1 - 5.4
 </td>
 <td>
 1.1 - 3.2
@@ -2660,19 +2669,19 @@ agpot-hi / mkt-lo
 mean
 </th>
 <td>
-6.0
+6.01
 </td>
 <td>
-7.8
+7.99
 </td>
 <td>
-11.8
+11.60
 </td>
 <td>
-7.0
+6.91
 </td>
 <td>
-3.4
+3.36
 </td>
 </tr>
 <tr class="center">
@@ -2686,16 +2695,16 @@ CI
 4.2 - 7.8
 </td>
 <td>
-6.0 - 9.7
+6.1 - 9.8
 </td>
 <td>
-9.2 - 14.4
+9.1 - 14.1
 </td>
 <td>
-5.3 - 8.7
+5.2 - 8.6
 </td>
 <td>
-2.4 - 4.5
+2.3 - 4.4
 </td>
 </tr>
 <tr class="center">
@@ -2706,19 +2715,19 @@ agpot-hi / mkt-hi
 mean
 </th>
 <td>
-4.3
+4.40
 </td>
 <td>
-5.1
+5.36
 </td>
 <td>
-5.2
+ 5.11
 </td>
 <td>
-2.7
+2.70
 </td>
 <td>
-1.3
+1.24
 </td>
 </tr>
 <tr class="center">
@@ -2729,19 +2738,19 @@ mean
 CI
 </th>
 <td>
-2.6 - 6.0
+2.7 - 6.1
 </td>
 <td>
-3.5 - 6.8
+3.7 - 7
 </td>
 <td>
-3.4 - 7.0
+3.3 - 6.9
 </td>
 <td>
-1.6 - 3.9
+1.6 - 3.8
 </td>
 <td>
-0.6 - 1.9
+0.6 - 1.8
 </td>
 </tr>
 </tbody>
@@ -2769,19 +2778,19 @@ Quadrant
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -2794,19 +2803,19 @@ agpot-lo / mkt-lo
 mean
 </th>
 <td>
-7.5
+7.51
 </td>
 <td>
-8.0
+8.06
 </td>
 <td>
-9.8
+9.64
 </td>
 <td>
-3.3
+3.25
 </td>
 <td>
-2.4
+2.31
 </td>
 </tr>
 <tr class="center">
@@ -2817,16 +2826,16 @@ mean
 CI
 </th>
 <td>
-5.7 - 9.3
+5.8 - 9.3
 </td>
 <td>
-6.1 - 9.8
+6.2 - 9.9
 </td>
 <td>
-7.7 - 12.0
+7.5 - 11.7
 </td>
 <td>
-2.2 - 4.5
+2.1 - 4.4
 </td>
 <td>
 1.5 - 3.2
@@ -2840,19 +2849,19 @@ agpot-lo / mkt-hi
 mean
 </th>
 <td>
-2.3
+2.34
 </td>
 <td>
-4.7
+5.02
 </td>
 <td>
-3.7
+3.65
 </td>
 <td>
-1.2
+1.22
 </td>
 <td>
-1.5
+1.46
 </td>
 </tr>
 <tr class="center">
@@ -2863,16 +2872,16 @@ mean
 CI
 </th>
 <td>
-1.2 - 3.4
+1.3 - 3.4
 </td>
 <td>
-3.1 - 6.3
+3.4 - 6.6
 </td>
 <td>
-2.1 - 5.3
+2.1 - 5.2
 </td>
 <td>
-0.6 - 1.9
+0.6 - 1.8
 </td>
 <td>
 0.7 - 2.2
@@ -2886,19 +2895,19 @@ agpot-hi / mkt-lo
 mean
 </th>
 <td>
-6.1
+6.10
 </td>
 <td>
-8.2
+8.23
 </td>
 <td>
-9.6
+9.41
 </td>
 <td>
-6.1
+6.00
 </td>
 <td>
-3.4
+3.36
 </td>
 </tr>
 <tr class="center">
@@ -2912,13 +2921,13 @@ CI
 4.3 - 7.9
 </td>
 <td>
-6.2 - 10.1
+6.3 - 10.2
 </td>
 <td>
-7.4 - 11.7
+7.3 - 11.5
 </td>
 <td>
-4.5 - 7.7
+4.4 - 7.6
 </td>
 <td>
 2.4 - 4.4
@@ -2932,19 +2941,19 @@ agpot-hi / mkt-hi
 mean
 </th>
 <td>
-4.0
+4.12
 </td>
 <td>
-7.6
+8.09
 </td>
 <td>
-6.0
+5.87
 </td>
 <td>
-2.3
+2.28
 </td>
 <td>
-2.1
+2.06
 </td>
 </tr>
 <tr class="center">
@@ -2955,19 +2964,19 @@ mean
 CI
 </th>
 <td>
-2.6 - 5.4
+2.7 - 5.6
 </td>
 <td>
-5.8 - 9.4
+6.2 - 10
 </td>
 <td>
-4.1 - 7.9
+4.1 - 7.7
 </td>
 <td>
 1.4 - 3.2
 </td>
 <td>
-1.3 - 2.9
+1.2 - 2.9
 </td>
 </tr>
 </tbody>
@@ -3004,19 +3013,19 @@ Quadrant
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -3029,19 +3038,19 @@ agpot-lo / mkt-lo
 mean
 </th>
 <td>
-6.5
+6.71
 </td>
 <td>
-9.0
+9.23
 </td>
 <td>
-11.6
+11.29
 </td>
 <td>
-4.1
+3.95
 </td>
 <td>
-2.6
+2.50
 </td>
 </tr>
 <tr class="center">
@@ -3052,19 +3061,19 @@ mean
 CI
 </th>
 <td>
-4.5 - 8.4
+4.8 - 8.6
 </td>
 <td>
-7.1 - 10.9
+7.2 - 11.2
 </td>
 <td>
-9.1 - 14.1
+8.8 - 13.7
 </td>
 <td>
-2.9 - 5.3
+2.8 - 5.1
 </td>
 <td>
-1.5 - 3.7
+1.4 - 3.6
 </td>
 </tr>
 <tr class="center">
@@ -3075,19 +3084,19 @@ agpot-lo / mkt-hi
 mean
 </th>
 <td>
-2.0
+2.14
 </td>
 <td>
-4.1
+4.15
 </td>
 <td>
-3.2
+ 3.11
 </td>
 <td>
-2.1
+2.00
 </td>
 <td>
-1.5
+1.47
 </td>
 </tr>
 <tr class="center">
@@ -3098,16 +3107,16 @@ mean
 CI
 </th>
 <td>
-1.1 - 3.0
+1.2 - 3.1
 </td>
 <td>
-2.5 - 5.6
+2.6 - 5.7
 </td>
 <td>
-1.7 - 4.7
+1.6 - 4.6
 </td>
 <td>
-1.1 - 3.0
+1 - 3
 </td>
 <td>
 0.7 - 2.3
@@ -3121,19 +3130,19 @@ agpot-hi / mkt-lo
 mean
 </th>
 <td>
-6.6
+6.73
 </td>
 <td>
-8.4
+8.59
 </td>
 <td>
-10.0
+ 9.73
 </td>
 <td>
-5.8
+5.68
 </td>
 <td>
-3.1
+2.98
 </td>
 </tr>
 <tr class="center">
@@ -3144,19 +3153,19 @@ mean
 CI
 </th>
 <td>
-4.6 - 8.7
+4.7 - 8.7
 </td>
 <td>
-6.3 - 10.4
+6.6 - 10.6
 </td>
 <td>
-7.8 - 12.2
+7.6 - 11.8
 </td>
 <td>
-4.2 - 7.4
+4.1 - 7.2
 </td>
 <td>
-2.2 - 3.9
+2.1 - 3.8
 </td>
 </tr>
 <tr class="center">
@@ -3167,19 +3176,19 @@ agpot-hi / mkt-hi
 mean
 </th>
 <td>
-3.9
+3.88
 </td>
 <td>
-6.8
+7.22
 </td>
 <td>
-5.2
+ 5.05
 </td>
 <td>
-1.8
+1.71
 </td>
 <td>
-1.9
+1.88
 </td>
 </tr>
 <tr class="center">
@@ -3190,19 +3199,19 @@ mean
 CI
 </th>
 <td>
-2.1 - 5.7
+2.2 - 5.6
 </td>
 <td>
-4.7 - 8.9
+5.1 - 9.3
 </td>
 <td>
-3.4 - 7.0
+3.3 - 6.8
 </td>
 <td>
-0.9 - 2.6
+0.9 - 2.5
 </td>
 <td>
-1.2 - 2.7
+1.1 - 2.6
 </td>
 </tr>
 </tbody>
@@ -3230,19 +3239,19 @@ Quadrant
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -3255,19 +3264,19 @@ agpot-lo / mkt-lo
 mean
 </th>
 <td>
-6.7
+6.93
 </td>
 <td>
-8.2
+8.34
 </td>
 <td>
-13.1
+12.87
 </td>
 <td>
-3.4
+3.29
 </td>
 <td>
-1.5
+1.44
 </td>
 </tr>
 <tr class="center">
@@ -3278,19 +3287,19 @@ mean
 CI
 </th>
 <td>
-4.9 - 8.5
+5.1 - 8.8
 </td>
 <td>
-6.0 - 10.4
+6 - 10.6
 </td>
 <td>
-10.2 - 16.1
+10 - 15.8
 </td>
 <td>
-2.3 - 4.5
+2.2 - 4.4
 </td>
 <td>
-0.6 - 2.3
+0.6 - 2.2
 </td>
 </tr>
 <tr class="center">
@@ -3301,19 +3310,19 @@ agpot-lo / mkt-hi
 mean
 </th>
 <td>
-2.7
+2.68
 </td>
 <td>
-3.6
+3.74
 </td>
 <td>
-4.2
+ 4.15
 </td>
 <td>
-2.2
+2.19
 </td>
 <td>
-0.9
+0.92
 </td>
 </tr>
 <tr class="center">
@@ -3324,16 +3333,16 @@ mean
 CI
 </th>
 <td>
-1.4 - 4.0
+1.4 - 4
 </td>
 <td>
-2.2 - 5.1
+2.3 - 5.2
 </td>
 <td>
-2.4 - 6.0
+2.4 - 5.9
 </td>
 <td>
-1.0 - 3.4
+1 - 3.4
 </td>
 <td>
 0.4 - 1.5
@@ -3347,19 +3356,19 @@ agpot-hi / mkt-lo
 mean
 </th>
 <td>
-6.1
+6.07
 </td>
 <td>
-8.0
+8.16
 </td>
 <td>
-10.9
+10.72
 </td>
 <td>
-5.1
+4.96
 </td>
 <td>
-3.3
+3.26
 </td>
 </tr>
 <tr class="center">
@@ -3370,19 +3379,19 @@ mean
 CI
 </th>
 <td>
-4.1 - 8.0
+4.1 - 8
 </td>
 <td>
-6.0 - 10.0
+6.2 - 10.2
 </td>
 <td>
-8.4 - 13.5
+8.2 - 13.2
 </td>
 <td>
-3.6 - 6.5
+3.5 - 6.4
 </td>
 <td>
-2.2 - 4.4
+2.1 - 4.4
 </td>
 </tr>
 <tr class="center">
@@ -3393,19 +3402,19 @@ agpot-hi / mkt-hi
 mean
 </th>
 <td>
-4.7
+4.82
 </td>
 <td>
-5.6
+5.86
 </td>
 <td>
-5.4
+ 5.34
 </td>
 <td>
-3.0
+2.95
 </td>
 <td>
-1.3
+1.32
 </td>
 </tr>
 <tr class="center">
@@ -3416,19 +3425,19 @@ mean
 CI
 </th>
 <td>
-2.8 - 6.7
+2.9 - 6.7
 </td>
 <td>
-3.8 - 7.4
+4.1 - 7.6
 </td>
 <td>
-3.4 - 7.5
+3.4 - 7.3
 </td>
 <td>
-1.8 - 4.2
+1.8 - 4.1
 </td>
 <td>
-0.7 - 2.0
+0.7 - 1.9
 </td>
 </tr>
 </tbody>
@@ -3456,19 +3465,19 @@ Quadrant
 <th>
 </th>
 <th>
-subs.
+SUB
 </th>
 <th>
-trans.
+TRANS
 </th>
 <th>
-pre-comm.
+PRCOMM
 </th>
 <th>
-specd. comm.
+SPCOMM
 </th>
 <th>
-divf. comm.
+DIV
 </th>
 </tr>
 </thead>
@@ -3481,19 +3490,19 @@ agpot-lo / mkt-lo
 mean
 </th>
 <td>
-7.6
+7.61
 </td>
 <td>
-8.3
+8.36
 </td>
 <td>
-9.5
+9.35
 </td>
 <td>
-3.3
+3.25
 </td>
 <td>
-2.5
+2.41
 </td>
 </tr>
 <tr class="center">
@@ -3504,19 +3513,19 @@ mean
 CI
 </th>
 <td>
-5.9 - 9.4
+5.9 - 9.3
 </td>
 <td>
-6.3 - 10.3
+6.4 - 10.4
 </td>
 <td>
-7.4 - 11.7
+7.3 - 11.4
 </td>
 <td>
-2.2 - 4.5
+2.1 - 4.4
 </td>
 <td>
-1.6 - 3.4
+1.5 - 3.3
 </td>
 </tr>
 <tr class="center">
@@ -3527,19 +3536,19 @@ agpot-lo / mkt-hi
 mean
 </th>
 <td>
-2.4
+2.46
 </td>
 <td>
-4.8
+5.06
 </td>
 <td>
-3.7
+3.61
 </td>
 <td>
-1.4
+1.33
 </td>
 <td>
-1.4
+1.34
 </td>
 </tr>
 <tr class="center">
@@ -3553,16 +3562,16 @@ CI
 1.3 - 3.6
 </td>
 <td>
-3.2 - 6.3
+3.5 - 6.7
 </td>
 <td>
-2.1 - 5.3
+2.1 - 5.2
 </td>
 <td>
-0.7 - 2.0
+0.7 - 2
 </td>
 <td>
-0.7 - 2.1
+0.7 - 2
 </td>
 </tr>
 <tr class="center">
@@ -3573,19 +3582,19 @@ agpot-hi / mkt-lo
 mean
 </th>
 <td>
-6.4
+6.36
 </td>
 <td>
-8.4
+8.47
 </td>
 <td>
-8.7
+8.51
 </td>
 <td>
-5.3
+5.14
 </td>
 <td>
-3.4
+3.34
 </td>
 </tr>
 <tr class="center">
@@ -3599,16 +3608,16 @@ CI
 4.5 - 8.2
 </td>
 <td>
-6.4 - 10.4
+6.5 - 10.5
 </td>
 <td>
-6.6 - 10.8
+6.5 - 10.6
 </td>
 <td>
-3.8 - 6.7
+3.7 - 6.6
 </td>
 <td>
-2.3 - 4.5
+2.3 - 4.4
 </td>
 </tr>
 <tr class="center">
@@ -3619,19 +3628,19 @@ agpot-hi / mkt-hi
 mean
 </th>
 <td>
-4.2
+4.26
 </td>
 <td>
-8.1
+8.58
 </td>
 <td>
-6.2
+6.06
 </td>
 <td>
-2.4
+2.37
 </td>
 <td>
-2.2
+2.12
 </td>
 </tr>
 <tr class="center">
@@ -3642,19 +3651,19 @@ mean
 CI
 </th>
 <td>
-2.7 - 5.6
+2.8 - 5.7
 </td>
 <td>
-6.2 - 10.0
+6.6 - 10.6
 </td>
 <td>
-4.2 - 8.1
+4.2 - 8
 </td>
 <td>
-1.5 - 3.4
+1.4 - 3.3
 </td>
 <td>
-1.3 - 3.0
+1.3 - 3
 </td>
 </tr>
 </tbody>
@@ -3669,7 +3678,7 @@ CI
         </div>
       </div>
 <a href="ghana.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="clustering-of-farm-households.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

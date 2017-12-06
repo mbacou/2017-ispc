@@ -80,6 +80,7 @@ rtt100k <- raster("~/Maps/CELL5M/tt10_SSA_tiff/traveltimetomarket_ssa_100k.tif")
 # GAEZ suitability is coded from 1 to 9:
 # 0-no data, 1-very high (> 85%), 2-high (> 70%), 3-good (> 55%), 4-medium (> 40%), 
 # 5-moderate (> 25%), 6-marginal (> 10%), 7-very marginal (> 0%), 8-not suitable (0%), 9-water
+class5 <- c("SUB", "TRANS", "PRCOMM", "SPCOMM", "DIV")
 rquad <- crop(rgaez, rtt100k)*10 + (rtt100k <= 4)
 tmp <- c(
   10,10,3, 11,11,4, 20,20,3, 21,21,4, 30,30,3, 31,31,4, 40,40,3, 41,41,4,
@@ -170,6 +171,13 @@ setnames(gha,
 # Other fixes
 gha[, `:=`(clust_pam3 = NULL, clust_pam5 = NULL, clust_pam5_2var = NULL)]
 setnames(gha, "district", "district_cd")
+
+# set croparea_ha==0 for hhlds with aggross > 0
+gha[, sum(aggross>0), by=croparea==0]
+#    croparea    V1
+# 1:     TRUE  6086
+# 2:    FALSE 10679
+# OK we have hhlds with aggross but no land
 
 ```
 
@@ -1444,6 +1452,23 @@ ifpri[, .N, by=svyCode]
 # Done in `2017-agra-aasr` but might need revisions
 
 ##########################################
+# SHF 4ha dummy `croparea_4ha` (2-class)
+gha[, croparea_4ha := NULL]
+gha[, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
+summary(gha$croparea_4ha)
+# <= 4 ha  > 4 ha 
+#   28145    3312 
+
+##########################################
+# SHF 4ha dummy `croparea_3clas`
+gha[, croparea_3clas := NULL]
+gha[, max(croparea_imp, na.rm=T)]
+gha[, croparea_3clas := cut(croparea_imp, c(-1,2,4,106), labels=c("<= 2 ha", "2-4 ha", "> 4 ha"), ordered=T, right=F)]
+summary(gha$croparea_3clas)
+# <= 2 ha  2-4 ha  > 4 ha 
+#   22642    5503    3312  
+
+##########################################
 # CROP SALES
 # Options #1 `totcropsold`
 gha[, summary(totcropsold)] 
@@ -1484,15 +1509,6 @@ gha[, agsales_sh := shagprodsold]
 
 pplot(cropsales_sh~survey+croparea_4ha, gha)
 pplot(agsales_sh~survey+croparea_4ha, gha)
-
-
-##########################################
-# SHF 4ha dummy `croparea_4ha` (2-class)
-gha[, croparea_4ha := NULL]
-gha[croparea_imp>0, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
-summary(gha$croparea_4ha)
-# <= 4 ha  > 4 ha    NA's 
-#   15587    3312   12558 
 
 ##########################################
 # Crop commercialization dummy `cropsales_3clas`
@@ -1550,10 +1566,10 @@ summary(gha$class6)
 ##########################################
 # Farm classification dummy `class5`
 gha[, class5 := class6]
-levels(gha$class5) <- c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
+levels(gha$class5) <- class5[c(1,2,3,2,4,5)]
 summary(gha$class5)
-# subs.       trans.    pre-comm. specd. comm.  divf. comm.         NA's 
-# 2400        16019         4387         3762         2183         2706 
+#  SUB  TRANS PRCOMM SPCOMM    DIV   NA's 
+# 2400  16019   4387   3762   2183   2706
 
 ```
 
@@ -1625,22 +1641,32 @@ tza[shagprodsold>0, .N, by=.(wave, croparea_imp>0)]
 # Clean up
 tza[, `:=`(qtl=NULL, q=NULL)]
 
+# set croparea_ha==0 for hhlds with aggross > 0
+tza[, sum(aggross>0), by=!is.na(croparea_imp)]
+#    is.na   V1
+# 1:  TRUE 7606
+tza[, sum(aggross>0), by=croparea_imp==0]
+#    croparea   V1
+# 1:    FALSE 7292
+# 2:     TRUE  314
+# OK we have hhlds with aggross but no land
+
 ##########################################
 # SHF 4ha dummy `croparea_4ha` (2-class)
 tza[, croparea_4ha := NULL]
-tza[croparea_imp>0, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
+tza[, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
 summary(tza$croparea_4ha)
-# <= 4 ha  > 4 ha    NA's 
-#    7240     926    3997 
+# <= 4 ha  > 4 ha 
+#   11237     926 
 
 ##########################################
 # SHF 4ha dummy `croparea_3clas`
 tza[, croparea_3clas := NULL]
-tza[, max(croparea, na.rm=T)]
-tza[croparea_imp>0, croparea_3clas := cut(croparea_imp, c(-1,2,4,51), labels=c("<= 2 ha", "2-4 ha", "> 4 ha"), ordered=T, right=F)]
+tza[, max(croparea_imp, na.rm=T)]
+tza[, croparea_3clas := cut(croparea_imp, c(-1,2,4,51), labels=c("<= 2 ha", "2-4 ha", "> 4 ha"), ordered=T, right=F)]
 summary(tza$croparea_3clas)
-# <= 2 ha  2-4 ha  > 4 ha    NA's 
-#    5750    1490     926    3997 
+# <= 2 ha  2-4 ha  > 4 ha 
+#    9747    1490     926 
 
 
 ##########################################
@@ -1815,10 +1841,11 @@ summary(tza$class6)
 ##########################################
 # Farm classification dummy `class5`
 tza[, class5 := class6]
-levels(tza$class5) <- c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
+levels(tza$class5) <- class5[c(1,2,3,2,4,5)]
+  c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
 summary(tza$class5)
-# subs.       trans.    pre-comm. specd. comm.  divf. comm.         NA's 
-#  1384         3678         2105         1043          668         3285
+#  SUB  TRANS PRCOMM SPCOMM    DIV   NA's 
+# 1384   3678   2105   1043    668   3285
 
 
 ```
@@ -1864,22 +1891,32 @@ eth[cropsales_sh > 0, .N, by=.(wave, croparea_imp > 0)]
 # Clean up
 eth[, `:=`(qtl=NULL, q=NULL)]
 
+# set croparea_ha==0 for hhlds with aggross > 0
+eth[, sum(aggross>0), by=!is.na(croparea_imp)]
+#    is.na   V1
+# 1:  TRUE 7606
+eth[, sum(aggross>0), by=croparea_imp==0]
+#    croparea_imp   V1
+# 1:        FALSE 5911
+# 2:         TRUE 1184
+# OK we have hhlds with aggross but no land
+
 ##########################################
 # SHF 4ha dummy `croparea_4ha` (2-class)
 eth[, croparea_4ha := NULL]
-eth[croparea_imp > 0, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
+eth[, croparea_4ha := factor(croparea_imp <= 4, levels=c(T, F), labels=c("<= 4 ha", "> 4 ha"))]
 summary(eth$croparea_4ha)
-# <= 4 ha  > 4 ha    NA's 
-#    5999      80    3018 
+# <= 4 ha  > 4 ha 
+#    9017      80
 
 ##########################################
 # SHF 4ha dummy `croparea_3clas`
 eth[, croparea_3clas := NULL]
-eth[, max(croparea, na.rm=T)]
-eth[croparea_imp > 0, croparea_3clas := cut(croparea_imp, c(-1,2,4,51), labels=c("<= 2 ha", "2-4 ha", "> 4 ha"), ordered=T, right=F)]
+eth[, max(croparea_imp, na.rm=T)]
+eth[, croparea_3clas := cut(croparea_imp, c(-1,2,4,12), labels=c("<= 2 ha", "2-4 ha", "> 4 ha"), ordered=T, right=F)]
 summary(eth$croparea_3clas)
-# <= 2 ha  2-4 ha  > 4 ha    NA's 
-#    5404     595      80    3018 
+# <= 2 ha  2-4 ha  > 4 ha 
+#    8422     595      80 
 
 
 ##########################################
@@ -2026,81 +2063,34 @@ summary(eth$class6)
 ##########################################
 # Farm classification dummy `class5`
 eth[, class5 := class6]
-levels(eth$class5) <- c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
-Summary(eth$class5)
-# subs.       trans.    pre-comm. specd. comm.  divf. comm.         NA's 
-#   820          442         2100         1249          147         4339 
+levels(eth$class5) <- class5[c(1,2,3,2,4,5)]
+summary(eth$class5)
+# SUB  TRANS PRCOMM SPCOMM    DIV   NA's 
+# 820    442   2100   1249    147   4339 
 
-```
-
-```{r gha-table, eval=FALSE}
-
-# Need to generate results by wave, class5, rural, farm sizes, and margins
-gha.table <- 
-  # by wave
-  lapply(gha.svy.farm[1:2], function(x) {
-    # by farm size
-    lapply(levels(gha$croparea_4ha), function(i) {
-      svyCrossTab(list(
-        
-        # Demographics
-        ~hhsize_imp, ~agehead, ~I(100*femhead), ~I(100*widowhead), ~hhlabor,
-        ~educhead, ~educave15_60, ~educhigh,
-        ~I(100*ownhome), ~I(100*cellphone), ~I(100*telephone), ~I(100*electricity), 
-        ~distwater, ~distroad, ~distpost, ~distbank, ~disthealth,
-        # Land
-        ~landown, ~landshare, ~croparea_imp,
-        #~landrent,
-        # Income
-        ~aggross, ~totgross, ~I(100*naggross_sh), ~cropvalue, ~cropsales,
-        ~I(100*cropsales_sh), ~totlvstprod, ~totlivsold,
-        # Livestock
-        ~I(1E3*TLU_horse), ~I(1E3*TLU_cattle), ~I(1E3*TLU_pigs), ~I(1E3*TLU_sheep),
-        ~I(1E3*TLU_small), ~I(1E3*TLU_total), 
-        # Input
-        ~I(100*seeds), ~I(100*fert_any), ~I(100*fert_inorg), ~I(100*fert_org), 
-        ~I(100*herb), ~I(100*pest), ~I(100*irr), ~I(100*fuel), ~I(100*hired_labor)
-        
-      ), ~class5, subset(x, croparea_4ha==i), quantiles=c(.5, .9))
-    })
-  })
-
-gha.table.rur <- 
-  # by wave
-  lapply(gha.svy.farm[1:2], function(x) {
-    # by rural
-    lapply(levels(gha$rural), function(r) {
-      svyCrossTab(list(
-        
-        # Demographics
-        ~hhsize_imp, ~agehead, ~I(100*femhead), ~I(100*widowhead), ~hhlabor,
-        ~educhead, ~educave15_60, ~educhigh,
-        ~I(100*ownhome), ~I(100*cellphone), ~I(100*telephone), ~I(100*electricity), 
-        ~distwater, ~distroad, ~distpost, ~distbank, ~disthealth,
-        # Land
-        ~landown, ~landshare, ~croparea_imp,
-        #~landrent,
-        # Income
-        ~aggross, ~totgross, ~I(100*naggross_sh), ~cropvalue, ~cropsales,
-        ~I(100*cropsales_sh), ~totlvstprod, ~totlivsold,
-        # Livestock
-        ~I(1E3*TLU_horse), ~I(1E3*TLU_cattle), ~I(1E3*TLU_pigs), ~I(1E3*TLU_sheep),
-        ~I(1E3*TLU_small), ~I(1E3*TLU_total), 
-        # Input
-        ~I(100*seeds), ~I(100*fert_any), ~I(100*fert_inorg), ~I(100*fert_org), 
-        ~I(100*herb), ~I(100*pest), ~I(100*irr), ~I(100*fuel), ~I(100*hired_labor)
-        
-      ), ~class5, subset(x, rural==r), quantiles=c(.5, .9))
-    })
-  })
-
-
-    
+# Verify sampling designs (defined below)
+svytotal(~hhsize, eth.svy[["eth2"]])
+#           total      SE
+# hhsize 80768450 2829245
+# => OK
 
 ```
 
 
 ```{r designs, eval=FALSE}
+
+#####################################################################################
+# Define "farms" households
+#####################################################################################
+
+gha[, farm := FALSE]
+gha[aggross > 0 | croparea_imp > 0, farm := TRUE]
+
+tza[, farm := FALSE]
+tza[aggross > 0 | croparea_imp > 0, farm := TRUE]
+
+eth[, farm := FALSE]
+eth[aggross > 0 | croparea_imp > 0, farm := TRUE]
 
 #####################################################################################
 # Define Stratified Survey Designs
@@ -2115,11 +2105,11 @@ gha.svy <- list(
     data=gha[survey=="1998/99"])
 )
 
-# Subset survey sample to farms
-gha.svy.farm <- lapply(gha.svy, subset, !is.na(croparea_3clas))
+# Subset survey sample to farms (this includes croparea==0 & aggross > 0)
+gha.svy.farm <- lapply(gha.svy, subset, farm==TRUE)
 
-# Subset survey sample to SHF (note that they exclude farms with no `croparea`)
-gha.svy.shf <- lapply(gha.svy, subset, croparea_4ha=="<= 4 ha")
+# Subset survey sample to SHF
+gha.svy.shf <- lapply(gha.svy.farm, subset, croparea_4ha=="<= 4 ha")
 
 ###############################################
 # TZA
@@ -2132,8 +2122,8 @@ tza.svy <- list(
     data=tza[survey=="2008/09"])
 )
 
-tza.svy.farm <- lapply(tza.svy, subset, !is.na(croparea_3clas))
-tza.svy.shf <- lapply(tza.svy, subset, croparea_4ha=="<= 4 ha")
+tza.svy.farm <- lapply(tza.svy, subset, farm==TRUE)
+tza.svy.shf <- lapply(tza.svy.farm, subset, croparea_4ha=="<= 4 ha")
 
 
 ###############################################
@@ -2147,15 +2137,15 @@ eth.svy <- list(
     data=eth[survey=="2011/12"])
 )
 
-eth.svy.farm <- lapply(eth.svy, subset, !is.na(croparea_3clas))
-eth.svy.shf <- lapply(eth.svy, subset, croparea_4ha=="<= 4 ha")
+eth.svy.farm <- lapply(eth.svy, subset, farm==TRUE)
+eth.svy.shf <- lapply(eth.svy.farm, subset, croparea_4ha=="<= 4 ha")
 
 ```
 
 ```{r save, eval=FALSE}
 
 rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, 
-  eth.adm, eth.chr, eth.inc, eth.hh, tmp.cv)
+  eth.adm, eth.chr, eth.inc, eth.hh, tmp.cv, f, by, design, rn, res, res.cv)
 save.image("./tmp/2017-ispc.RData")
 
 #####################################################################################
@@ -2173,7 +2163,7 @@ gha %>%
   setorder(svyCode, hhid) %>%
   setattr("var.labels", lbl[names(gha), paste0(varLabel, " (", unit, ")")]) %>%
   setattr("datalabel", "Prepared by BACOU, Melanie <mel@mbacou.com> for BMGF") %>%
-  write.dta("./out/gha-glss_merged_2017.11.08.dta", version=12L, convert.factors="labels")
+  write.dta("./out/gha-glss_merged_2017.12.05.dta", version=12L, convert.factors="labels")
 
 
 ###############################################
@@ -2189,7 +2179,7 @@ tza %>%
   setorder(svyCode, hhid) %>%
   setattr("var.labels", lbl[names(tza), paste0(varLabel, " (", unit, ")")]) %>%
   setattr("datalabel", "Prepared by BACOU, Melanie <mel@mbacou.com> for BMGF") %>%
-  write.dta("./out/tza-nps_merged_2017.11.08.dta", version=12L, convert.factors="labels")
+  write.dta("./out/tza-nps_merged_2017.12.05.dta", version=12L, convert.factors="labels")
 
 
 ###############################################
@@ -2205,7 +2195,7 @@ eth %>%
   setorder(svyCode, hhid) %>%
   setattr("var.labels", lbl[names(eth), paste0(varLabel, " (", unit, ")")]) %>%
   setattr("datalabel", "Prepared by BACOU, Melanie <mel@mbacou.com> for BMGF") %>%
-  write.dta("./out/eth-ess_merged_2017.11.16.dta", version=12L, convert.factors="labels")
+  write.dta("./out/eth-ess_merged_2017.12.05.dta", version=12L, convert.factors="labels")
 
 
 ```

@@ -165,6 +165,7 @@ secOrder,section,sortOrder,varCode,varLabel,unit,source,notes
 8,farm management,7,seeds,farm purchases seeds,"0,1",calculated,
 8,farm management,8,fuel,farm purchases fuel,"0,1",calculated,
 8,farm management,9,hired_labor,farm hires labor,"0,1",calculated,
+10,farm segmentation,0,farm,is farm household (owns land or generates revenues from ag activities),"0,1",calculated,
 10,farm segmentation,1,croparea,"cultivated area (used in farm typology), imputed",ha,calculated,
 10,farm segmentation,2,croparea_4ha,"cultivated area, 2-class","<= 4 ha, > 4 ha",calculated,
 10,farm segmentation,3,croparea_3clas,"cultivated area, 3-class","<= 2 ha, 2-4 ha, > 4 ha",calculated,
