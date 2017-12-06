@@ -4,17 +4,20 @@
 
 Using DBScan clustering
 
-```{r eth-dbscan}
+```{r eth-clust-setup}
 
 library(dbscan)
 library(cluster)
+library(factoextra)
 
-# Method 3) DBSCAN (vary `epsilon` distance and check visually til results make sense)
+```
+
+### Ethiopia
+
+```{r, eval=FALSE}
+
+# DBSCAN (vary `epsilon` distance and check visually til results make sense)
 # Tried other approaches (SD, PAM, spatial.outliers) but DBSCAN seems to work better
-Y <- c("croparea_imp", "naggross_sh", "cropsales_sh")
-tmp <- eth[wave=="wave 2" & farm==TRUE, .SD, .SDcols=c("hhid", "weight", Y)]
-tmp <- na.omit(tmp)
-
 tmp1 <- dbscan(tmp[, .SD, .SDcols=Y[-1]], eps=0.01, minPts=50000, weights=tmp$weight)
 hullplot(tmp[, .SD, .SDcols=Y], tmp1, col=c("black", viridis(max(tmp1$cluster))))
 pairs(tmp[, .SD, .SDcols=Y], col=viridis(max(tmp1$cluster))[tmp1$cluster])
@@ -23,15 +26,111 @@ pairs(tmp[, .SD, .SDcols=Y], col=viridis(max(tmp1$cluster))[tmp1$cluster])
 
 Using PAM clustering (with and without cultivated area)
 
-```{r eth-pam}
+```{r eth-clust}
+
+Y <- c("croparea_imp", "naggross_sh", "cropsales_sh")
+tmp <- eth[farm==TRUE, .SD, .SDcols=c("hhid", "weight", Y)]
+tmp <- na.omit(tmp)
 
 tmp2 <- pam(tmp[, .SD, .SDcols=Y], k=5)
 tmp2$medoids
-pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp2$cluster])
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp2$cluster],
+  main="PAM - 3 covariates, Ethiopia")
 
 tmp3 <- pam(tmp[, .SD, .SDcols=Y[-1]], k=5)
 tmp3$medoids
-pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp3$cluster])
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp3$cluster],
+  main="PAM - 2 covariates, Ethiopia")
+
+tmp4 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
+tmp4$centers
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp4$cluster], 
+  main="KMEAN - 2 covariates (based on crop quantities), Ethiopia")
 
 ```
 
+Using RIGA Sales (median and mean)
+
+```{r, eth-clust-riga}
+
+# Change crop sales variable
+Y <- c("croparea_imp", "naggross_sh", "shcropsold")
+tmp <- eth[farm==TRUE, .SD, .SDcols=c("hhid", "weight", Y)]
+tmp <- na.omit(tmp)
+
+#mod.pam.nb.eth <- fviz_nbclust(tmp[, .SD, .SDcols=Y[-1]], pam, method="silhouette")
+#plot(mod.pam.nb.eth)
+#mod.km.nb.eth <- fviz_nbclust(tmp[, .SD, .SDcols=Y[-1]], kmeans, method="silhouette")
+#plot(mod.km.nb.eth)
+
+tmp5 <- pam(tmp[, .SD, .SDcols=Y[-1]], k=5)
+tmp5$medoids
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp5$cluster],
+  main="PAM - 2 covariates, RIGA sales, Ethiopia")
+
+tmp6 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
+tmp6$centers
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp6$cluster],
+  main="PAM - 2 covariates, RIGA sales, Ethiopia")
+
+```
+
+### Tanzania
+
+```{r tza-clust}
+
+Y <- c("croparea_imp", "naggross_sh", "cropsales_sh")
+tmp <- tza[farm==TRUE, .SD, .SDcols=c("hhid", "weight", Y)]
+tmp <- na.omit(tmp)
+
+# mod.pam.nb.tza <- fviz_nbclust(tmp[, .SD, .SDcols=Y[-1]], pam, method="silhouette")
+# plot(mod.pam.nb.tza)
+# mod.km.nb.tza <- fviz_nbclust(tmp[, .SD, .SDcols=Y[-1]], kmeans, method="silhouette")
+# plot(mod.km.nb.tza)
+
+tmp7 <- pam(tmp[, .SD, .SDcols=Y], k=5)
+tmp7$medoids
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp7$cluster],
+  main="PAM - 3 covariates, Tanzania")
+
+tmp8 <- pam(tmp[, .SD, .SDcols=Y[-1]], k=5)
+tmp8$medoids
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp8$cluster],
+  main="PAM - 2 covariates, Tanzania")
+
+tmp9 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
+tmp9$centers
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp9$cluster],
+  main="PAM - 2 covariates, RIGA sales, Tanzania")
+
+```
+
+### Ghana
+
+```{r gha-clust}
+
+Y <- c("croparea_imp", "naggross_sh", "cropsales_sh")
+tmp <- gha[farm==TRUE, .SD, .SDcols=c("hhid", "weight", Y)]
+tmp <- na.omit(tmp)
+
+# mod.pam.nb.gha <- fviz_nbclust(tmp[, .SD, .SDcols=Y[-1]], pam, method="silhouette")
+# plot(mod.pam.nb.gha)
+# mod.km.nb.gha <- fviz_nbclust(tmp[, .SD, .SDcols=Y[-1]], kmeans, method="silhouette")
+# plot(mod.km.nb.gha)
+
+tmp10 <- pam(tmp[, .SD, .SDcols=Y], k=5)
+tmp10$medoids
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp10$cluster],
+  main="PAM - 3 covariates, Ghana")
+
+tmp11 <- pam(tmp[, .SD, .SDcols=Y[-1]], k=5)
+tmp11$medoids
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp11$cluster],
+  main="PAM - 2 covariates, Ghana")
+
+tmp12 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
+tmp12$centers
+pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp12$cluster],
+  main="PAM - 2 covariates, RIGA sales, Ghana")
+
+```

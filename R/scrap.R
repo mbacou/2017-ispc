@@ -109,7 +109,21 @@ svyCrossProp <- function(x, design) {
 
 
 # Export by wave, class5, rural, quadrants, farm sizes, and produce marginal stats
-tmp <- svyCrossProp(c("croparea_3clas", "rural", "class5", "seg_quad"), eth.svy.farm[["eth2"]])
+res <- svyCrossProp(c("croparea_3clas", "rural", "class5"), gha.svy.farm[["gha6"]])
+res <- copy(res)
+res[, svyCode := "gha6"]
+
+for(i in list(gha.svy.farm[-1], eth.svy.farm, tza.svy.farm)) for(j in names(i)) {
+  tmp <- svyCrossProp(c("croparea_3clas", "rural", "class5"), i[[j]])
+  tmp <- copy(tmp)
+  tmp[, svyCode := j]
+  res <- rbind(res, tmp)
+}
+fwrite(res, "./out/hh_splits.csv", append=TRUE)
+
+
+tmp <- svyCrossProp(c("croparea_3clas", "rural", "class5"), tza.svy.farm[["tza3"]])
+
 tmp <- svyCrossTab(list(~croparea_imp, ~rural, ~class5), by=~croparea_4ha, eth.svy.farm[["eth2"]])
 tmp <- svyCrossTab(list(~croparea_imp), by=~croparea_4ha, eth.svy.farm[["eth2"]])
 
