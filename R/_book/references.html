@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Agricultural Transformation in Ghana, Ethiopia, and Tanzania</title>
+  <meta name="description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)">
+  <meta name="generator" content="bookdown 0.5.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Agricultural Transformation in Ghana, Ethiopia, and Tanzania" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Agricultural Transformation in Ghana, Ethiopia, and Tanzania" />
+  
+  <meta name="twitter:description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)" />
+  
+
+<meta name="author" content="BACOU, Melanie for BMGF">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="clustering-of-farm-households.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">2017-ISPC-AGTRANS</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Data Preparation</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#harmonized-codebook"><i class="fa fa-check"></i><b>1.1</b> Harmonized Codebook</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#riga-income-aggregates"><i class="fa fa-check"></i><b>1.2</b> RIGA Income Aggregates</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#survey-maps"><i class="fa fa-check"></i><b>1.3</b> Survey Maps</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#agricultural-potential-quadrants"><i class="fa fa-check"></i><b>1.4</b> Agricultural Potential Quadrants</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ethiopia.html"><a href="ethiopia.html"><i class="fa fa-check"></i><b>2</b> Ethiopia</a><ul>
+<li class="chapter" data-level="2.1" data-path="ethiopia.html"><a href="ethiopia.html#household-sampling-and-stratification"><i class="fa fa-check"></i><b>2.1</b> Household Sampling and Stratification</a></li>
+<li class="chapter" data-level="2.2" data-path="ethiopia.html"><a href="ethiopia.html#distribution-of-farm-holdings-across-farm-sizes-and-farm-types"><i class="fa fa-check"></i><b>2.2</b> Distribution of Farm Holdings across Farm Sizes and Farm Types</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="ethiopia.html"><a href="ethiopia.html#land-holding"><i class="fa fa-check"></i><b>2.2.1</b> Land Holding</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ethiopia.html"><a href="ethiopia.html#trends-in-commercialization"><i class="fa fa-check"></i><b>2.2.2</b> Trends in Commercialization</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ethiopia.html"><a href="ethiopia.html#trends-in-income-diversification"><i class="fa fa-check"></i><b>2.2.3</b> Trends in Income Diversification</a></li>
+<li class="chapter" data-level="2.2.4" data-path="ethiopia.html"><a href="ethiopia.html#x3-farm-classification"><i class="fa fa-check"></i><b>2.2.4</b> 3x3 Farm Classification</a></li>
+<li class="chapter" data-level="2.2.5" data-path="ethiopia.html"><a href="ethiopia.html#simplified-farm-classification-5-class"><i class="fa fa-check"></i><b>2.2.5</b> Simplified Farm Classification (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ethiopia.html"><a href="ethiopia.html#farm-segmentation-along-farm-types-5-class-and-agricultural-potential-quadrants"><i class="fa fa-check"></i><b>2.3</b> Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="ethiopia.html"><a href="ethiopia.html#all-farms"><i class="fa fa-check"></i><b>2.3.1</b> All Farms</a></li>
+<li class="chapter" data-level="2.3.2" data-path="ethiopia.html"><a href="ethiopia.html#small-farms-below-4-ha"><i class="fa fa-check"></i><b>2.3.2</b> Small Farms (below 4 ha)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ghana.html"><a href="ghana.html"><i class="fa fa-check"></i><b>3</b> Ghana</a><ul>
+<li class="chapter" data-level="3.1" data-path="ghana.html"><a href="ghana.html#household-sampling-and-stratification-1"><i class="fa fa-check"></i><b>3.1</b> Household Sampling and Stratification</a></li>
+<li class="chapter" data-level="3.2" data-path="ghana.html"><a href="ghana.html#distribution-of-farm-holdings-across-farm-sizes-and-farm-types-1"><i class="fa fa-check"></i><b>3.2</b> Distribution of Farm Holdings across Farm Sizes and Farm Types</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="ghana.html"><a href="ghana.html#land-holding-1"><i class="fa fa-check"></i><b>3.2.1</b> Land Holding</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ghana.html"><a href="ghana.html#trends-in-commercialization-1"><i class="fa fa-check"></i><b>3.2.2</b> Trends in Commercialization</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ghana.html"><a href="ghana.html#trends-in-income-diversification-1"><i class="fa fa-check"></i><b>3.2.3</b> Trends in Income Diversification</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ghana.html"><a href="ghana.html#x3-farm-classification-1"><i class="fa fa-check"></i><b>3.2.4</b> 3x3 Farm Classification</a></li>
+<li class="chapter" data-level="3.2.5" data-path="ghana.html"><a href="ghana.html#simplified-farm-classification-5-class-1"><i class="fa fa-check"></i><b>3.2.5</b> Simplified Farm Classification (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ghana.html"><a href="ghana.html#farm-segmentation-along-farm-types-5-class-and-agricultural-potential-quadrants-1"><i class="fa fa-check"></i><b>3.3</b> Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="ghana.html"><a href="ghana.html#all-farms-1"><i class="fa fa-check"></i><b>3.3.1</b> All Farms</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ghana.html"><a href="ghana.html#small-farms-below-4-ha-1"><i class="fa fa-check"></i><b>3.3.2</b> Small Farms (below 4 ha)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ghana.html"><a href="ghana.html#farm-characteristics-across-types-5-class"><i class="fa fa-check"></i><b>3.4</b> Farm Characteristics across Types (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tanzania.html"><a href="tanzania.html"><i class="fa fa-check"></i><b>4</b> Tanzania</a><ul>
+<li class="chapter" data-level="4.1" data-path="tanzania.html"><a href="tanzania.html#household-sampling-and-stratification-2"><i class="fa fa-check"></i><b>4.1</b> Household Sampling and Stratification</a></li>
+<li class="chapter" data-level="4.2" data-path="tanzania.html"><a href="tanzania.html#distribution-of-farm-holdings-across-farm-sizes-and-farm-types-2"><i class="fa fa-check"></i><b>4.2</b> Distribution of Farm Holdings across Farm Sizes and Farm Types</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="tanzania.html"><a href="tanzania.html#land-holding-2"><i class="fa fa-check"></i><b>4.2.1</b> Land Holding</a></li>
+<li class="chapter" data-level="4.2.2" data-path="tanzania.html"><a href="tanzania.html#trends-in-commercialization-2"><i class="fa fa-check"></i><b>4.2.2</b> Trends in Commercialization</a></li>
+<li class="chapter" data-level="4.2.3" data-path="tanzania.html"><a href="tanzania.html#trends-in-income-diversification-2"><i class="fa fa-check"></i><b>4.2.3</b> Trends in Income Diversification</a></li>
+<li class="chapter" data-level="4.2.4" data-path="tanzania.html"><a href="tanzania.html#x3-farm-classification-2"><i class="fa fa-check"></i><b>4.2.4</b> 3x3 Farm Classification</a></li>
+<li class="chapter" data-level="4.2.5" data-path="tanzania.html"><a href="tanzania.html#simplified-farm-classification-5-class-2"><i class="fa fa-check"></i><b>4.2.5</b> Simplified Farm Classification (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="tanzania.html"><a href="tanzania.html#farm-segmentation-along-farm-types-5-class-and-agricultural-potential-quadrants-2"><i class="fa fa-check"></i><b>4.3</b> Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="tanzania.html"><a href="tanzania.html#all-farms-2"><i class="fa fa-check"></i><b>4.3.1</b> All Farms</a></li>
+<li class="chapter" data-level="4.3.2" data-path="tanzania.html"><a href="tanzania.html#small-farms-below-4-ha-2"><i class="fa fa-check"></i><b>4.3.2</b> Small Farms (below 4 ha)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html"><i class="fa fa-check"></i><b>5</b> Clustering of Farm Households</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#ethiopia-1"><i class="fa fa-check"></i><b>5.0.1</b> Ethiopia</a></li>
+<li class="chapter" data-level="5.0.2" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#tanzania-1"><i class="fa fa-check"></i><b>5.0.2</b> Tanzania</a></li>
+<li class="chapter" data-level="5.0.3" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#ghana-1"><i class="fa fa-check"></i><b>5.0.3</b> Ghana</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Agricultural Transformation in Ghana, Ethiopia, and Tanzania</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<p>Note that some of these references are unpublished materials, do not cite.</p>
+
+<div id="refs" class="references">
+<div>
+<p>Alvarez, S., Paas, W., Descheemaeker, K., Tittonell, P., &amp; Groot, J. (2014). Typology Construction, a way of dealing with farm diversity: General guidelines for Humidtropics. Retrieved from <a href="https://cgspace.cgiar.org/bitstream/handle/10568/65374/typology_guidelines.pdf" class="uri">https://cgspace.cgiar.org/bitstream/handle/10568/65374/typology_guidelines.pdf</a></p>
+</div>
+<div>
+<p>Anderson, L., &amp; Gugerty, M. K. (2015). United republic of tanzania – farmer profile series. In E. S. P. Analysis &amp; R. (EPAR) (Eds.) (Vol. 172). Evans School of Public Affairs.</p>
+</div>
+<div>
+<p>Anderson, L., &amp; Reynolds, T. (2016). Agricultural transformation in tanzania: Scope of work. In E. S. P. Analysis &amp; R. (EPAR) (Eds.) (Vol. 353). Evans School of Public Policy.</p>
+</div>
+<div>
+<p>Bacou, M., Magalhaes, E., Hazell, P., &amp; Wood-Sichra, U. (2015). <em>Ethiopia Farm Segmentation Study: Draft Report for the Bill and Melinda Gates Foundation</em>. International Food Policy Research Institute. Retrieved from <a href="https://drive.google.com/open?id=0B1o4EXFzqcCzcUJSYlNfZzF5MGs" class="uri">https://drive.google.com/open?id=0B1o4EXFzqcCzcUJSYlNfZzF5MGs</a></p>
+</div>
+<div>
+<p>Benin, S., &amp; others. (2016). <em>Agricultural productivity in Africa: Trends, patterns, and determinants</em>. (S. Benin, Ed.). International Food Policy Research Institute. <a href="https://doi.org/10.2499/9780896298811" class="uri">https://doi.org/10.2499/9780896298811</a></p>
+</div>
+<div>
+<p>Buckwell, A. E., &amp; Hazell, P. B. R. (1972). Implications of Aggregation Bias for the Construction of Static and Dynamic Linear Programming Supply Models. <em>Journal of Agricultural Economics</em>, <em>23</em>(2), 119–134. <a href="https://doi.org/10.1111/j.1477-9552.1972.tb01436.x" class="uri">https://doi.org/10.1111/j.1477-9552.1972.tb01436.x</a></p>
+</div>
+<div>
+<p>Carletto, G., Covarrubias, K., Davis, B., Krausova, M., &amp; Winters, P. (2007). <em>Rural Income Generating Activities Study: Methodological note on the construction of income aggregates</em>. <em>Rural Income Generating Activities (RIGA) Project</em>. Food and Agriculture Organization (FAO). Retrieved from <a href="http://www.fao.org/fileadmin/user_upload/riga/pdf/ai197e00.pdf" class="uri">http://www.fao.org/fileadmin/user_upload/riga/pdf/ai197e00.pdf</a></p>
+</div>
+<div>
+<p>Central Statistical Agency &amp; the World Bank. (2012). <em>Living Standards Measurement Study-Integrated Surveys on Agriculture (LSMS-ISA): Ethiopia Rural Socioeconomic Survey (ERSS) Basic Information Document</em>. CSA. Retrieved from <a href="http://microdata.worldbank.org/index.php/catalog/2783/download/39570" class="uri">http://microdata.worldbank.org/index.php/catalog/2783/download/39570</a></p>
+</div>
+<div>
+<p>Central Statistical Agency &amp; the World Bank. (n.d.). <em>Ethiopia - socioeconomic survey 2013-2014</em>.</p>
+</div>
+<div>
+<p>CGAP. (2017). <em>Understanding Smallholder Families, Developing Financial Solutions</em>. Boulder Rural and Agricultural Finance Program. Master Class | Wednesday 19 July 2017. Retrieved from <a href="http://www.cgap.org/publications/segmentation-smallholder-households" class="uri">http://www.cgap.org/publications/segmentation-smallholder-households</a></p>
+</div>
+<div>
+<p>Christen, R. P., &amp; Anderson, J. (2013). <em>Segmentation of Smallholder Households: Meeting the Range of Financial Needs in Agricultural Families</em>. <em>Focus Note</em> (Vol. 85). CGAP. Retrieved from <a href="http://www.cgap.org/sites/default/files/Focus-Note-Segmentation-of-Smallholder-Households-April-2013.pdf" class="uri">http://www.cgap.org/sites/default/files/Focus-Note-Segmentation-of-Smallholder-Households-April-2013.pdf</a></p>
+</div>
+<div>
+<p>Diao, X., Fang, P., Magalhaes, E., Pahl, S., &amp; Silver, J. and. (2017). Cities and rural transformation: A spatial analysis of rural youth livelihoods in Ghana. In <em>IFPRI discussion paper</em> (Vol. 1599). International Food Policy Research Institute. Retrieved from <a href="http://ebrary.ifpri.org/cdm/ref/collection/p15738coll2/id/13105" class="uri">http://ebrary.ifpri.org/cdm/ref/collection/p15738coll2/id/13105</a></p>
+</div>
+<div>
+<p>Douillet, M., &amp; Toulon, A. (2014). Developing a Typology of Agricultural Holdings for Improved Policy Design: a preliminary case study of Malawi. <em>Foundation for World Agriculture and Rurality</em>. Retrieved from <a href="http://www.worldagricultureswatch.org/sites/default/files/documents/malawi_report.pdf" class="uri">http://www.worldagricultureswatch.org/sites/default/files/documents/malawi_report.pdf</a></p>
+</div>
+<div>
+<p>Estoque, R. C., &amp; Murayama, Y. (2017). Trends and Spatial Patterns of Urbanization in Asia and Africa: A Comparative Analysis. <em>The Urban Book Series</em>, 393–414. <a href="https://doi.org/10.1007/978-981-10-3241-7_19" class="uri">https://doi.org/10.1007/978-981-10-3241-7_19</a></p>
+</div>
+<div>
+<p>Eva Galvez Nogales and Martin Webber. (2017). <em>Territorial tools for agro-industry development – A Sourcebook</em>. Food and Agriculture Organization of the United Nations (FAO). Retrieved from <a href="http://www.fao.org/3/a-i6862e.pdf" class="uri">http://www.fao.org/3/a-i6862e.pdf</a></p>
+</div>
+<div>
+<p>Evans School Policy Analysis and Research Group (EPAR). (2017). <em>Categorizing “Smallholder” Farmers in the Ethiopia and Tanzania LSMS-ISA: Results Coding</em>. Retrieved from <a href="unpublished" class="uri">unpublished</a></p>
+</div>
+<div>
+<p>Girei, A. A., Saingbe, N. D., Bitrus, M. A., &amp; Bassey, I. H. (2017). Revealing the Impact of Fadama III Project on the Income Level of Beneficiary Farmers in Plateau State, Nigeria. <em>European Journal of Academic Essays</em>, <em>4(2): 26-38</em>. Retrieved from <a href="http://euroessays.org/wp-content/uploads/2017/02/EJAE-1611-547.pdf" class="uri">http://euroessays.org/wp-content/uploads/2017/02/EJAE-1611-547.pdf</a></p>
+</div>
+<div>
+<p>Hazell, P. (2013a). Comparative Study of Trends in Urbanization and Changes in Farm Size in Africa and Asia: Implications for Agricultural Research.</p>
+</div>
+<div>
+<p>Hazell, P. (2013b). <em>Comparative Study of Trends in Urbanization and Changes in Farm Size in Africa and Asia: Implications for Agricultural Research – A Foresight Study of the Independent Science and Partnership Council</em>. CGIAR. Retrieved from <a href="https://ispc.cgiar.org/sites/default/files/ISPC_StrategyTrends_FarmSize_Hazell.pdf" class="uri">https://ispc.cgiar.org/sites/default/files/ISPC_StrategyTrends_FarmSize_Hazell.pdf</a></p>
+</div>
+<div>
+<p>Hazell, P. (2013c). <em>Is Small Farm Led Development still a Relevant Strategy for Africa and Asia?</em> Retrieved from <a href="http://ppafest.nutrition.cornell.edu/authors/hazell-final.pdf" class="uri">http://ppafest.nutrition.cornell.edu/authors/hazell-final.pdf</a></p>
+</div>
+<div>
+<p>Hazell, P., &amp; Bernstein, J. O. (2013). <em>Feed the Future Learning Agenda Literature Review: Improved Agricultural Productivity</em>. Westat. Retrieved from <a href="http://pdf.usaid.gov/pdf_docs/PA00JW44.pdf" class="uri">http://pdf.usaid.gov/pdf_docs/PA00JW44.pdf</a></p>
+</div>
+<div>
+<p>Headey, D., Bezemer, D., &amp; Hazell, P. B. (2010). Agricultural Employment Trends in Asia and Africa: Too Fast or Too Slow? <em>The World Bank Research Observer</em>, <em>25</em>(1), 57–89. <a href="https://doi.org/10.1093/wbro/lkp028" class="uri">https://doi.org/10.1093/wbro/lkp028</a></p>
+</div>
+<div>
+<p>Headey, D., Dereje, M., Ricker-Gilbert, J., Josephson, A., &amp; Taffesse, A. S. (2013). Land Constraints and Agricultural Intensification in Ethiopia: A Village- Level Analysis of High-Potential Areas. <em>ESSP Working Paper</em>, <em>58</em>. <a href="https://doi.org/10.1016/j.foodpol.2014.01.008" class="uri">https://doi.org/10.1016/j.foodpol.2014.01.008</a></p>
+</div>
+<div>
+<p>Jayne, T. S. (Ed.). (2016). <em>Africa Agriculture Status Report 2016 - Progress towards Agricultural Transformation in Africa</em>. AGRA. Retrieved from <a href="https://agra.org/aasr2016/public/assr.pdf" class="uri">https://agra.org/aasr2016/public/assr.pdf</a></p>
+</div>
+<div>
+<p>Jayne, T. S., Chamberlin, J., Traub, L., Sitko, N., Muyanga, M., Yeboah, K., … others. (2015). Africa’s Changing Farmland Ownership: Causes and Consequences. In <em>Plenary paper presented at the 29th international conference of agricultural economists, milan, italy, august 2015</em>. Retrieved from <a href="http://pdf.usaid.gov/pdf_docs/PA00KMWX.pdf" class="uri">http://pdf.usaid.gov/pdf_docs/PA00KMWX.pdf</a></p>
+</div>
+<div>
+<p>Jayne, T., Yeboah, K., Traub, L., Muyanga, M., Chamberlin, J., &amp; Meyer, F. (2015). How can Agricultural Development Strategies Effectively Reduce Poverty in Africa?: Ag. Learning Lunch seminar, Bill and Melinda Gates Foundation. Seattle. Retrieved from <a href="https://github.com/mbacou/2017-agra-aasr/raw/master/refs/Jayne%20(2015)%20Farmer%20Typology.ppt">https://github.com/mbacou/2017-agra-aasr/raw/master/refs/Jayne%20(2015)%20Farmer%20Typology.ppt</a></p>
+</div>
+<div>
+<p>Lang, C., Barrett, C. B., &amp; Naschold, F. (2013). Targeting maps: An asset-based approach to geographic targeting. <em>World Development</em>, <em>41</em>, 232–244. <a href="https://doi.org/10.1016/j.worlddev.2012.06.006" class="uri">https://doi.org/10.1016/j.worlddev.2012.06.006</a></p>
+</div>
+<div>
+<p>Masters, W. A., Djurfeldt, A. A., De Haan, C., Hazell, P., Jayne, T., Jirström, M., &amp; Reardon, T. (2013). Urbanization and farm size in asia and africa: Implications for food security and agricultural research. <em>Global Food Security</em>, <em>2</em>(3), 156–165. <a href="https://doi.org/10.1016/j.gfs.2013.07.002" class="uri">https://doi.org/10.1016/j.gfs.2013.07.002</a></p>
+</div>
+<div>
+<p>Maxwell, D., Vaitla, B., &amp; Coates, J. (2014). How do indicators of household food insecurity measure up? An empirical comparison from Ethiopia. <em>Food Policy</em>, <em>47 (2014) 107–116</em>. <a href="https://doi.org/10.1016/j.foodpol.2014.04.003" class="uri">https://doi.org/10.1016/j.foodpol.2014.04.003</a></p>
+</div>
+<div>
+<p>Minot, N., &amp; Sawyer, B. (2013). <em>Agricultural production in Ethiopia: Results of the 2012 ATA Baseline Survey</em>. <em>Research for Ethiopia’s Agricultural Policy (REAP)</em>. International Food Policy Research Institute (IFPRI). Retrieved from <a href="http://ebrary.ifpri.org/utils/getfile/collection/p15738coll2/id/127950/filename/128161.pdf" class="uri">http://ebrary.ifpri.org/utils/getfile/collection/p15738coll2/id/127950/filename/128161.pdf</a></p>
+</div>
+<div>
+<p>Nagler, P., &amp; Naudé, W. (2017). Non-farm entrepreneurship in rural sub-saharan africa: New empirical evidence. <em>Food Policy</em>, <em>67</em>, 175–191. <a href="https://doi.org/10.1016/j.foodpol.2016.09.019" class="uri">https://doi.org/10.1016/j.foodpol.2016.09.019</a></p>
+</div>
+<div>
+<p>NBS. (2010). <em>Tanzania National Panel Survey Report - Round 1, 2008-2009</em>. United Republic of Tanzania National Bureau of Statistics. Retrieved from <a href="http://microdata.worldbank.org/index.php/catalog/76" class="uri">http://microdata.worldbank.org/index.php/catalog/76</a></p>
+</div>
+<div>
+<p>NBS. (2014). <em>Tanzania National Panel Survey Wave 3, 2012-2013</em>. United Republic of Tanzania National Bureau of Statistics. Retrieved from <a href="http://microdata.worldbank.org/index.php/catalog/2252" class="uri">http://microdata.worldbank.org/index.php/catalog/2252</a></p>
+</div>
+<div>
+<p>NBS. (2016). <em>Basic Information Document - National Panel Survey (NPS 2014-2015)</em>. United Republic of Tanzania National Bureau of Statistics. Retrieved from <a href="http://microdata.worldbank.org/index.php/catalog/2862" class="uri">http://microdata.worldbank.org/index.php/catalog/2862</a></p>
+</div>
+<div>
+<p>Odjugo, P. A. O., Enaruvbe, G. O., &amp; Isibor, H. O. (2015). Geospatial Approach to Spatio-temporal Pattern of Urban Growth in Benin City, Nigeria. <em>African Journal of Environmental Science and Technology</em>, <em>9</em>(3), 166–175. <a href="https://doi.org/10.5897/ajest2014.1715" class="uri">https://doi.org/10.5897/ajest2014.1715</a></p>
+</div>
+<div>
+<p>Roberts, C., Gong, Q. Y., Schnitzer, P., &amp; Azzarri, C. (2014). <em>Ethiopia Agricultural Snapshot 2011/12</em>. Working Paper, HarvestChoice/International Food Policy Research Institute (IFPRI). Retrieved from <a href="https://harvestchoice.org/publications/ethiopia-agricultural-snapshot-201112" class="uri">https://harvestchoice.org/publications/ethiopia-agricultural-snapshot-201112</a></p>
+</div>
+<div>
+<p>Schnitzer, P., &amp; Azzarri, C. (2014). <em>Tanzania Agricultural Snapshot 2007/08</em>. Working Paper, HarvestChoice/International Food Policy Research Institute (IFPRI). Retrieved from <a href="https://harvestchoice.org/publications/tanzania-agricultural-snapshot-200708" class="uri">https://harvestchoice.org/publications/tanzania-agricultural-snapshot-200708</a></p>
+</div>
+<div>
+<p>Sheahan, M., &amp; Barrett, C. B. (2017). Ten striking facts about agricultural input use in sub-saharan africa. <em>Food Policy</em>, <em>67</em>, 12–25. <a href="https://doi.org/10.1016/j.foodpol.2016.09.010" class="uri">https://doi.org/10.1016/j.foodpol.2016.09.010</a></p>
+</div>
+<div>
+<p>Turok, I. (2012). <em>Urbanisation and Development in South Africa: Economic Imperatives, Spatial Distortions and Strategic Responses</em>. International Institute for Environment; Development (IIED). Retrieved from <a href="http://www.worldcat.org/oclc/872660370?referer=xid" class="uri">http://www.worldcat.org/oclc/872660370?referer=xid</a></p>
+</div>
+<div>
+<p>Willy, D. K., Muyanga, M., Jayne, T., &amp; others. (2015). <em>Adaptation to Rising Population Density: Voices from Rural Kenya</em>. <em>WPS</em> (Vol. 54/2015). Tegemeo Institute of Agricultural Policy and Development. Retrieved from <a href="https://ideas.repec.org/p/ags/egtewp/208250.html" class="uri">https://ideas.repec.org/p/ags/egtewp/208250.html</a></p>
+</div>
+<div>
+<p>Wineman, A., &amp; Jayne, T. S. (2017). Intra-Rural Migration And Pathways To Greater Well-Being: Evidence From Tanzania. <em>FSP Research Paper</em>, <em>60</em>, 40. Retrieved from <a href="http://ageconsearch.umn.edu/record/261669?ln=en" class="uri">http://ageconsearch.umn.edu/record/261669?ln=en</a></p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="clustering-of-farm-households.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 1
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

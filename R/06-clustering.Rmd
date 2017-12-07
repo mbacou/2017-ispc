@@ -71,7 +71,7 @@ pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp5$cluster],
 tmp6 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
 tmp6$centers
 pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp6$cluster],
-  main="PAM - 2 covariates, RIGA sales, Ethiopia")
+  main="KMEAN - 2 covariates, RIGA sales, Ethiopia")
 
 ```
 
@@ -101,7 +101,7 @@ pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp8$cluster],
 tmp9 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
 tmp9$centers
 pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp9$cluster],
-  main="PAM - 2 covariates, RIGA sales, Tanzania")
+  main="KMEAN - 2 covariates, RIGA sales, Tanzania")
 
 ```
 
@@ -131,6 +131,6 @@ pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp11$cluster],
 tmp12 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
 tmp12$centers
 pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp12$cluster],
-  main="PAM - 2 covariates, RIGA sales, Ghana")
+  main="KMEAN - 2 covariates, RIGA sales, Ghana")
 
 ```

@@ -33,7 +33,7 @@ load("../tmp/2017-ispc.RData")
 # Output options
 table_options(htmloptions(justification="c", head=F, pad=T))
 opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
-  dev="png", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=T, 
+  dev="png", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=F, 
   dev.args=list(
     png=list(family="Roboto Condensed", pointsize=11), 
     svg=list(family="Roboto Condensed")))
@@ -2014,8 +2014,9 @@ pplot(agsales_sh~survey+croparea_4ha, eth)
 
 ##########################################
 # Crop commercialization dummy `cropsales_3clas`
+# BEWARE we can use `shcropsold` or use `cropsales`_sh
 eth[, cropsales_3clas := NULL]
-eth[, cropsales_3clas := cut(cropsales_sh, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
+eth[, cropsales_3clas := cut(shcropsold, c(-1,.05,.5,1.1), labels=c("LoC", "MeC", "HiC"), ordered=T, right=F)]
 summary(eth$cropsales_3clas)
 #  LoC  MeC  HiC NA's 
 # 1062 2319 1417 4299
@@ -2144,7 +2145,7 @@ eth.svy.shf <- lapply(eth.svy.farm, subset, croparea_4ha=="<= 4 ha")
 
 ```{r save, eval=FALSE}
 
-rm(tmp, tmp1, tmp2, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, 
+rm(tmp, tmp1, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, 
   eth.adm, eth.chr, eth.inc, eth.hh, tmp.cv, f, by, design, rn, res, res.cv)
 save.image("./tmp/2017-ispc.RData")
 

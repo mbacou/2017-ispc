@@ -167,6 +167,24 @@ html(tabular(Heading("Farm Size")*croparea_3clas*(mean+CI)~Heading("Farm Types")
 
 ```
 
+Proportions of **small holdings** across categories (farms below 4 ha)
+
+
+```{r gha-proptab56b, results="asis"}
+
+# To ease comparisons with EPAR
+tmp1 <- lapply(gha.svy.shf, function(x) svyCrossProp("class5", x))
+tmp <- rbindlist(tmp1)
+tmp2 <- c("2012/2013", "2005/2006", "1998/1999")
+tmp[, year := rep(tmp2, each=5)]
+tmp[, year := factor(year, levels=tmp2)]
+
+table_options(HTMLcaption="(#tab:proptab56) Est. Proportions of Farm Holdings across Categories (TNPS all waves, percent, farms below 4 ha)")
+html(tabular((`Year`=year)*(mean+CI)~Heading("Farm Types")*class5*Heading()*identity,
+  data=tmp), rmarkdown=T)
+
+```
+
 ## Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants
 
 ```{r gha-figquad, fig.cap="Agricultural Potential Quadrants, Ghana"}

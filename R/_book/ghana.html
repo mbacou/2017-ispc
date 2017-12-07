@@ -1,0 +1,7447 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Agricultural Transformation in Ghana, Ethiopia, and Tanzania</title>
+  <meta name="description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)">
+  <meta name="generator" content="bookdown 0.5.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Agricultural Transformation in Ghana, Ethiopia, and Tanzania" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Agricultural Transformation in Ghana, Ethiopia, and Tanzania" />
+  
+  <meta name="twitter:description" content="Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)" />
+  
+
+<meta name="author" content="BACOU, Melanie for BMGF">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="ethiopia.html">
+<link rel="next" href="tanzania.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="css/book.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">2017-ISPC-AGTRANS</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Data Preparation</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#harmonized-codebook"><i class="fa fa-check"></i><b>1.1</b> Harmonized Codebook</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#riga-income-aggregates"><i class="fa fa-check"></i><b>1.2</b> RIGA Income Aggregates</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#survey-maps"><i class="fa fa-check"></i><b>1.3</b> Survey Maps</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#agricultural-potential-quadrants"><i class="fa fa-check"></i><b>1.4</b> Agricultural Potential Quadrants</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="ethiopia.html"><a href="ethiopia.html"><i class="fa fa-check"></i><b>2</b> Ethiopia</a><ul>
+<li class="chapter" data-level="2.1" data-path="ethiopia.html"><a href="ethiopia.html#household-sampling-and-stratification"><i class="fa fa-check"></i><b>2.1</b> Household Sampling and Stratification</a></li>
+<li class="chapter" data-level="2.2" data-path="ethiopia.html"><a href="ethiopia.html#distribution-of-farm-holdings-across-farm-sizes-and-farm-types"><i class="fa fa-check"></i><b>2.2</b> Distribution of Farm Holdings across Farm Sizes and Farm Types</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="ethiopia.html"><a href="ethiopia.html#land-holding"><i class="fa fa-check"></i><b>2.2.1</b> Land Holding</a></li>
+<li class="chapter" data-level="2.2.2" data-path="ethiopia.html"><a href="ethiopia.html#trends-in-commercialization"><i class="fa fa-check"></i><b>2.2.2</b> Trends in Commercialization</a></li>
+<li class="chapter" data-level="2.2.3" data-path="ethiopia.html"><a href="ethiopia.html#trends-in-income-diversification"><i class="fa fa-check"></i><b>2.2.3</b> Trends in Income Diversification</a></li>
+<li class="chapter" data-level="2.2.4" data-path="ethiopia.html"><a href="ethiopia.html#x3-farm-classification"><i class="fa fa-check"></i><b>2.2.4</b> 3x3 Farm Classification</a></li>
+<li class="chapter" data-level="2.2.5" data-path="ethiopia.html"><a href="ethiopia.html#simplified-farm-classification-5-class"><i class="fa fa-check"></i><b>2.2.5</b> Simplified Farm Classification (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="ethiopia.html"><a href="ethiopia.html#farm-segmentation-along-farm-types-5-class-and-agricultural-potential-quadrants"><i class="fa fa-check"></i><b>2.3</b> Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="ethiopia.html"><a href="ethiopia.html#all-farms"><i class="fa fa-check"></i><b>2.3.1</b> All Farms</a></li>
+<li class="chapter" data-level="2.3.2" data-path="ethiopia.html"><a href="ethiopia.html#small-farms-below-4-ha"><i class="fa fa-check"></i><b>2.3.2</b> Small Farms (below 4 ha)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ghana.html"><a href="ghana.html"><i class="fa fa-check"></i><b>3</b> Ghana</a><ul>
+<li class="chapter" data-level="3.1" data-path="ghana.html"><a href="ghana.html#household-sampling-and-stratification-1"><i class="fa fa-check"></i><b>3.1</b> Household Sampling and Stratification</a></li>
+<li class="chapter" data-level="3.2" data-path="ghana.html"><a href="ghana.html#distribution-of-farm-holdings-across-farm-sizes-and-farm-types-1"><i class="fa fa-check"></i><b>3.2</b> Distribution of Farm Holdings across Farm Sizes and Farm Types</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="ghana.html"><a href="ghana.html#land-holding-1"><i class="fa fa-check"></i><b>3.2.1</b> Land Holding</a></li>
+<li class="chapter" data-level="3.2.2" data-path="ghana.html"><a href="ghana.html#trends-in-commercialization-1"><i class="fa fa-check"></i><b>3.2.2</b> Trends in Commercialization</a></li>
+<li class="chapter" data-level="3.2.3" data-path="ghana.html"><a href="ghana.html#trends-in-income-diversification-1"><i class="fa fa-check"></i><b>3.2.3</b> Trends in Income Diversification</a></li>
+<li class="chapter" data-level="3.2.4" data-path="ghana.html"><a href="ghana.html#x3-farm-classification-1"><i class="fa fa-check"></i><b>3.2.4</b> 3x3 Farm Classification</a></li>
+<li class="chapter" data-level="3.2.5" data-path="ghana.html"><a href="ghana.html#simplified-farm-classification-5-class-1"><i class="fa fa-check"></i><b>3.2.5</b> Simplified Farm Classification (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="ghana.html"><a href="ghana.html#farm-segmentation-along-farm-types-5-class-and-agricultural-potential-quadrants-1"><i class="fa fa-check"></i><b>3.3</b> Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="ghana.html"><a href="ghana.html#all-farms-1"><i class="fa fa-check"></i><b>3.3.1</b> All Farms</a></li>
+<li class="chapter" data-level="3.3.2" data-path="ghana.html"><a href="ghana.html#small-farms-below-4-ha-1"><i class="fa fa-check"></i><b>3.3.2</b> Small Farms (below 4 ha)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="ghana.html"><a href="ghana.html#farm-characteristics-across-types-5-class"><i class="fa fa-check"></i><b>3.4</b> Farm Characteristics across Types (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="tanzania.html"><a href="tanzania.html"><i class="fa fa-check"></i><b>4</b> Tanzania</a><ul>
+<li class="chapter" data-level="4.1" data-path="tanzania.html"><a href="tanzania.html#household-sampling-and-stratification-2"><i class="fa fa-check"></i><b>4.1</b> Household Sampling and Stratification</a></li>
+<li class="chapter" data-level="4.2" data-path="tanzania.html"><a href="tanzania.html#distribution-of-farm-holdings-across-farm-sizes-and-farm-types-2"><i class="fa fa-check"></i><b>4.2</b> Distribution of Farm Holdings across Farm Sizes and Farm Types</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="tanzania.html"><a href="tanzania.html#land-holding-2"><i class="fa fa-check"></i><b>4.2.1</b> Land Holding</a></li>
+<li class="chapter" data-level="4.2.2" data-path="tanzania.html"><a href="tanzania.html#trends-in-commercialization-2"><i class="fa fa-check"></i><b>4.2.2</b> Trends in Commercialization</a></li>
+<li class="chapter" data-level="4.2.3" data-path="tanzania.html"><a href="tanzania.html#trends-in-income-diversification-2"><i class="fa fa-check"></i><b>4.2.3</b> Trends in Income Diversification</a></li>
+<li class="chapter" data-level="4.2.4" data-path="tanzania.html"><a href="tanzania.html#x3-farm-classification-2"><i class="fa fa-check"></i><b>4.2.4</b> 3x3 Farm Classification</a></li>
+<li class="chapter" data-level="4.2.5" data-path="tanzania.html"><a href="tanzania.html#simplified-farm-classification-5-class-2"><i class="fa fa-check"></i><b>4.2.5</b> Simplified Farm Classification (5-class)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="tanzania.html"><a href="tanzania.html#farm-segmentation-along-farm-types-5-class-and-agricultural-potential-quadrants-2"><i class="fa fa-check"></i><b>4.3</b> Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="tanzania.html"><a href="tanzania.html#all-farms-2"><i class="fa fa-check"></i><b>4.3.1</b> All Farms</a></li>
+<li class="chapter" data-level="4.3.2" data-path="tanzania.html"><a href="tanzania.html#small-farms-below-4-ha-2"><i class="fa fa-check"></i><b>4.3.2</b> Small Farms (below 4 ha)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html"><i class="fa fa-check"></i><b>5</b> Clustering of Farm Households</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#ethiopia-1"><i class="fa fa-check"></i><b>5.0.1</b> Ethiopia</a></li>
+<li class="chapter" data-level="5.0.2" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#tanzania-1"><i class="fa fa-check"></i><b>5.0.2</b> Tanzania</a></li>
+<li class="chapter" data-level="5.0.3" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#ghana-1"><i class="fa fa-check"></i><b>5.0.3</b> Ghana</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Agricultural Transformation in Ghana, Ethiopia, and Tanzania</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ghana" class="section level1">
+<h1><span class="header-section-number">3</span> Ghana</h1>
+<p>Relevant sources of household-level micro records for Ghana are the <strong>6 rounds of Ghana Living Standards Surveys</strong> in particular:</p>
+<ul>
+<li>1998/1999 <strong>GLSS4</strong> (EAs were first stratified into 3 ecological zones (Coastal, Forest, Savannah), and then within each zone further stratification was done into rural or urban areas)</li>
+<li>2005/2006 <strong>GLSS5</strong> (EAs were first stratified into 10 administrative regions; within each region EAs were further sub-divided into rural or urban areas; EAs were also classified into ecological zones and inclusion of Accra (GAMA) so that the survey results may be presented across 1) Coastal, 2) Forest, and 3) Northern Savannah, and 4) Accra).</li>
+<li>2012/2013 <strong>GLSS6</strong> (EAs were allocated into 10 regions using probability proportional to population size (PPS), then further divided into urban and rural localities).</li>
+</ul>
+<p>In contrast to the latest 2 waves GLSS4 is only representative for 3 (ecology) x 2 (rural/urban) zones.</p>
+<p>GLSS surveys collect information on the demographic characteristics of the population, their education, health, employment and time use, migration, housing conditions and household agriculture, with a specific focus on <strong>labor force</strong>, with a labor force module expanded in GLSS6 to include a section on child labor.</p>
+<div id="household-sampling-and-stratification-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Household Sampling and Stratification</h2>
+<table>
+<caption><span id="tab:gha-samples">Table 3.1: </span>Composition of Ghana GLSS Harmonized Survey Samples</caption>
+<thead>
+<tr class="header">
+<th align="left">Survey</th>
+<th align="left">Year</th>
+<th align="right">Regions</th>
+<th align="right">Districts</th>
+<th align="right">Sample</th>
+<th align="right">Urban</th>
+<th align="right">Rural</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">GLSS4</td>
+<td align="left">1997/98</td>
+<td align="right">10</td>
+<td align="right">102</td>
+<td align="right">5,998</td>
+<td align="right">2,199</td>
+<td align="right">3,799</td>
+</tr>
+<tr class="even">
+<td align="left">GLSS5</td>
+<td align="left">2005/06</td>
+<td align="right">10</td>
+<td align="right">110</td>
+<td align="right">8,687</td>
+<td align="right">3,618</td>
+<td align="right">5,069</td>
+</tr>
+<tr class="odd">
+<td align="left">GLSS6</td>
+<td align="left">2012/13</td>
+<td align="right">10</td>
+<td align="right">170</td>
+<td align="right">16,772</td>
+<td align="right">7,445</td>
+<td align="right">9,327</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="distribution-of-farm-holdings-across-farm-sizes-and-farm-types-1" class="section level2">
+<h2><span class="header-section-number">3.2</span> Distribution of Farm Holdings across Farm Sizes and Farm Types</h2>
+<p>The plots below show the distribution of key variables in the unweighted sample of households across survey waves. The median line is in red, mean line in green, and the blue region is the inferred 95% confidence interval of the mean.</p>
+<div id="land-holding-1" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Land Holding</h3>
+<div class="figure"><span id="fig:gha-land"></span>
+<img src="fig/gha-land-1.png" alt="Trends in Farm Sizes across Survey Waves (ha)" width="1540" />
+<p class="caption">
+Figure 3.1: Trends in Farm Sizes across Survey Waves (ha)
+</p>
+</div>
+<div class="figure"><span id="fig:gha-land"></span>
+<img src="fig/gha-land-2.png" alt="Trends in Farm Sizes across Survey Waves (ha)" width="1540" />
+<p class="caption">
+Figure 3.1: Trends in Farm Sizes across Survey Waves (ha)
+</p>
+</div>
+</div>
+<div id="trends-in-commercialization-1" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Trends in Commercialization</h3>
+<div class="figure"><span id="fig:gha-cc"></span>
+<img src="fig/gha-cc-1.png" alt="Crop Commercialization across Survey Waves (percent of crop production)" width="1540" />
+<p class="caption">
+Figure 3.2: Crop Commercialization across Survey Waves (percent of crop production)
+</p>
+</div>
+<div class="figure"><span id="fig:gha-ac"></span>
+<img src="fig/gha-ac-1.png" alt="Agricultural Commercialization across Survey Waves (percent of ag. production)" width="1540" />
+<p class="caption">
+Figure 3.3: Agricultural Commercialization across Survey Waves (percent of ag. production)
+</p>
+</div>
+</div>
+<div id="trends-in-income-diversification-1" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Trends in Income Diversification</h3>
+<div class="figure"><span id="fig:gha-div"></span>
+<img src="fig/gha-div-1.png" alt="Non-Farm Income (percent of gross income)" width="1540" />
+<p class="caption">
+Figure 3.4: Non-Farm Income (percent of gross income)
+</p>
+</div>
+</div>
+<div id="x3-farm-classification-1" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> 3x3 Farm Classification</h3>
+<div class="figure"><span id="fig:gha-prop9"></span>
+<img src="fig/gha-prop9-1.png" alt="Est. Proportions of Farm Holdings across Farm Sizes and Categories" width="1540" />
+<p class="caption">
+Figure 3.5: Est. Proportions of Farm Holdings across Farm Sizes and Categories
+</p>
+</div>
+<table class="Rtable">
+<caption>
+<span id="tab:tab1">Table 3.2: </span> Est. Proportions of Farm Holdings across Categories (GLSS6, 2012/13, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="9">
+Crop Commercialization
+</th>
+</tr>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="3">
+<span class="math inline">\(\leq\)</span> 2 ha
+</th>
+<th colspan="3">
+2-4 ha
+</th>
+<th colspan="3">
+<span class="math inline">\(&gt;\)</span> 4 ha
+</th>
+</tr>
+<tr class="center">
+<th>
+Income Diversification
+</th>
+<th>
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+LoD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+ 9.57
+</td>
+<td>
+7.68
+</td>
+<td>
+12.25
+</td>
+<td>
+2.24
+</td>
+<td>
+4.03
+</td>
+<td>
+8.58
+</td>
+<td>
+1.10
+</td>
+<td>
+3.14
+</td>
+<td>
+6.67
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+8.4 - 10.8
+</td>
+<td>
+6.6 - 8.7
+</td>
+<td>
+10.8 - 13.8
+</td>
+<td>
+1.7 - 2.8
+</td>
+<td>
+3.4 - 4.7
+</td>
+<td>
+7.6 - 9.6
+</td>
+<td>
+0.7 - 1.5
+</td>
+<td>
+2.4 - 3.9
+</td>
+<td>
+5.8 - 7.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+MeD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+ 1.69
+</td>
+<td>
+1.05
+</td>
+<td>
+ 1.63
+</td>
+<td>
+0.26
+</td>
+<td>
+0.49
+</td>
+<td>
+1.33
+</td>
+<td>
+0.21
+</td>
+<td>
+0.43
+</td>
+<td>
+1.02
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+1.3 - 2.1
+</td>
+<td>
+0.7 - 1.4
+</td>
+<td>
+1.3 - 2
+</td>
+<td>
+0.1 - 0.4
+</td>
+<td>
+0.3 - 0.7
+</td>
+<td>
+1 - 1.7
+</td>
+<td>
+0.1 - 0.4
+</td>
+<td>
+0.3 - 0.6
+</td>
+<td>
+0.6 - 1.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+HiD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+12.45
+</td>
+<td>
+5.05
+</td>
+<td>
+ 6.10
+</td>
+<td>
+2.49
+</td>
+<td>
+1.76
+</td>
+<td>
+3.51
+</td>
+<td>
+0.94
+</td>
+<td>
+1.15
+</td>
+<td>
+3.18
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+10.8 - 14.1
+</td>
+<td>
+3.9 - 6.2
+</td>
+<td>
+5.2 - 6.9
+</td>
+<td>
+1.8 - 3.2
+</td>
+<td>
+1.3 - 2.2
+</td>
+<td>
+2.8 - 4.2
+</td>
+<td>
+0.7 - 1.2
+</td>
+<td>
+0.8 - 1.5
+</td>
+<td>
+2.6 - 3.8
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:tab1">Table 3.2: </span> Est. Proportions of Farm Holdings across Categories (GLSS5, 2005/06, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="9">
+Crop Commercialization
+</th>
+</tr>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="3">
+<span class="math inline">\(\leq\)</span> 2 ha
+</th>
+<th colspan="3">
+2-4 ha
+</th>
+<th colspan="3">
+<span class="math inline">\(&gt;\)</span> 4 ha
+</th>
+</tr>
+<tr class="center">
+<th>
+Income Diversification
+</th>
+<th>
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+LoD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+11.14
+</td>
+<td>
+10.03
+</td>
+<td>
+8.99
+</td>
+<td>
+3.36
+</td>
+<td>
+5.84
+</td>
+<td>
+6.38
+</td>
+<td>
+1.97
+</td>
+<td>
+6.04
+</td>
+<td>
+8.43
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+9.7 - 12.6
+</td>
+<td>
+8.8 - 11.2
+</td>
+<td>
+7.6 - 10.4
+</td>
+<td>
+2.5 - 4.2
+</td>
+<td>
+4.9 - 6.8
+</td>
+<td>
+5.3 - 7.4
+</td>
+<td>
+1.4 - 2.5
+</td>
+<td>
+4.8 - 7.2
+</td>
+<td>
+6.9 - 10
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+MeD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+ 2.56
+</td>
+<td>
+ 2.57
+</td>
+<td>
+2.49
+</td>
+<td>
+0.74
+</td>
+<td>
+1.31
+</td>
+<td>
+1.49
+</td>
+<td>
+0.24
+</td>
+<td>
+0.81
+</td>
+<td>
+1.69
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+2 - 3.1
+</td>
+<td>
+2 - 3.2
+</td>
+<td>
+1.9 - 3.1
+</td>
+<td>
+0.5 - 1
+</td>
+<td>
+0.9 - 1.7
+</td>
+<td>
+1 - 1.9
+</td>
+<td>
+0.1 - 0.4
+</td>
+<td>
+0.5 - 1.1
+</td>
+<td>
+1.3 - 2.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+HiD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+ 8.51
+</td>
+<td>
+ 3.81
+</td>
+<td>
+3.91
+</td>
+<td>
+1.67
+</td>
+<td>
+1.26
+</td>
+<td>
+1.63
+</td>
+<td>
+0.59
+</td>
+<td>
+0.93
+</td>
+<td>
+1.61
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+7.2 - 9.9
+</td>
+<td>
+3 - 4.6
+</td>
+<td>
+3.1 - 4.7
+</td>
+<td>
+1.2 - 2.1
+</td>
+<td>
+0.9 - 1.6
+</td>
+<td>
+1.2 - 2
+</td>
+<td>
+0.3 - 0.8
+</td>
+<td>
+0.6 - 1.3
+</td>
+<td>
+1.1 - 2.1
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:tab1">Table 3.2: </span> Est. Proportions of Farm Holdings across Categories (GLSS4, 1998/99, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="9">
+Crop Commercialization
+</th>
+</tr>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="3">
+<span class="math inline">\(\leq\)</span> 2 ha
+</th>
+<th colspan="3">
+2-4 ha
+</th>
+<th colspan="3">
+<span class="math inline">\(&gt;\)</span> 4 ha
+</th>
+</tr>
+<tr class="center">
+<th>
+Income Diversification
+</th>
+<th>
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+<th>
+LoC
+</th>
+<th>
+MeC
+</th>
+<th>
+HiC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+LoD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+9.43
+</td>
+<td>
+11.67
+</td>
+<td>
+5.68
+</td>
+<td>
+9.93
+</td>
+<td>
+16.73
+</td>
+<td>
+5.27
+</td>
+<td>
+0.86
+</td>
+<td>
+4.45
+</td>
+<td>
+2.06
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+7.6 - 11.3
+</td>
+<td>
+9.1 - 14.2
+</td>
+<td>
+4.3 - 7
+</td>
+<td>
+7.5 - 12.3
+</td>
+<td>
+13.6 - 19.9
+</td>
+<td>
+3.7 - 6.9
+</td>
+<td>
+0.5 - 1.3
+</td>
+<td>
+3.2 - 5.7
+</td>
+<td>
+1.3 - 2.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+MeD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+3.31
+</td>
+<td>
+ 2.81
+</td>
+<td>
+1.54
+</td>
+<td>
+1.96
+</td>
+<td>
+ 2.92
+</td>
+<td>
+0.90
+</td>
+<td>
+0.21
+</td>
+<td>
+0.65
+</td>
+<td>
+0.26
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+2.5 - 4.2
+</td>
+<td>
+2 - 3.7
+</td>
+<td>
+0.8 - 2.3
+</td>
+<td>
+1.4 - 2.5
+</td>
+<td>
+2 - 3.8
+</td>
+<td>
+0.6 - 1.2
+</td>
+<td>
+0.1 - 0.4
+</td>
+<td>
+0.4 - 0.9
+</td>
+<td>
+0.1 - 0.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+HiD
+</th>
+<th class="left">
+mean
+</th>
+<td>
+6.44
+</td>
+<td>
+ 3.04
+</td>
+<td>
+1.61
+</td>
+<td>
+3.82
+</td>
+<td>
+ 1.76
+</td>
+<td>
+1.54
+</td>
+<td>
+0.51
+</td>
+<td>
+0.40
+</td>
+<td>
+0.22
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+4.8 - 8.1
+</td>
+<td>
+2.1 - 4
+</td>
+<td>
+0.8 - 2.4
+</td>
+<td>
+2.7 - 5
+</td>
+<td>
+1.1 - 2.4
+</td>
+<td>
+0.6 - 2.4
+</td>
+<td>
+0.2 - 0.8
+</td>
+<td>
+0.2 - 0.6
+</td>
+<td>
+0 - 0.4
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="simplified-farm-classification-5-class-1" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> Simplified Farm Classification (5-class)</h3>
+<div class="figure"><span id="fig:gha-prop5"></span>
+<img src="fig/gha-prop5-1.png" alt="Est. Proportions of Farm Holdings across Farm Sizes and Categories" width="1540" />
+<p class="caption">
+Figure 3.6: Est. Proportions of Farm Holdings across Farm Sizes and Categories
+</p>
+</div>
+<table class="Rtable">
+<caption>
+<span id="tab:proptab56">Table 2.8: </span> Est. Proportions of Farm Holdings across Categories (GLSS6, 2012/13, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Farm Size
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+<span class="math inline">\(\leq\)</span> 2 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+6.76
+</td>
+<td>
+24.73
+</td>
+<td>
+7.84
+</td>
+<td>
+10.56
+</td>
+<td>
+8.05
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+5.9 - 7.6
+</td>
+<td>
+22.8 - 26.6
+</td>
+<td>
+6.8 - 8.9
+</td>
+<td>
+9.3 - 11.8
+</td>
+<td>
+7 - 9.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+2-4 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.94
+</td>
+<td>
+ 7.65
+</td>
+<td>
+3.78
+</td>
+<td>
+ 7.55
+</td>
+<td>
+4.66
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.7 - 1.2
+</td>
+<td>
+6.3 - 9
+</td>
+<td>
+3.2 - 4.3
+</td>
+<td>
+6.7 - 8.4
+</td>
+<td>
+3.9 - 5.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+<span class="math inline">\(&gt;\)</span> 4 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.72
+</td>
+<td>
+ 4.78
+</td>
+<td>
+3.02
+</td>
+<td>
+ 5.40
+</td>
+<td>
+3.57
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.4 - 1
+</td>
+<td>
+4 - 5.5
+</td>
+<td>
+2.3 - 3.7
+</td>
+<td>
+4.7 - 6.1
+</td>
+<td>
+3 - 4.2
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:proptab55">Table 2.6: </span> Est. Proportions of Farm Holdings across Categories (GLSS5, 2005/06, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Farm Size
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+<span class="math inline">\(\leq\)</span> 2 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+8.24
+</td>
+<td>
+24.15
+</td>
+<td>
+10.54
+</td>
+<td>
+7.47
+</td>
+<td>
+6.03
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+7.1 - 9.4
+</td>
+<td>
+21.9 - 26.3
+</td>
+<td>
+9.3 - 11.8
+</td>
+<td>
+6.3 - 8.6
+</td>
+<td>
+5 - 7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+2-4 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+1.81
+</td>
+<td>
+ 5.66
+</td>
+<td>
+ 5.49
+</td>
+<td>
+5.92
+</td>
+<td>
+3.29
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+1.4 - 2.2
+</td>
+<td>
+4.9 - 6.4
+</td>
+<td>
+4.6 - 6.4
+</td>
+<td>
+4.9 - 6.9
+</td>
+<td>
+2.7 - 3.9
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+<span class="math inline">\(&gt;\)</span> 4 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+1.49
+</td>
+<td>
+ 4.68
+</td>
+<td>
+ 5.68
+</td>
+<td>
+6.73
+</td>
+<td>
+2.81
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+1.1 - 1.9
+</td>
+<td>
+3.8 - 5.6
+</td>
+<td>
+4.6 - 6.7
+</td>
+<td>
+5.4 - 8.1
+</td>
+<td>
+2.1 - 3.5
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:proptab54">Table 2.7: </span> Est. Proportions of Farm Holdings across Categories (GLSS4, 1998/99, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Farm Size
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+<span class="math inline">\(\leq\)</span> 2 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+8.36
+</td>
+<td>
+15.62
+</td>
+<td>
+12.42
+</td>
+<td>
+6.00
+</td>
+<td>
+3.14
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+6.7 - 10
+</td>
+<td>
+12.7 - 18.5
+</td>
+<td>
+9.8 - 15.1
+</td>
+<td>
+4.6 - 7.4
+</td>
+<td>
+1.9 - 4.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+2-4 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+6.93
+</td>
+<td>
+ 9.96
+</td>
+<td>
+18.32
+</td>
+<td>
+6.69
+</td>
+<td>
+2.94
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+5.1 - 8.8
+</td>
+<td>
+8.2 - 11.7
+</td>
+<td>
+15 - 21.7
+</td>
+<td>
+4.9 - 8.5
+</td>
+<td>
+1.9 - 4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+<span class="math inline">\(&gt;\)</span> 4 ha
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.74
+</td>
+<td>
+ 1.73
+</td>
+<td>
+ 4.55
+</td>
+<td>
+2.08
+</td>
+<td>
+0.52
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.4 - 1.1
+</td>
+<td>
+1.2 - 2.2
+</td>
+<td>
+3.2 - 5.9
+</td>
+<td>
+1.3 - 2.8
+</td>
+<td>
+0.2 - 0.8
+</td>
+</tr>
+</tbody>
+</table>
+<p>Proportions of <strong>small holdings</strong> across categories (farms below 4 ha)</p>
+<table class="Rtable">
+<caption>
+<span id="tab:proptab56">Table 2.8: </span> Est. Proportions of Farm Holdings across Categories (TNPS all waves, percent, farms below 4 ha)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Year
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+2012/2013
+</th>
+<th class="left">
+mean
+</th>
+<td>
+ 9.33
+</td>
+<td>
+39.25
+</td>
+<td>
+14.08
+</td>
+<td>
+21.94
+</td>
+<td>
+15.40
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+8.2 - 10.5
+</td>
+<td>
+36.5 - 42
+</td>
+<td>
+12.5 - 15.6
+</td>
+<td>
+19.9 - 24
+</td>
+<td>
+13.8 - 17
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+2005/2006
+</th>
+<th class="left">
+mean
+</th>
+<td>
+12.79
+</td>
+<td>
+37.92
+</td>
+<td>
+20.40
+</td>
+<td>
+17.04
+</td>
+<td>
+11.86
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+11.2 - 14.4
+</td>
+<td>
+35 - 40.8
+</td>
+<td>
+18.4 - 22.4
+</td>
+<td>
+15 - 19.1
+</td>
+<td>
+10.3 - 13.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+1998/1999
+</th>
+<th class="left">
+mean
+</th>
+<td>
+16.91
+</td>
+<td>
+28.30
+</td>
+<td>
+34.01
+</td>
+<td>
+14.05
+</td>
+<td>
+ 6.73
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+14.4 - 19.4
+</td>
+<td>
+25.3 - 31.3
+</td>
+<td>
+30 - 38
+</td>
+<td>
+11.4 - 16.7
+</td>
+<td>
+5.1 - 8.4
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="farm-segmentation-along-farm-types-5-class-and-agricultural-potential-quadrants-1" class="section level2">
+<h2><span class="header-section-number">3.3</span> Farm Segmentation along Farm Types (5-class) and Agricultural Potential Quadrants</h2>
+<div class="figure"><span id="fig:gha-figquad"></span>
+<img src="fig/gha-figquad-1.png" alt="Agricultural Potential Quadrants, Ghana" width="1540" />
+<p class="caption">
+Figure 3.7: Agricultural Potential Quadrants, Ghana
+</p>
+</div>
+<div id="all-farms-1" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> All Farms</h3>
+<p>(TODO: no map has been proceesed yet for GLSS4)</p>
+<div class="figure"><span id="fig:gha-propquad5"></span>
+<img src="fig/gha-propquad5-1.png" alt="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)" width="1540" />
+<p class="caption">
+Figure 3.8: Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (all farm sizes combined)
+</p>
+</div>
+<table class="Rtable">
+<caption>
+<span id="tab:propquadtab53">Table 3.3: </span> Est. Proportions of Farm Holdings across Types and Quadrants (GLSS6, 2012/13, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Quadrant
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.30
+</td>
+<td>
+ 0.93
+</td>
+<td>
+ 0.44
+</td>
+<td>
+ 0.53
+</td>
+<td>
+ 0.35
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.1 - 0.5
+</td>
+<td>
+0.5 - 1.4
+</td>
+<td>
+0.1 - 0.8
+</td>
+<td>
+0.2 - 0.9
+</td>
+<td>
+0.2 - 0.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.34
+</td>
+<td>
+ 3.16
+</td>
+<td>
+ 0.25
+</td>
+<td>
+ 0.21
+</td>
+<td>
+ 0.49
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.1 - 0.5
+</td>
+<td>
+1.8 - 4.5
+</td>
+<td>
+0 - 0.6
+</td>
+<td>
+0 - 0.4
+</td>
+<td>
+0 - 1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+6.30
+</td>
+<td>
+23.75
+</td>
+<td>
+11.64
+</td>
+<td>
+19.06
+</td>
+<td>
+11.71
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+5.3 - 7.3
+</td>
+<td>
+21.3 - 26.2
+</td>
+<td>
+10.2 - 13.1
+</td>
+<td>
+17.1 - 21
+</td>
+<td>
+10.2 - 13.2
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+1.47
+</td>
+<td>
+ 9.32
+</td>
+<td>
+ 2.30
+</td>
+<td>
+ 3.71
+</td>
+<td>
+ 3.74
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+1.1 - 1.9
+</td>
+<td>
+7.6 - 11.1
+</td>
+<td>
+1.6 - 3
+</td>
+<td>
+2.7 - 4.7
+</td>
+<td>
+2.8 - 4.7
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:propquadtab52">Table 2.9: </span> Est. Proportions of Farm Holdings across Types and Quadrants (GLSS5, 2005/06, percent)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Quadrant
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.29
+</td>
+<td>
+ 0.95
+</td>
+<td>
+ 0.31
+</td>
+<td>
+ 0.57
+</td>
+<td>
+0.34
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.1 - 0.5
+</td>
+<td>
+0.3 - 1.6
+</td>
+<td>
+0.1 - 0.6
+</td>
+<td>
+0.1 - 1
+</td>
+<td>
+0 - 0.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.55
+</td>
+<td>
+ 3.75
+</td>
+<td>
+ 0.91
+</td>
+<td>
+ 0.29
+</td>
+<td>
+0.31
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.2 - 0.9
+</td>
+<td>
+2.6 - 4.9
+</td>
+<td>
+0 - 2
+</td>
+<td>
+0 - 0.6
+</td>
+<td>
+0 - 0.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+8.78
+</td>
+<td>
+22.95
+</td>
+<td>
+17.69
+</td>
+<td>
+15.65
+</td>
+<td>
+9.15
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+7.5 - 10
+</td>
+<td>
+20.4 - 25.5
+</td>
+<td>
+15.7 - 19.7
+</td>
+<td>
+13.5 - 17.8
+</td>
+<td>
+7.7 - 10.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+1.93
+</td>
+<td>
+ 6.82
+</td>
+<td>
+ 2.81
+</td>
+<td>
+ 3.62
+</td>
+<td>
+2.33
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+1.1 - 2.7
+</td>
+<td>
+5.2 - 8.5
+</td>
+<td>
+1.9 - 3.7
+</td>
+<td>
+2.3 - 4.9
+</td>
+<td>
+1.5 - 3.1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="small-farms-below-4-ha-1" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Small Farms (below 4 ha)</h3>
+<div class="figure"><span id="fig:gha-propquad5sh"></span>
+<img src="fig/gha-propquad5sh-1.png" alt="Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (farms below 4 ha)" width="1540" />
+<p class="caption">
+Figure 3.9: Est. Proportions of Farm Holdings across Farm Sizes and Quadrants (farms below 4 ha)
+</p>
+</div>
+<table class="Rtable">
+<caption>
+<span id="tab:propquadtab53sh">Table 3.4: </span> Est. Proportions of Farm Holdings across Types and Quadrants (GLSS6, 2012/13, percent, farms below 4 ha)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Quadrant
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.35
+</td>
+<td>
+ 1.09
+</td>
+<td>
+ 0.42
+</td>
+<td>
+ 0.59
+</td>
+<td>
+ 0.31
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.1 - 0.6
+</td>
+<td>
+0.6 - 1.6
+</td>
+<td>
+0.1 - 0.7
+</td>
+<td>
+0.2 - 1
+</td>
+<td>
+0.1 - 0.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.36
+</td>
+<td>
+ 3.45
+</td>
+<td>
+ 0.22
+</td>
+<td>
+ 0.12
+</td>
+<td>
+ 0.56
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.1 - 0.6
+</td>
+<td>
+1.8 - 5.1
+</td>
+<td>
+0 - 0.5
+</td>
+<td>
+0 - 0.3
+</td>
+<td>
+0 - 1.2
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+6.87
+</td>
+<td>
+24.55
+</td>
+<td>
+10.91
+</td>
+<td>
+17.44
+</td>
+<td>
+10.74
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+5.8 - 8
+</td>
+<td>
+21.9 - 27.1
+</td>
+<td>
+9.4 - 12.5
+</td>
+<td>
+15.4 - 19.5
+</td>
+<td>
+9.2 - 12.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+1.75
+</td>
+<td>
+10.16
+</td>
+<td>
+ 2.52
+</td>
+<td>
+ 3.80
+</td>
+<td>
+ 3.78
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+1.3 - 2.2
+</td>
+<td>
+8.2 - 12.1
+</td>
+<td>
+1.7 - 3.3
+</td>
+<td>
+2.8 - 4.8
+</td>
+<td>
+2.7 - 4.8
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:propquadtab52sh">Table 2.11: </span> Est. Proportions of Farm Holdings across Types and Quadrants (GLSS5, 2005/06, percent, farms below 4 ha)
+</caption>
+<thead>
+<tr class="center">
+<th>
+ 
+</th>
+<th>
+ 
+</th>
+<th colspan="5">
+Farm Types
+</th>
+</tr>
+<tr class="center">
+<th>
+Quadrant
+</th>
+<th>
+</th>
+<th>
+SUB
+</th>
+<th>
+TRANS
+</th>
+<th>
+PRCOMM
+</th>
+<th>
+SPCOMM
+</th>
+<th>
+DIV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.37
+</td>
+<td>
+ 1.19
+</td>
+<td>
+ 0.38
+</td>
+<td>
+ 0.63
+</td>
+<td>
+0.44
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.1 - 0.7
+</td>
+<td>
+0.4 - 2
+</td>
+<td>
+0.1 - 0.7
+</td>
+<td>
+0.1 - 1.1
+</td>
+<td>
+0 - 0.9
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-lo / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+0.69
+</td>
+<td>
+ 4.35
+</td>
+<td>
+ 0.75
+</td>
+<td>
+ 0.32
+</td>
+<td>
+0.39
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+0.2 - 1.2
+</td>
+<td>
+3 - 5.7
+</td>
+<td>
+0 - 1.6
+</td>
+<td>
+0 - 0.7
+</td>
+<td>
+0 - 0.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-lo
+</th>
+<th class="left">
+mean
+</th>
+<td>
+9.56
+</td>
+<td>
+24.50
+</td>
+<td>
+16.08
+</td>
+<td>
+12.56
+</td>
+<td>
+8.32
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+8.1 - 11
+</td>
+<td>
+21.8 - 27.2
+</td>
+<td>
+14.1 - 18.1
+</td>
+<td>
+10.6 - 14.5
+</td>
+<td>
+6.9 - 9.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+agpot-hi / mkt-hi
+</th>
+<th class="left">
+mean
+</th>
+<td>
+2.16
+</td>
+<td>
+ 7.87
+</td>
+<td>
+ 3.20
+</td>
+<td>
+ 3.53
+</td>
+<td>
+2.71
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+CI
+</th>
+<td>
+1.3 - 3
+</td>
+<td>
+6 - 9.8
+</td>
+<td>
+2.2 - 4.2
+</td>
+<td>
+2.3 - 4.8
+</td>
+<td>
+1.8 - 3.7
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:tab2">Table 3.5: </span> Est. Demographic Characteristics of Farm Holdings below 4 ha across Categories (2012/13, percent/km)
+</caption>
+<thead>
+<tr class="center">
+<th>
+Label
+</th>
+<th>
+</th>
+<th>
+LoCLoD
+</th>
+<th>
+LoCMeD
+</th>
+<th>
+LoCHiD
+</th>
+<th>
+MeCLoD
+</th>
+<th>
+MeCMeD
+</th>
+<th>
+MeCHiD
+</th>
+<th>
+HiCLoD
+</th>
+<th>
+HiCMeD
+</th>
+<th>
+HiCHiD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+age head of hh
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+47.5
+</td>
+<td>
+52.3
+</td>
+<td>
+48.7
+</td>
+<td>
+47.0
+</td>
+<td>
+51.4
+</td>
+<td>
+47.8
+</td>
+<td>
+47.4
+</td>
+<td>
+52.4
+</td>
+<td>
+46.9
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+45.0
+</td>
+<td>
+53.0
+</td>
+<td>
+47.0
+</td>
+<td>
+45.0
+</td>
+<td>
+50.0
+</td>
+<td>
+46.0
+</td>
+<td>
+45.0
+</td>
+<td>
+50.0
+</td>
+<td>
+45.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.7
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 0.6
+</td>
+<td>
+ 1.9
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 0.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ave years of education among hh members, 15-60 yrs
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 4.0
+</td>
+<td>
+ 5.1
+</td>
+<td>
+ 6.1
+</td>
+<td>
+ 3.8
+</td>
+<td>
+ 4.1
+</td>
+<td>
+ 5.3
+</td>
+<td>
+ 4.3
+</td>
+<td>
+ 5.6
+</td>
+<td>
+ 5.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 4.0
+</td>
+<td>
+ 5.8
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 3.9
+</td>
+<td>
+ 4.0
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 4.5
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 6.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.2
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+female head of hh widow
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 5.8
+</td>
+<td>
+16.5
+</td>
+<td>
+ 6.1
+</td>
+<td>
+ 5.6
+</td>
+<td>
+10.6
+</td>
+<td>
+ 4.4
+</td>
+<td>
+ 3.8
+</td>
+<td>
+ 8.8
+</td>
+<td>
+ 3.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.2
+</td>
+<td>
+ 5.2
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 1.1
+</td>
+<td>
+ 3.5
+</td>
+<td>
+ 1.1
+</td>
+<td>
+ 0.7
+</td>
+<td>
+ 2.7
+</td>
+<td>
+ 1.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+female headed hh
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+27.4
+</td>
+<td>
+52.5
+</td>
+<td>
+33.7
+</td>
+<td>
+20.9
+</td>
+<td>
+42.9
+</td>
+<td>
+27.6
+</td>
+<td>
+20.7
+</td>
+<td>
+27.2
+</td>
+<td>
+26.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+100.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 2.0
+</td>
+<td>
+ 5.6
+</td>
+<td>
+ 1.6
+</td>
+<td>
+ 1.7
+</td>
+<td>
+ 5.5
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 4.1
+</td>
+<td>
+ 2.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+hh labor age $&gt;$14 but $&lt;$60 yrs
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 2.0
+</td>
+<td>
+ 1.8
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 2.6
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 1.9
+</td>
+<td>
+ 2.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+highest years of education in hh
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 5.4
+</td>
+<td>
+ 6.6
+</td>
+<td>
+ 7.6
+</td>
+<td>
+ 5.5
+</td>
+<td>
+ 5.7
+</td>
+<td>
+ 7.1
+</td>
+<td>
+ 5.8
+</td>
+<td>
+ 6.6
+</td>
+<td>
+ 7.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 6.0
+</td>
+<td>
+ 7.0
+</td>
+<td>
+ 8.0
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 7.0
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 7.0
+</td>
+<td>
+ 8.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.2
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+household has electricity
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+33.3
+</td>
+<td>
+46.1
+</td>
+<td>
+73.7
+</td>
+<td>
+29.8
+</td>
+<td>
+41.8
+</td>
+<td>
+49.9
+</td>
+<td>
+34.3
+</td>
+<td>
+55.1
+</td>
+<td>
+60.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+100.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 3.0
+</td>
+<td>
+ 5.6
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 3.1
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 3.3
+</td>
+<td>
+ 2.7
+</td>
+<td>
+ 4.7
+</td>
+<td>
+ 3.2
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+household has fixed telephone line
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 0.1
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.1
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+household has mobile phone
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+20.6
+</td>
+<td>
+20.9
+</td>
+<td>
+11.4
+</td>
+<td>
+20.4
+</td>
+<td>
+16.5
+</td>
+<td>
+15.7
+</td>
+<td>
+18.2
+</td>
+<td>
+18.0
+</td>
+<td>
+13.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.9
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 3.5
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 3.4
+</td>
+<td>
+ 1.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+household owns dwelling
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+66.1
+</td>
+<td>
+63.8
+</td>
+<td>
+48.0
+</td>
+<td>
+71.9
+</td>
+<td>
+66.0
+</td>
+<td>
+62.7
+</td>
+<td>
+70.2
+</td>
+<td>
+67.5
+</td>
+<td>
+57.9
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 3.0
+</td>
+<td>
+ 4.6
+</td>
+<td>
+ 1.9
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 5.6
+</td>
+<td>
+ 4.3
+</td>
+<td>
+ 1.7
+</td>
+<td>
+ 4.4
+</td>
+<td>
+ 2.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+km from community to bank
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+13.1
+</td>
+<td>
+12.3
+</td>
+<td>
+ 8.2
+</td>
+<td>
+16.1
+</td>
+<td>
+14.7
+</td>
+<td>
+11.2
+</td>
+<td>
+15.4
+</td>
+<td>
+12.2
+</td>
+<td>
+11.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+10.0
+</td>
+<td>
+10.0
+</td>
+<td>
+ 5.0
+</td>
+<td>
+12.0
+</td>
+<td>
+10.0
+</td>
+<td>
+ 8.0
+</td>
+<td>
+11.0
+</td>
+<td>
+10.0
+</td>
+<td>
+ 8.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.9
+</td>
+<td>
+ 1.1
+</td>
+<td>
+ 0.6
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 0.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+km from community to health facility
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+18.2
+</td>
+<td>
+17.4
+</td>
+<td>
+14.4
+</td>
+<td>
+20.8
+</td>
+<td>
+18.2
+</td>
+<td>
+16.5
+</td>
+<td>
+21.0
+</td>
+<td>
+18.7
+</td>
+<td>
+17.9
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+12.0
+</td>
+<td>
+15.0
+</td>
+<td>
+10.0
+</td>
+<td>
+15.0
+</td>
+<td>
+12.0
+</td>
+<td>
+11.7
+</td>
+<td>
+17.0
+</td>
+<td>
+15.0
+</td>
+<td>
+14.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.2
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 1.1
+</td>
+<td>
+ 1.2
+</td>
+<td>
+ 1.6
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 1.1
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 1.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+km from community to nearest motorable road
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 1.7
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 1.2
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.4
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+km from community to post office
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+15.8
+</td>
+<td>
+14.3
+</td>
+<td>
+11.5
+</td>
+<td>
+18.6
+</td>
+<td>
+15.4
+</td>
+<td>
+13.5
+</td>
+<td>
+18.3
+</td>
+<td>
+15.3
+</td>
+<td>
+13.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+11.0
+</td>
+<td>
+10.0
+</td>
+<td>
+ 8.0
+</td>
+<td>
+14.0
+</td>
+<td>
+10.0
+</td>
+<td>
+ 9.0
+</td>
+<td>
+14.0
+</td>
+<td>
+11.0
+</td>
+<td>
+10.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.0
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 1.2
+</td>
+<td>
+ 1.6
+</td>
+<td>
+ 1.2
+</td>
+<td>
+ 1.3
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 0.9
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+km from household to nearest water source
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 1.2
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 1.6
+</td>
+<td>
+ 1.2
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 3.5
+</td>
+<td>
+ 3.7
+</td>
+<td>
+ 3.5
+</td>
+<td>
+ 1.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.6
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.7
+</td>
+<td>
+ 1.2
+</td>
+<td>
+ 1.9
+</td>
+<td>
+ 2.7
+</td>
+<td>
+ 0.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+years of education head of hh
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 3.4
+</td>
+<td>
+ 4.4
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 3.6
+</td>
+<td>
+ 3.1
+</td>
+<td>
+ 5.3
+</td>
+<td>
+ 4.1
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 6.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 4.0
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 6.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.2
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.2
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:tab3">Table 3.6: </span> Land Assets of Farm Holdings below 4 ha across Categories (2012/13, ha)
+</caption>
+<thead>
+<tr class="center">
+<th>
+Label
+</th>
+<th>
+</th>
+<th>
+LoCLoD
+</th>
+<th>
+LoCMeD
+</th>
+<th>
+LoCHiD
+</th>
+<th>
+MeCLoD
+</th>
+<th>
+MeCMeD
+</th>
+<th>
+MeCHiD
+</th>
+<th>
+HiCLoD
+</th>
+<th>
+HiCMeD
+</th>
+<th>
+HiCHiD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+land owned
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+0.7
+</td>
+<td>
+0.5
+</td>
+<td>
+1.0
+</td>
+<td>
+1.1
+</td>
+<td>
+1.1
+</td>
+<td>
+0.9
+</td>
+<td>
+1.3
+</td>
+<td>
+1.3
+</td>
+<td>
+1.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+0.2
+</td>
+<td>
+0.1
+</td>
+<td>
+0.8
+</td>
+<td>
+0.8
+</td>
+<td>
+0.8
+</td>
+<td>
+0.8
+</td>
+<td>
+1.2
+</td>
+<td>
+1.2
+</td>
+<td>
+0.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+0.0
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+land rented out by hh
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+0.8
+</td>
+<td>
+0.8
+</td>
+<td>
+1.3
+</td>
+<td>
+1.0
+</td>
+<td>
+0.7
+</td>
+<td>
+1.5
+</td>
+<td>
+0.8
+</td>
+<td>
+0.4
+</td>
+<td>
+1.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+<td>
+ NA
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+0.2
+</td>
+<td>
+0.0
+</td>
+<td>
+0.2
+</td>
+<td>
+0.2
+</td>
+<td>
+0.1
+</td>
+<td>
+0.4
+</td>
+<td>
+0.2
+</td>
+<td>
+0.0
+</td>
+<td>
+0.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+land sharecropped out by hh
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+0.4
+</td>
+<td>
+0.2
+</td>
+<td>
+0.9
+</td>
+<td>
+0.7
+</td>
+<td>
+0.3
+</td>
+<td>
+0.7
+</td>
+<td>
+0.7
+</td>
+<td>
+0.7
+</td>
+<td>
+0.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+0.4
+</td>
+<td>
+0.1
+</td>
+<td>
+0.8
+</td>
+<td>
+0.4
+</td>
+<td>
+0.2
+</td>
+<td>
+0.7
+</td>
+<td>
+0.4
+</td>
+<td>
+0.4
+</td>
+<td>
+0.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.1
+</td>
+<td>
+0.2
+</td>
+<td>
+0.1
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:tab4">Table 3.7: </span> Est. Production, Sales, and Income of Farm Holdings below 4 ha across Categories (2012/13, Percent/Cedis)
+</caption>
+<thead>
+<tr class="center">
+<th>
+Label
+</th>
+<th>
+</th>
+<th>
+LoCLoD
+</th>
+<th>
+LoCMeD
+</th>
+<th>
+LoCHiD
+</th>
+<th>
+MeCLoD
+</th>
+<th>
+MeCMeD
+</th>
+<th>
+MeCHiD
+</th>
+<th>
+HiCLoD
+</th>
+<th>
+HiCMeD
+</th>
+<th>
+HiCHiD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+share of annual crop production sold
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+     0.2
+</td>
+<td>
+     0.2
+</td>
+<td>
+     0.1
+</td>
+<td>
+    29.4
+</td>
+<td>
+    25.1
+</td>
+<td>
+    25.6
+</td>
+<td>
+    70.9
+</td>
+<td>
+    71.1
+</td>
+<td>
+    61.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+    26.9
+</td>
+<td>
+    24.9
+</td>
+<td>
+    24.7
+</td>
+<td>
+    75.5
+</td>
+<td>
+    77.2
+</td>
+<td>
+    71.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+     0.1
+</td>
+<td>
+     0.1
+</td>
+<td>
+     0.0
+</td>
+<td>
+     1.1
+</td>
+<td>
+     1.7
+</td>
+<td>
+     1.3
+</td>
+<td>
+     1.1
+</td>
+<td>
+     2.2
+</td>
+<td>
+     2.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+share of non-farm income in total income
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+     2.4
+</td>
+<td>
+    48.1
+</td>
+<td>
+    98.1
+</td>
+<td>
+     3.3
+</td>
+<td>
+    48.0
+</td>
+<td>
+    91.0
+</td>
+<td>
+     4.0
+</td>
+<td>
+    49.5
+</td>
+<td>
+    91.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+     0.0
+</td>
+<td>
+    45.7
+</td>
+<td>
+   100.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+    46.8
+</td>
+<td>
+    95.1
+</td>
+<td>
+     0.0
+</td>
+<td>
+    49.0
+</td>
+<td>
+    95.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+     0.3
+</td>
+<td>
+     1.0
+</td>
+<td>
+     0.2
+</td>
+<td>
+     0.3
+</td>
+<td>
+     0.9
+</td>
+<td>
+     0.5
+</td>
+<td>
+     0.3
+</td>
+<td>
+     0.7
+</td>
+<td>
+     0.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+value of annual crop production
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+   527.9
+</td>
+<td>
+   410.2
+</td>
+<td>
+   217.7
+</td>
+<td>
+ 1,349.3
+</td>
+<td>
+   853.4
+</td>
+<td>
+   831.1
+</td>
+<td>
+ 1,680.2
+</td>
+<td>
+ 1,479.3
+</td>
+<td>
+ 1,045.2
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+   234.6
+</td>
+<td>
+   255.4
+</td>
+<td>
+    70.0
+</td>
+<td>
+   813.7
+</td>
+<td>
+   536.9
+</td>
+<td>
+   532.7
+</td>
+<td>
+ 1,187.5
+</td>
+<td>
+ 1,000.3
+</td>
+<td>
+   662.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+    75.6
+</td>
+<td>
+    47.6
+</td>
+<td>
+    28.8
+</td>
+<td>
+   154.5
+</td>
+<td>
+    87.4
+</td>
+<td>
+    70.4
+</td>
+<td>
+    66.7
+</td>
+<td>
+   114.6
+</td>
+<td>
+    64.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+value of annual crop sales
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+     4.6
+</td>
+<td>
+     3.3
+</td>
+<td>
+     0.7
+</td>
+<td>
+   341.5
+</td>
+<td>
+   215.8
+</td>
+<td>
+   212.0
+</td>
+<td>
+ 1,273.7
+</td>
+<td>
+ 1,136.3
+</td>
+<td>
+   797.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+   200.0
+</td>
+<td>
+   120.0
+</td>
+<td>
+   112.1
+</td>
+<td>
+   880.0
+</td>
+<td>
+   792.7
+</td>
+<td>
+   426.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+     2.0
+</td>
+<td>
+     1.2
+</td>
+<td>
+     0.2
+</td>
+<td>
+    22.8
+</td>
+<td>
+    34.4
+</td>
+<td>
+    18.3
+</td>
+<td>
+    54.4
+</td>
+<td>
+    93.4
+</td>
+<td>
+    54.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+value of total annual farm income
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 1,171.2
+</td>
+<td>
+ 1,394.2
+</td>
+<td>
+   188.0
+</td>
+<td>
+ 1,480.6
+</td>
+<td>
+ 1,001.9
+</td>
+<td>
+   915.4
+</td>
+<td>
+ 2,051.2
+</td>
+<td>
+ 2,165.5
+</td>
+<td>
+ 1,421.2
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+   390.3
+</td>
+<td>
+   431.6
+</td>
+<td>
+     0.0
+</td>
+<td>
+   906.8
+</td>
+<td>
+   589.5
+</td>
+<td>
+   584.0
+</td>
+<td>
+ 1,446.1
+</td>
+<td>
+ 1,171.4
+</td>
+<td>
+   892.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+   121.5
+</td>
+<td>
+   339.0
+</td>
+<td>
+    28.2
+</td>
+<td>
+   156.3
+</td>
+<td>
+   105.6
+</td>
+<td>
+    75.8
+</td>
+<td>
+    94.4
+</td>
+<td>
+   279.4
+</td>
+<td>
+   116.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+value of total annual gross income
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 1,231.1
+</td>
+<td>
+ 2,850.8
+</td>
+<td>
+34,438.1
+</td>
+<td>
+ 1,532.2
+</td>
+<td>
+ 1,962.7
+</td>
+<td>
+33,976.4
+</td>
+<td>
+ 2,157.6
+</td>
+<td>
+ 4,610.0
+</td>
+<td>
+41,257.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+   397.4
+</td>
+<td>
+   790.0
+</td>
+<td>
+ 8,480.5
+</td>
+<td>
+   934.6
+</td>
+<td>
+ 1,148.4
+</td>
+<td>
+14,134.4
+</td>
+<td>
+ 1,511.4
+</td>
+<td>
+ 2,341.2
+</td>
+<td>
+17,071.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+   128.8
+</td>
+<td>
+   741.2
+</td>
+<td>
+ 2,955.9
+</td>
+<td>
+   158.1
+</td>
+<td>
+   198.8
+</td>
+<td>
+ 3,676.2
+</td>
+<td>
+    99.0
+</td>
+<td>
+   636.6
+</td>
+<td>
+ 2,760.2
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+value of total annual livestock production
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+    15.6
+</td>
+<td>
+     8.5
+</td>
+<td>
+     6.5
+</td>
+<td>
+    77.8
+</td>
+<td>
+    67.0
+</td>
+<td>
+    54.6
+</td>
+<td>
+   300.8
+</td>
+<td>
+   609.6
+</td>
+<td>
+   336.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+    16.2
+</td>
+<td>
+    16.9
+</td>
+<td>
+    10.0
+</td>
+<td>
+     3.7
+</td>
+<td>
+     5.0
+</td>
+<td>
+     5.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+     2.8
+</td>
+<td>
+     2.8
+</td>
+<td>
+     1.1
+</td>
+<td>
+     5.7
+</td>
+<td>
+     9.6
+</td>
+<td>
+     6.3
+</td>
+<td>
+    74.9
+</td>
+<td>
+   239.9
+</td>
+<td>
+    94.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+value total annual livestock production sold
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+     1.7
+</td>
+<td>
+     1.3
+</td>
+<td>
+     0.6
+</td>
+<td>
+    60.0
+</td>
+<td>
+    52.1
+</td>
+<td>
+    39.6
+</td>
+<td>
+   287.8
+</td>
+<td>
+   592.4
+</td>
+<td>
+   326.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+<td>
+     0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+     0.6
+</td>
+<td>
+     0.6
+</td>
+<td>
+     0.2
+</td>
+<td>
+     4.9
+</td>
+<td>
+     8.5
+</td>
+<td>
+     5.0
+</td>
+<td>
+    74.1
+</td>
+<td>
+   238.6
+</td>
+<td>
+    94.6
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:tab5">Table 3.8: </span> Est. Small and Large Livestock Holdings for Farms below 4 ha across Categories (2012/13, ’000 TLU)
+</caption>
+<thead>
+<tr class="center">
+<th>
+Label
+</th>
+<th>
+</th>
+<th>
+LoCLoD
+</th>
+<th>
+LoCMeD
+</th>
+<th>
+LoCHiD
+</th>
+<th>
+MeCLoD
+</th>
+<th>
+MeCMeD
+</th>
+<th>
+MeCHiD
+</th>
+<th>
+HiCLoD
+</th>
+<th>
+HiCMeD
+</th>
+<th>
+HiCHiD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+tropical livestock units: cattle
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+24.1
+</td>
+<td>
+ 8.2
+</td>
+<td>
+14.7
+</td>
+<td>
+23.5
+</td>
+<td>
+21.7
+</td>
+<td>
+10.2
+</td>
+<td>
+25.9
+</td>
+<td>
+34.8
+</td>
+<td>
+14.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 6.5
+</td>
+<td>
+ 2.8
+</td>
+<td>
+ 3.7
+</td>
+<td>
+ 3.6
+</td>
+<td>
+ 6.5
+</td>
+<td>
+ 2.7
+</td>
+<td>
+ 3.9
+</td>
+<td>
+16.6
+</td>
+<td>
+ 2.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+tropical livestock units: chicken, rabbits, other poultry
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 7.0
+</td>
+<td>
+ 5.7
+</td>
+<td>
+ 5.2
+</td>
+<td>
+11.9
+</td>
+<td>
+10.8
+</td>
+<td>
+12.3
+</td>
+<td>
+11.2
+</td>
+<td>
+10.6
+</td>
+<td>
+10.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 6.7
+</td>
+<td>
+ 7.8
+</td>
+<td>
+ 7.8
+</td>
+<td>
+ 4.4
+</td>
+<td>
+ 6.7
+</td>
+<td>
+ 3.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.7
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.7
+</td>
+<td>
+ 1.2
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 0.7
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 0.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+tropical livestock units: horses
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 4.1
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 3.1
+</td>
+<td>
+ 4.9
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 1.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.3
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.9
+</td>
+<td>
+ 1.7
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 0.8
+</td>
+<td>
+ 0.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+tropical livestock units: pigs
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 7.4
+</td>
+<td>
+ 4.4
+</td>
+<td>
+ 2.8
+</td>
+<td>
+ 8.4
+</td>
+<td>
+ 6.0
+</td>
+<td>
+ 7.2
+</td>
+<td>
+ 5.9
+</td>
+<td>
+ 4.6
+</td>
+<td>
+ 3.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.5
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 0.5
+</td>
+<td>
+ 1.3
+</td>
+<td>
+ 1.8
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 1.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+tropical livestock units: sheep, goats
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+21.0
+</td>
+<td>
+15.0
+</td>
+<td>
+16.3
+</td>
+<td>
+36.3
+</td>
+<td>
+45.0
+</td>
+<td>
+34.7
+</td>
+<td>
+34.0
+</td>
+<td>
+31.8
+</td>
+<td>
+35.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+12.1
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 2.4
+</td>
+<td>
+ 2.8
+</td>
+<td>
+ 1.3
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 5.6
+</td>
+<td>
+ 2.5
+</td>
+<td>
+ 2.2
+</td>
+<td>
+ 3.4
+</td>
+<td>
+ 2.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+tropical livestock units: total
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+63.6
+</td>
+<td>
+34.2
+</td>
+<td>
+40.0
+</td>
+<td>
+83.2
+</td>
+<td>
+88.5
+</td>
+<td>
+65.7
+</td>
+<td>
+79.1
+</td>
+<td>
+83.4
+</td>
+<td>
+65.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 0.0
+</td>
+<td>
+26.7
+</td>
+<td>
+32.4
+</td>
+<td>
+26.7
+</td>
+<td>
+18.9
+</td>
+<td>
+19.0
+</td>
+<td>
+22.2
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 9.0
+</td>
+<td>
+ 6.1
+</td>
+<td>
+ 4.4
+</td>
+<td>
+ 6.2
+</td>
+<td>
+12.6
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 5.7
+</td>
+<td>
+17.9
+</td>
+<td>
+ 5.0
+</td>
+</tr>
+</tbody>
+</table>
+<table class="Rtable">
+<caption>
+<span id="tab:tab6">Table 3.9: </span> Est. Agricultural Input Use in Farms below 4 ha across Categories (2012/13, percent of farms)
+</caption>
+<thead>
+<tr class="center">
+<th>
+Label
+</th>
+<th>
+</th>
+<th>
+LoCLoD
+</th>
+<th>
+LoCMeD
+</th>
+<th>
+LoCHiD
+</th>
+<th>
+MeCLoD
+</th>
+<th>
+MeCMeD
+</th>
+<th>
+MeCHiD
+</th>
+<th>
+HiCLoD
+</th>
+<th>
+HiCMeD
+</th>
+<th>
+HiCHiD
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="center">
+<th class="left">
+farm hires labor
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+26.1
+</td>
+<td>
+32.2
+</td>
+<td>
+40.3
+</td>
+<td>
+44.3
+</td>
+<td>
+40.1
+</td>
+<td>
+48.0
+</td>
+<td>
+48.5
+</td>
+<td>
+58.8
+</td>
+<td>
+48.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+100.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 2.4
+</td>
+<td>
+ 5.4
+</td>
+<td>
+ 2.2
+</td>
+<td>
+ 2.2
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 4.5
+</td>
+<td>
+ 2.2
+</td>
+<td>
+ 4.0
+</td>
+<td>
+ 2.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm purchases fuel
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+14.1
+</td>
+<td>
+12.2
+</td>
+<td>
+22.4
+</td>
+<td>
+28.0
+</td>
+<td>
+27.0
+</td>
+<td>
+27.4
+</td>
+<td>
+34.7
+</td>
+<td>
+25.3
+</td>
+<td>
+29.9
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.9
+</td>
+<td>
+ 3.1
+</td>
+<td>
+ 1.7
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 3.8
+</td>
+<td>
+ 3.2
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 3.8
+</td>
+<td>
+ 2.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm purchases seeds
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 7.8
+</td>
+<td>
+ 8.5
+</td>
+<td>
+13.1
+</td>
+<td>
+17.5
+</td>
+<td>
+19.5
+</td>
+<td>
+21.4
+</td>
+<td>
+15.7
+</td>
+<td>
+15.8
+</td>
+<td>
+19.7
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.2
+</td>
+<td>
+ 2.8
+</td>
+<td>
+ 1.3
+</td>
+<td>
+ 1.9
+</td>
+<td>
+ 3.7
+</td>
+<td>
+ 2.9
+</td>
+<td>
+ 1.6
+</td>
+<td>
+ 3.4
+</td>
+<td>
+ 2.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm uses any fertilizer
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+30.2
+</td>
+<td>
+14.6
+</td>
+<td>
+25.5
+</td>
+<td>
+46.5
+</td>
+<td>
+42.3
+</td>
+<td>
+34.1
+</td>
+<td>
+44.9
+</td>
+<td>
+42.0
+</td>
+<td>
+37.8
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 2.7
+</td>
+<td>
+ 3.0
+</td>
+<td>
+ 1.8
+</td>
+<td>
+ 2.4
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 3.6
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 4.7
+</td>
+<td>
+ 2.5
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm uses herbicides
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+27.4
+</td>
+<td>
+34.3
+</td>
+<td>
+39.3
+</td>
+<td>
+62.9
+</td>
+<td>
+56.5
+</td>
+<td>
+64.0
+</td>
+<td>
+64.9
+</td>
+<td>
+70.8
+</td>
+<td>
+57.1
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+<td>
+100.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 2.4
+</td>
+<td>
+ 4.5
+</td>
+<td>
+ 2.0
+</td>
+<td>
+ 2.6
+</td>
+<td>
+ 5.0
+</td>
+<td>
+ 2.9
+</td>
+<td>
+ 2.2
+</td>
+<td>
+ 3.9
+</td>
+<td>
+ 3.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm uses inorganic fertilizer
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+24.9
+</td>
+<td>
+11.6
+</td>
+<td>
+17.1
+</td>
+<td>
+35.5
+</td>
+<td>
+35.8
+</td>
+<td>
+26.9
+</td>
+<td>
+34.8
+</td>
+<td>
+27.8
+</td>
+<td>
+24.6
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 2.6
+</td>
+<td>
+ 2.7
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 2.5
+</td>
+<td>
+ 4.9
+</td>
+<td>
+ 3.3
+</td>
+<td>
+ 2.3
+</td>
+<td>
+ 3.9
+</td>
+<td>
+ 2.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm uses irrigation
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 1.0
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 1.7
+</td>
+<td>
+ 0.6
+</td>
+<td>
+ 0.6
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 1.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.3
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 1.1
+</td>
+<td>
+ 0.4
+</td>
+<td>
+ 0.2
+</td>
+<td>
+ 0.1
+</td>
+<td>
+ 0.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm uses organic fertilizer
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+ 6.9
+</td>
+<td>
+ 4.1
+</td>
+<td>
+10.2
+</td>
+<td>
+12.3
+</td>
+<td>
+ 7.6
+</td>
+<td>
+ 7.8
+</td>
+<td>
+11.6
+</td>
+<td>
+15.2
+</td>
+<td>
+15.3
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.3
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 1.5
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 1.3
+</td>
+<td>
+ 1.4
+</td>
+<td>
+ 3.5
+</td>
+<td>
+ 2.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+farm uses pesticides
+</th>
+<th class="left">
+Mean
+</th>
+<td>
+13.7
+</td>
+<td>
+10.0
+</td>
+<td>
+19.3
+</td>
+<td>
+26.0
+</td>
+<td>
+23.9
+</td>
+<td>
+27.7
+</td>
+<td>
+37.7
+</td>
+<td>
+40.4
+</td>
+<td>
+35.4
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+Q50
+</th>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+<td>
+ 0.0
+</td>
+</tr>
+<tr class="center">
+<th class="left">
+ 
+</th>
+<th class="left">
+SE
+</th>
+<td>
+ 1.9
+</td>
+<td>
+ 2.7
+</td>
+<td>
+ 1.6
+</td>
+<td>
+ 2.1
+</td>
+<td>
+ 5.3
+</td>
+<td>
+ 3.4
+</td>
+<td>
+ 2.5
+</td>
+<td>
+ 4.5
+</td>
+<td>
+ 2.7
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="farm-characteristics-across-types-5-class" class="section level2">
+<h2><span class="header-section-number">3.4</span> Farm Characteristics across Types (5-class)</h2>
+<p>A sample of results across farm types are shown here (see xsheet for complete tabulations).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ethiopia.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tanzania.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 1
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true
+},
+"toolbar": {
+"position": "fixed"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
