@@ -114,7 +114,11 @@
 <li class="chapter" data-level="4.3.2" data-path="tanzania.html"><a href="tanzania.html#small-farms-below-4-ha-2"><i class="fa fa-check"></i><b>4.3.2</b> Small Farms (below 4 ha)</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html"><i class="fa fa-check"></i><b>5</b> Clustering of Farm Households</a></li>
+<li class="chapter" data-level="5" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html"><i class="fa fa-check"></i><b>5</b> Clustering of Farm Households</a><ul>
+<li class="chapter" data-level="5.0.1" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#ethiopia-1"><i class="fa fa-check"></i><b>5.0.1</b> Ethiopia</a></li>
+<li class="chapter" data-level="5.0.2" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#tanzania-1"><i class="fa fa-check"></i><b>5.0.2</b> Tanzania</a></li>
+<li class="chapter" data-level="5.0.3" data-path="clustering-of-farm-households.html"><a href="clustering-of-farm-households.html#ghana-1"><i class="fa fa-check"></i><b>5.0.3</b> Ghana</a></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
@@ -134,9 +138,11 @@
 
             <section class="normal" id="section-">
 <div id="clustering-of-farm-households" class="section level1">
-<h1><span class="header-section-number">Section 5</span> Clustering of Farm Households</h1>
+<h1><span class="header-section-number">5</span> Clustering of Farm Households</h1>
 <p>[in progress] Along segmenting variables.</p>
 <p>Using DBScan clustering</p>
+<div id="ethiopia-1" class="section level3">
+<h3><span class="header-section-number">5.0.1</span> Ethiopia</h3>
 <p>Using PAM clustering (with and without cultivated area)</p>
 <pre><code>     croparea_imp naggross_sh cropsales_sh
 [1,]     1.777000  0.04647670    0.3230641
@@ -153,11 +159,11 @@
 [5,]  0.03514252    0.8255319</code></pre>
 <p><img src="fig/eth-clust-2.png" width="1540" /></p>
 <pre><code>  naggross_sh cropsales_sh
-1  0.03619325   0.71005138
-2  0.83550346   0.08298591
-3  0.01999832   0.16449775
-4  0.34239651   0.15969160
-5  0.55169879   0.75603170</code></pre>
+1  0.57027423   0.71505265
+2  0.68301465   0.09251775
+3  0.04201491   0.08421301
+4  0.04214551   0.39967303
+5  0.04059558   0.81931199</code></pre>
 <p><img src="fig/eth-clust-3.png" width="1540" /></p>
 <p>Using RIGA Sales (median and mean)</p>
 <pre><code>     naggross_sh shcropsold
@@ -169,11 +175,14 @@
 <p><img src="fig/eth-clust-riga-1.png" width="1540" /></p>
 <pre><code>  naggross_sh shcropsold
 1  0.03702533 0.30665257
-2  0.32816822 0.03223278
-3  0.76212952 0.02804418
+2  0.76212952 0.02804418
+3  0.32816822 0.03223278
 4  0.27527290 0.81719637
 5  0.02214218 0.02261416</code></pre>
 <p><img src="fig/eth-clust-riga-2.png" width="1540" /></p>
+</div>
+<div id="tanzania-1" class="section level3">
+<h3><span class="header-section-number">5.0.2</span> Tanzania</h3>
 <pre><code>     croparea_imp naggross_sh cropsales_sh
 [1,]    0.4896696   0.3736405    0.1257884
 [2,]    1.3556967   0.2166206    0.2581831
@@ -189,12 +198,15 @@
 [5,]  0.91425340   0.00000000</code></pre>
 <p><img src="fig/tza-clust-2.png" width="1540" /></p>
 <pre><code>  naggross_sh cropsales_sh
-1  0.43913005   0.12366595
-2  0.70770926   0.81723616
-3  0.09790395   0.64518720
-4  0.86852020   0.03851267
-5  0.06142988   0.11101702</code></pre>
+1  0.06142988   0.11101702
+2  0.09790395   0.64518720
+3  0.86852020   0.03851267
+4  0.43913005   0.12366595
+5  0.70770926   0.81723616</code></pre>
 <p><img src="fig/tza-clust-3.png" width="1540" /></p>
+</div>
+<div id="ghana-1" class="section level3">
+<h3><span class="header-section-number">5.0.3</span> Ghana</h3>
 <pre><code>     croparea_imp naggross_sh cropsales_sh
 [1,]    0.6779281   0.2986156    0.1551922
 [2,]    2.1448338   0.1874032    0.2712700
@@ -209,14 +221,8 @@
 [4,]  0.81121812   0.71535176
 [5,]  0.03352676   0.39879155</code></pre>
 <p><img src="fig/gha-clust-2.png" width="1540" /></p>
-<pre><code>  naggross_sh cropsales_sh
-1  0.07290777   0.42626520
-2  0.05738586   0.82169954
-3  0.84655513   0.07060343
-4  0.07155432   0.05593235
-5  0.79896886   0.72410747</code></pre>
-<p><img src="fig/gha-clust-3.png" width="1540" /></p>
 
+</div>
 </div>
             </section>
 
@@ -253,8 +259,8 @@ gitbook.start({
 "size": 1
 },
 "edit": {
-"link": "https://github.com/mbacou/2017-ispc/blob/master/R/06-clustering.Rmd",
-"text": "Edit"
+"link": null,
+"text": null
 },
 "download": null,
 "toc": {

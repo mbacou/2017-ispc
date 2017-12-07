@@ -128,9 +128,9 @@ tmp11$medoids
 pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp11$cluster],
   main="PAM - 2 covariates, Ghana")
 
-tmp12 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
-tmp12$centers
-pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp12$cluster],
-  main="KMEAN - 2 covariates, RIGA sales, Ghana")
+#tmp12 <- kmeans(tmp[, .SD, .SDcols=Y[-1]], 5)
+#tmp12$centers
+#pairs(tmp[, .SD, .SDcols=Y], col=viridis(5)[tmp12$cluster],
+#  main="KMEAN - 2 covariates, RIGA sales, Ghana")
 
 ```
