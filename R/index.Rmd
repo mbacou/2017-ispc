@@ -9,16 +9,16 @@ output:bookdown::gitbook:
   github-repo: "mbacou/2017-ispc"
 bibliography: biblio.bib
 csl: apa.csl
-link-ph_s11q03_a + ph_s12q07)citations: yes
+citations: yes
 nocite: |
-  @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs, @buckwell2008biasr, @tnps2016doco, @tnps2014report, @tnps2010report, @ess2014eth, @erss2012eth
+    @aasr_2016, @alvarez2014typology, @jayne2015agdev, @hazell2013urban, @douillet2014developing, @jordan2005eth, @omamo2006strategic, @bacou2015ethseg, @omamo2006strategic, @benin2016agricultural, @willy2015adaptation, @jayne2015africafarmland, @diao2017ghana, @roberts2014eth, @schnitzer2014tza, @heady2013ethland, @maxwell2014foodinsec, @minot2013agataeth, @girei2017fadama, @christen2013segmenting, @cgap2017segmentation, @nogales2017sourcebook, @lang2013maps, @nagler2017farms, @seahan2017strikingfacts, @wineman2017migration, @hazell2013urbanization, @anderson2015profiles, @anderson2015transformation, @epar2017segment, @masters2013urban, @hazell2013nutrition, @westat2013productivity, @ispc2013foresight, @headey2010toofast, @estoque2017trends, @odjugo2015benin, @turok2012urban, @lang2013targeting, @nagler2017entrepreneur, @sheahan2017inputs, @buckwell2008biasr, @tnps2016doco, @tnps2014report, @tnps2010report, @ess2014eth, @erss2012eth, @waw2013typologies
   
 ---
-
+  
 # Data Preparation
-
+  
 ```{r setup, include=FALSE}
-
+  
 library(data.table)
 library(survey)
 library(tmap)
@@ -56,6 +56,103 @@ prty <- function(...) prettyNum(..., digits=0, big.mark=",", scientific=FALSE)
 # Helper - ggplot defaults
 theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", ...) + 
   theme(panel.grid=element_line(linetype="dotted"))
+
+#####################################################################################
+# Helper - Broom results from svytotal(), svymean() and svyquantile()
+#####################################################################################
+#' Combine and format estimated totals and means from svyby()
+#' @param f list of formulae (list(~var1, ~var2, ...)) to estimate each var separately
+#' @param by passed to svyby()
+#' @param design passed to svyby()
+#' @param FUN passed to svyby()
+#' @param ... other arguments passed to svyby()
+#' @usage Use tables::tabular() to pivot results
+svyCrossTab <- function(f, by, design, FUN=svymean, quantiles=.5, ...) {
+  
+  require(survey)
+  require(data.table)
+  require(stringr)
+  
+  # Reshape means
+  m <- lapply(f, function(x) try(svyby(x, by, design, FUN, na.rm=TRUE, ...) %>% 
+      ftable() %>% as.data.table()))
+  m <- m[sapply(m, function(x) class(x)[1]) != "try-error"]
+  m <- lapply(m, function(x) {
+    setnames(x, names(x)[names(x) %like% "Var"], c("Stat", "Variable"))
+    x[Stat=="FUN", Stat := as.character(quote(FUN))]
+    return(x)
+  })
+  res <- rbindlist(m)
+  
+  # Reshape quantiles
+  if(!is.na(quantiles)) {
+    m <- lapply(f, function(x) try(
+      svyby(x, by, design, svyquantile, quantiles, ci=TRUE, na.rm=TRUE) %>%
+        ftable %>% as.data.table())
+    )
+    m <- m[sapply(m, function(x) class(x)[1])!="try-error"]
+    m <- lapply(m, function(x) {
+      n <- ncol(x)
+      setnames(x, names(x)[names(x) %like% "Var"], c("Stat", "Variable"))
+      x[Stat=="svyquantile", Stat := "Q50"]
+      x[Stat=="SE", Stat := "SEQ50"]
+      return(x)
+    })
+    m <- rbindlist(m)
+    res <- rbind(res, m)
+  }
+  
+  # Add variable labels
+  res <- dcast(res, ...~Stat, value.var="Freq")
+  res[, Variable := str_replace(Variable, fixed("I(1000 * "), "") %>%
+      str_replace(fixed("I(100 * "), "") %>% str_replace(fixed(")"), "")]
+  setkey(res, Variable)
+  setkey(lbl, varCode)
+  res[lbl, Label := i.varLabel]
+  return(res)
+}
+
+#####################################################################################
+# Helper - Broom survey proportions from svytotal() or svymean(~interaction())
+#####################################################################################
+#' Combine and format proportions estimated using svytotal/svymean(~interaction())
+#' @param x character vector of factor variables whose proportions to estimate
+#' @param design survey design passed to svytotal() and svymean()
+#' @param prop "mean" for proportions or "total" for frequencies
+#' @param ... other arguments passed to svytotal() and svymean()
+svyCrossProp <- function(x, design, prop=c("mean", "total"), ...) {
+  if(length(x) == 1) f <- formula(paste0("~", x))
+  if(length(x) > 1) f <- formula(paste0("~I(interaction(", paste(x, collapse=", "), "))"))
+  res <- switch(prop,
+    mean = svymean(f, design, na.rm=TRUE, ...),
+    total = svytotal(f, design, na.rm=TRUE, ...)
+  )
+  rn <- row.names(ftable(res)) %>%
+    str_replace(fixed(as.character(f)[2]), "") %>% str_split(fixed(".")) %>%
+    as.data.table() %>% t()
+  res.cv <- confint(res)
+  res <- switch(prop,
+    mean = as.data.table(cbind(100*res, 100*res.cv)),
+    total = as.data.table(cbind(res, res.cv))
+  )
+  setnames(res, c("mean", "CI1", "CI2"))
+  res <- cbind(rn, res)
+  res[CI1 < 0, CI1 := 0]
+  res[, `:=`(
+    CI1 = prettyNum(CI1, digits=switch(prop, mean=2, total=0), big.mark=","),
+    CI2 = prettyNum(CI2, digits=switch(prop, mean=2, total=0), big.mark=",")
+    )]
+  res[, `:=`(
+    CI = paste(CI1, CI2, sep=" - "),
+    CI1 = NULL, 
+    CI2 = NULL
+    )]
+  setnames(res, "mean", switch(prop, mean="mean", total="total"))
+  setnames(res, seq_along(x), x)
+  for (i in x) res[[i]] <- factor(res[[i]], levels=levels(design$variables[[i]]))
+  return(res)
+}
+
 
 #####################################################################################
 # Harmonize income/sales vars across 4 countries and survey years
@@ -145,8 +242,8 @@ g2 <- SpatialPolygonsDataFrame(g2, data.frame(g2.dt), match.ID="rn")
 
 # Required RIGA components
 vars.chr <- c("totcropprod", "totcropsold", "totagprod", "totagsold", "totlvstprod",
-"totlivsold", "agowncons", "agmisc", "shagprodsold", "shagowncons",
-"shagmisc", "shcropsold", "shlvstsold")
+  "totlivsold", "agowncons", "agmisc", "shagprodsold", "shagowncons",
+  "shagmisc", "shcropsold", "shlvstsold")
 
 vars.inc <- c("farmrntimp", "agr_wge", "selfimp1", "transfersgrossimp", "otherincimp", 
   "nonfarmrntimp", "nonagr_wge", "selfemp",
@@ -178,305 +275,12 @@ gha[, sum(aggross>0), by=croparea==0]
 # 1:     TRUE  6086
 # 2:    FALSE 10679
 # OK we have hhlds with aggross but no land
-
+  
 ```
-
+  
 ```{r tza, eval=FALSE}
+  
 
-# Generate raw codebook
-tmp <- list.files(c(
-  "~/Data/TZA-NPS-14/raw", "~/Data/TZA-NPS-12/raw", 
-  "~/Data/TZA-NPS-10/raw", "~/Data/TZA-NPS-08/raw"), 
-  glob2rx("*.dta"), recursive=T, full.names=T)
-tmp <- lapply(seq_along(tmp), function(x) {
-  y <- read.dta13(tmp[x])
-  y <- data.table(
-    varCode=names(y), 
-    varLabel=attr(y, "var.labels"), 
-    svyCode=unlist(strsplit(tmp[x], "/"))[5],
-    fName=unlist(strsplit(tmp[x], "/"))[7])
-})
-tmp <- rbindlist(tmp)
-fwrite(tmp, "./data/tza_raw_codebook.csv")
-tza.raw.lbl <- tmp
-
-# Combine TZA 3 waves from RIGA-H
-tza.f.adm <- c(
-  "~/Data/TZA-NPS-12/riga/Tanzania13_HH_ADMIN_V12.dta",
-  "~/Data/TZA-NPS-10/riga/Tanzania11_HH_ADMIN_V12.dta",
-  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_ADMIN.dta")
-tza.f.chr <- c(
-  "~/Data/TZA-NPS-12/riga/Tanzania13_HHCHAR_V12.dta",
-  "~/Data/TZA-NPS-10/riga/Tanzania11_HHCHAR_V12.dta",
-  "~/Data/TZA-NPS-08/riga/Tanzania09_HHCHAR.dta")
-tza.f.inc <- c(
-  "~/Data/TZA-NPS-12/riga/Tanzania13_HH_INCOME_V12.dta",
-  "~/Data/TZA-NPS-10/riga/Tanzania11_HH_INCOME_V12.dta",
-  "~/Data/TZA-NPS-08/riga/Tanzania09_HH_INCOME.dta")
-tza.f.hh <- c(
-  "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta",
-  "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
-  "~/Data/TZA-NPS-08/raw/SEC_A_T.dta")
-
-###############################################
-# ADMIN
-tza.adm <- lapply(tza.f.adm, function(x) data.table(read.dta13(x)))
-
-# Harmonize var codes
-tmp <- unlist(lapply(tza.adm, names))
-table(tmp)
-# There are `locality` and `weight_trimmed` vars in tza09, but can be ignored
-tza.adm[[3]][, `:=`(locality=NULL, weight_trimmed=NULL)]
-# Add survey codes
-tza.adm[[1]][, `:=`(svyCode="tza-nps-2012", wave="wave 3")]
-tza.adm[[2]][, `:=`(svyCode="tza-nps-2010", wave="wave 2")]
-tza.adm[[3]][, `:=`(svyCode="tza-nps-2008", wave="wave 1")]
-# Wave 2 has codes for region instead of labels
-setnames(tza.adm[[2]], "region", "region_cd")
-# Check unique IDs
-tza.adm[[3]][, .(range(hh), range(hhid))]
-#                V1             V2
-# 1: 01010140020171 01010140020171
-# 2: 55020180210078 55020180210078
-tza.adm[[2]][, .(range(hh), range(hhid))]
-#                  V1               V2
-# 1: 0101014002017101 0101014002017101
-# 2: 5502018021007801 5502018021007801
-tza.adm[[1]][, .(range(hh), range(hhid))]
-#          V1       V2
-# 1: 0001-001 0001-001
-# 2: 3924-001 3924-001
-
-# Combine all waves
-tza.adm <- rbindlist(tza.adm, fill=TRUE)
-
-# Add admin codes and labels
-# Recodes
-setnames(tza.adm, c("hhid", "hh", "ea"), c("hh", "hhid", "clust"))
-tza.adm[, unique(urban), by=wave]
-#     wave    V1
-# 1: tza09 Rural
-# 2: tza09 Urban
-# 3: tza11 Rural
-# 4: tza11 Urban
-# 5: tza13 Rural
-# 6: tza13 Urban
-tza.adm[, rural := factor(urban, levels=c("Rural", "Urban"), labels=c("rural", "urban"))]
-tza.adm[, urban := NULL]
-tza.adm[, unique(region), by=wave]
-# => wave 2 has codes for region instead of labels
-tza.adm[, unique(district), by=.(wave, region)]
-View(tza.adm[, unique(district), by=.(wave, region_cd)])
-tza.adm[, .N, by=wave]
-#     wave    N
-# 1: tza13 4995
-# 2: tza11 3913
-# 3: tza09 3255
-# tza09 regions are coded 1-5 (should be 8)?
-# tza districts are coded 1-8, will need to merge district details from another source
-
-# Merge admin vars into `tza`
-# tza <- tza.adm
-setnames(tza.adm, "district")
-tza <- tza[, .SD, .SDcols=c("hhid", setdiff(names(tza), names(tza.adm)))]
-setkey(tza, hhid)
-setkey(tza.adm, hhid)
-tza <- tza[tza.adm]
-
-#############################################
-# Fix tza13 admin codes
-unique(tza, by="hhid")
-tza[, `:=`(
-  region=as.character(region),
-  district=as.character(district)
-  )]
-
-tza[, `:=`(svyL1Nm=NULL, svyL2Nm=NULL, svyL1Cd=NULL, svyL2Cd=NULL)]
-
-x <- c(
-  "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta",
-  "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
-  "~/Data/TZA-NPS-08/raw/SEC_A_T.dta"
-)
-
-tmp <- read.dta13(x[1], convert.factors=F)
-tmp <- data.table(tmp)
-tmp[, range(y3_hhid)]
-# [1] "0001-001" "3924-001"
-tza[!hhid %in% tmp$y3_hhid, .N, by=wave]
-setkey(tmp, y3_hhid)
-setkey(tza, hhid)
-tza[tmp, `:=`(
-  svyL1Nm = as.character(i.hh_a01_2),
-  svyL1Cd = as.integer(i.hh_a01_1),
-  svyL2Nm = as.character(i.hh_a02_2),
-  svyL2Cd = as.integer(i.hh_a02_1)
-  )]
-tmp <- read.dta13(x[1])
-tmp <- attr(tmp, "label.table")$hh_a01_1
-tmp <- data.table(svyCode="tza-nps-2012", svyL1Cd=tmp, svyL1Nm=names(tmp))
-setkey(tmp, svyCode, svyL1Nm)
-setkey(tza, svyCode, svyL1Nm)
-tza[tmp,  svyL1Cd := i.svyL1Cd]
-
-# Fix tza11 admin codes
-tmp <- read.dta13(x[2])
-tmp <- data.table(tmp)
-tmp[, range(y2_hhid)]
-tza[!hhid %in% tmp$y2_hhid, .N, by=wave]
-setkey(tmp, y2_hhid)
-setkey(tza, hhid)
-tza[tmp, `:=`(
-  svyL1Cd = i.region,
-  svyL2Cd = i.district
-  )]
-
-# Fix tza09 admin codes
-tmp <- read.dta13(x[3])
-tmp <- data.table(tmp)
-tmp[, range(hhid)]
-tza[!hhid %in% tmp$hhid, .N, by=wave]
-setkey(tmp, hhid)
-setkey(tza, hhid)
-tza[tmp, `:=`(
-  svyL1Nm = as.character(i.region),
-  svyL2Cd = as.integer(i.district)
-  )]
-tmp <- read.dta13(x[3])
-tmp <- attr(tmp, "label.table")$REGION
-tmp <- data.table(svyCode="tza-nps-2008", svyL1Cd=tmp, svyL1Nm=names(tmp))
-setkey(tmp, svyCode, svyL1Nm)
-setkey(tza, svyCode, svyL1Nm)
-tza[tmp,  svyL1Cd := i.svyL1Cd]
-
-tmp[, svyCode := "tza-nps-2010"]
-setkey(tmp, svyCode, svyL1Cd)
-setkey(tza, svyCode, svyL1Cd)
-tza[tmp,  svyL1Nm := i.svyL1Nm]
-
-# Verify
-setnames(tza, c("district", "ward"), c("district_cd", "ward_cd"))
-tza[, sum(is.na(svyL1Nm))/.N, by=wave]
-tza[, sum(is.na(svyL1Cd))/.N, by=wave]
-tza[, sum(is.na(svyL2Nm))/.N, by=wave]
-tza[, sum(is.na(svyL2Cd))/.N, by=wave]
-tmp <- tza[, .N, keyby=.(svyCode, svyL1Cd, svyL1Nm, svyL2Cd, svyL2Nm)]
-# TODO still missing ward and district labels for tza09 and tza11
-
-
-
-# Could also use hhld XY coords if I can find them (IFPRI?), in files:
-x <- c(
-  "~/Data/TZA-NPS-12/raw/HouseholdGeovars_Y3.dta",
-  "~/Data/TZA-NPS-10/raw/HH.Geovariables_Y2.dta",
-  "~/Data/TZA-NPS-08/raw/HH.Geovariables_Y1.dta")
-tmp <- read.dta13(x[1])
-tmp <- data.table(tmp)
-tza[!hhid %in% tmp$y3_hhid, .N, by=wave]
-#     wave    N
-# 1: tza09 3255
-# 2: tza11 3913
-# 3: tza13   22
-setkey(tmp, y3_hhid)
-setkey(tza, hhid)
-tza[tmp, `:=`(
-  lon_dd_mod = lon_dd_mod,
-  lat_dd_mod = lat_dd_mod
-)]
-tmp <- read.dta13(x[2])
-tmp <- data.table(tmp)
-tza[!hhid %in% tmp$y2_hhid, .N, by=wave]
-#     wave    N
-# 1: tza13 4995
-# 2: tza09 3255
-# 3: tza11    7
-setkey(tmp, y2_hhid)
-setkey(tza, hhid)
-tza[tmp, `:=`(
-  lon_dd_mod = lon_modified,
-  lat_dd_mod = lat_modified
-)]
-tmp <- read.dta13(x[3])
-tmp <- data.table(tmp)
-tza[!hhid %in% tmp$hhid, .N, by=wave]
-#     wave    N
-# 1: tza13 4995
-# 2: tza11 3913
-# 3: tza09  459
-setkey(tmp, hhid)
-setkey(tza, hhid)
-tza[tmp, `:=`(
-  lon_dd_mod = lon_modified,
-  lat_dd_mod = lat_modified
-)]
-tza[, sum(is.na(lon_dd_mod)), by=wave]
-#     wave  V1
-# 1: tza13  22
-# 2: tza09 459
-# 3: tza11   7
-
-###############################################
-# HHCHAR
-tza.chr <- lapply(tza.f.chr, function(x) data.table(read.dta13(x)))
-
-# Harmonize var codes
-tmp <- unlist(lapply(tza.chr, names))
-tmp <- table(tmp)
-vars.chr[!vars.chr %in% names(tmp)]
-vars.chr <- names(tmp)[tmp==3]
-tza.chr <- lapply(tza.chr, function(x) x[, .SD, .SDcols=vars.chr])
-tza.chr <- rbindlist(tza.chr)
-unique(tza.chr, on="hh")
-tza[!hhid %in% tza.chr$hh, .(svyCode, hhid)]
-# Empty data.table (0 rows) of 2 cols: svyCode,hhid
-setkey(tza.chr, hh)
-setkey(tza, hhid)
-tza <- tza.chr[tza]
-setnames(tza, c("hh", "i.hh"), c("hhid", "hh"))
-tza[, i.district := NULL]
-
-###############################################
-# INCOME
-tza.inc <- lapply(tza.f.inc, function(x) data.table(read.dta13(x)))
-
-# Harmonize var codes
-tmp <- unlist(lapply(tza.inc, names))
-tmp <- table(tmp)
-vars.inc[!vars.inc %in% names(tmp)]
-tza.inc <- lapply(tza.inc, function(x) x[, .SD, .SDcols=c("hh", vars.inc)])
-tza.inc <- rbindlist(tza.inc)
-unique(tza.inc, on="hh")
-tza[!hhid %in% tza.inc$hh, .(svyCode, hhid)]
-# Empty data.table (0 rows) of 2 cols: svyCode,hhid
-setkey(tza.inc, hh)
-setkey(tza, hhid)
-tza <- tza.inc[tza]
-
-# Extra recodes
-setnames(tza, c("hh", "i.hh"), c("hhid", "hh"))
-tza[, landrent := rowSums(cbind(landrent, landlend), na.rm=T)]
-tza[, `:=`(hh=NULL, distmarket_ag=NULL, distroad_ag=NULL, disthome_ag=NULL, landlend=NULL)]
-setnames(tza, "ea", "clust")
-tza[, svyCode := factor(svyCode, levels=c("tza-nps-2012", "tza-nps-2010", "tza-nps-2008"))]
-tza[, survey := factor(svyCode, levels=levels(svyCode), labels=c("2012/13", "2010/11", "2008/09"))]
-tza[, wave := factor(svyCode, levels=levels(svyCode), labels=c("wave 3", "wave 2", "wave 1"))]
-
-##############################################
-# STRATIFICATION
-# Add stratification vars (7 zones, 6 ez?), these are not available from the RIGA files
-# Note that wards are marked as CONFIDENTIAL
-tza.hh <- lapply(tza.f.hh, function(x) data.table(read.dta13(x)))
-tza.hh[[1]][, wave := "wave 3"]
-tza.hh[[2]][, wave := "wave 2"]
-tza.hh[[3]][, wave := "wave 1"]
-tza[, range(hhid), by=wave]
-#      wave               V1
-# 1: wave 3         0001-001
-# 2: wave 3         3924-001
-# 3: wave 1   01010140020171
-# 4: wave 1   55020180210078
-# 5: wave 2 0101014002017101
-# 6: wave 2 5502018021007801
 
 setkey(tza.hh[[1]], wave, y3_hhid)
 setkey(tza.hh[[2]], wave, y2_hhid)
@@ -544,7 +348,7 @@ wb <- lapply(list.files("./out/WB", full.names=TRUE), fread, integer64="characte
 wb <- lapply(seq_along(wb), function(x) {
   wb[[x]][, source := basename(list.files("./out/WB")[x])]
   setnames(wb[[x]], 1, "hhid")
-  })
+})
 wb <- rbindlist(wb)
 wb[, .N, by=source]
 #             source    N
@@ -573,7 +377,7 @@ setkey(wb, svyCode, hhid)
 tza[wb, `:=`(
   cell5m = hc_seq_5m,
   suit_gaez = res03_crav6190l_silr_cer
-  )]
+)]
 
 # Verify
 tza[, .N, by=.(svyCode, is.na(cell5m))]
@@ -677,7 +481,7 @@ tza.f.rur <- c(
   "~/Data/TZA-NPS-12/raw/HH_SEC_A.dta", 
   "~/Data/TZA-NPS-10/raw/HH_SEC_A.dta",
   "~/Data/TZA-NPS-08/raw/SEC_A_T.dta"
-  )
+)
 tza.rur <- lapply(tza.f.rur, function(x) data.table(read.dta(x)))
 tza.rur[[1]] <- tza.rur[[1]][, .SD, .SDcols=c("y3_hhid", "y3_rural", "hh_a11")]
 tza.rur[[2]] <- tza.rur[[2]][, .SD, .SDcols=c("y2_hhid", "y2_rural", "hh_a14")]
@@ -774,7 +578,7 @@ tza[tmp, pweight := i.y3_panelweight]
 # Verify
 tza[, pcount := .N, by=phhid]
 dcast(tza, svyCode~pcount)
-        svyCode    1    2    3
+svyCode    1    2    3
 1: tza-nps-2012 1486  926 2583
 2: tza-nps-2010  127 1203 2583
 3: tza-nps-2008  329  343 2583
@@ -795,11 +599,11 @@ tmp[, sum(pct), by=.(country, wave)]
 tmp <- dcast(tmp, country+wave+naggross_3clas~croparea_clas+cropsales_3clas, value.var="pct")
 fwrite(tmp, "./out/EPAR/EPAR_UW_356_Categorizing Smallholder Farmers in ETH and TZ.csv")
 
-
+  
 ```
-
+  
 ```{r eth, eval=FALSE}
-
+  
 # Generate raw codebook
 tmp <- list.files(c(
   "~/Data/ETH-ERSS-11/raw", "~/Data/ETH-ESS-13/raw", "~/Data/ETH-ESS-15/raw"), 
@@ -1097,7 +901,7 @@ eth[eth.crop, `:=`(
   totcropprod_kg = i.totcropprod_kg, 
   totcropsold_kg = i.totcropsold_kg, 
   cropsales_sh = i.cropsales_sh
-  )]
+)]
 eth[is.na(cropsales_sh), uniqueN(hhid), by=.(svyCode, rural)]
 #          svyCode rural   V1
 # 1:  eth-ess-2013 rural  823
@@ -1340,7 +1144,7 @@ eth[, `:=`(cell5m=NULL, suit_gaez=NULL)]
 eth[wb, `:=`(
   cell5m = hc_seq_5m,
   suit_gaez = res03_crav6190l_silr_cer
-  )]
+)]
 
 # Verify
 eth[, .N, by=.(svyCode, is.na(cell5m))]
@@ -1356,7 +1160,7 @@ qtm(eth.pts[eth.pts$hhid %in% tmp,])
 eth[, `:=`(
   cell5m_imp = modal(cell5m, na.rm=T),
   suit_gaez_imp = modal(suit_gaez, na.rm=T)
-  ), by=.(svyCode, clust)]
+), by=.(svyCode, clust)]
 eth[is.na(cell5m), cell5m := cell5m_imp]
 eth[is.na(suit_gaez), suit_gaez := suit_gaez_imp]
 eth[, `:=`(cell5m_imp=NULL, suit_gaez_imp=NULL)]
@@ -1441,11 +1245,8 @@ tm_shape(rquad) + tm_raster(pal=viridis(4), breaks=0:4, labels=quad, alpha=.6) +
 ifpri[, .N, by=svyCode]
 # => only has data for eth-erss-2011
 
-
-
+  
 ```
-
-
 
 ```{r gha-typo, eval=FALSE}
 
@@ -1842,7 +1643,7 @@ summary(tza$class6)
 # Farm classification dummy `class5`
 tza[, class5 := class6]
 levels(tza$class5) <- class5[c(1,2,3,2,4,5)]
-  c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
+c("subs.", "trans.", "pre-comm.", "trans.", "specd. comm.", "divf. comm.")
 summary(tza$class5)
 #  SUB  TRANS PRCOMM SPCOMM    DIV   NA's 
 # 1384   3678   2105   1043    668   3285
@@ -2234,15 +2035,15 @@ However because RIGA income aggregates are *net of costs*, we construct intermed
 - $cropsales$ is derived/imputed from RIGA $totcropsold$
 - $cropvalue$ is derived/imputed from RIGA $totcropprod$
 - $cropsales\_sh$ (but can also be derived from RIGA $totcropsold$, $shcropsold$, or $shagprodsold$)
-  $$ cropsales\_sh = \frac{cropsales}{cropvalue} $$ 
+$$ cropsales\_sh = \frac{cropsales}{cropvalue} $$ 
 - $agsales$ is derived/imputed from RIGA $totagsold$
 - $agsales\_sh$
-  $$ agsales\_sh = \frac{agsales}{totagprod} $$
+$$ agsales\_sh = \frac{agsales}{totagprod} $$
 - $aggross = totagprod + farmrntimp + agr\_wge (+ selfimp1)$
 - $naggross = transfersgrossimp + otherincimp + nonfarmrntimp + nonagr\_wge + selfemp$
 - $totgross = aggross + naggross$  
 - $aggross\_sh$  
-  $$ aggross\_sh = \frac{aggross}{totgross} $$  
+$$ aggross\_sh = \frac{aggross}{totgross} $$  
 
 RIGA-H does not provide annual cultivated area, instead we have measures of land owned, land rented out, and land under sharecropping.
 
