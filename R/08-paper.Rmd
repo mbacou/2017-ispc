@@ -1,0 +1,353 @@
+---
+title: "Farm Typology - Ghana, Ethiopia, and Tanzania"
+author: "[BACOU, Melanie](http://github.com/mbacou) for BMGF"
+date: "Last updated on `r Sys.Date()` -- CODES AND NOTES, DO NOT USE OR CITE"
+description: "Agricultural transformation in Ghana, Tanzania and Ethiopia (ISPC review paper, codes and documentation)"
+output: 
+  html_document: 
+    df_print: kable
+    fig_caption: yes
+  word_document: 
+    fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+
+# Output options
+opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
+  dev="png", fig.path="fig/", fig.width=7, fig.height=3.8, dpi=220, cache=F, 
+  dev.args=list(
+    png=list(family="Roboto Condensed", pointsize=11), 
+    svg=list(family="Roboto Condensed")))
+
+library(viridis)
+library(stringr)
+library(data.table)
+library(survey)
+library(broom)
+library(htmltools)
+library(pander)
+
+load("../tmp/2017-ispc.RData")
+
+```
+
+```{r, eval=FALSE}
+
+# Update all tables for paper
+# Frequencies across segments
+svy.farm <- c(gha.svy.farm, eth.svy.farm, tza.svy.farm)
+svy.shf <- c(gha.svy.shf, eth.svy.shf, tza.svy.shf)
+
+# Counts
+freq <- lapply(svy.farm, function(x) svytable(
+  ~rural+croparea_3clas+class5, design=x, round=T))
+freq <- lapply(freq, function(x) tidy(ftable(x)))
+freq <- rbindlist(freq, idcol="panel")
+
+# Shares, percent
+freq.pct <- lapply(svy.farm, function(x) svytable(
+  ~rural+croparea_3clas+class5, x, Ntotal=100))
+freq.pct <- lapply(freq.pct, function(x) tidy(ftable(x)))
+freq.pct <- rbindlist(freq.pct, idcol="panel")
+
+# Verify
+freq[, sum(Freq), by=panel]
+freq.pct[, sum(Freq), by=panel]
+
+# Export
+fwrite(freq, "./out/hh_split_counts.csv")
+fwrite(freq.pct, "./out/hh_split_shares.csv")
+
+# Estimate hhld characteristics across segments
+vars <- list(
+  ~hhsize,
+  ~agehead,
+  ~I(100*femhead),
+  ~I(100*widowhead),
+  ~hhlabor,
+  ~educhead, ~educave15_60, ~educhigh,
+  ~I(100*ownhome), ~I(100*cellphone), ~I(100*telephone), ~I(100*electricity),
+  ~distwater, ~distroad, ~distpost, ~distbank, ~disthosptl, ~distmarket,
+  ~infraindex_natl, ~tt50k_mean, ~tt100k_mean,
+
+  # Assets
+  ~landown,
+  #~landshare, ~landrent,
+  ~croparea_imp,
+
+  # Income
+  ~aggross,
+  ~totgross,
+  ~I(100*naggross_sh),
+  ~cropvalue,
+  ~cropsales,
+  ~I(100*cropsales_sh),
+  ~I(100*shcropsold),
+  ~totlvstprod,
+  ~totlivsold,
+
+  # Input uses
+  ~I(100*seeds), ~I(100*fert_any), ~I(100*fert_inorg), ~I(100*fert_org),
+  ~I(100*herb), ~I(100*pest), ~I(100*irr), ~I(100*fuel), ~I(100*hired_labor),
+
+  # Livestock
+  ~I(1E3*TLU_horse), ~I(1E3*TLU_cattle), ~I(1E3*TLU_pigs), ~I(1E3*TLU_sheep),
+  ~I(1E3*TLU_small), ~I(1E3*TLU_total)
+
+  # Quadrant
+  ~suit_glues
+  #~ndvi, ~popdens_2015
+)
+
+hhchar.mean <- lapply(vars, function(i) {
+  print(i)
+  lapply(svy.shf,
+    function(j) {
+      res <- try(svyby(as.formula(i), ~rural+class5, j, svymean, na.rm=T))
+      if (class(res)=="try-error") try(svyby(as.formula(i), ~class5, j, svymean, na.rm=T))
+      if (class(res)=="try-error") res <- NA
+      return(res)
+    })})
+
+hhchar.mean <- lapply(hhchar.mean, function(i) lapply(i, function(j) {
+  if(is.na(j)) res <- data.table(NA)
+  else res <- tidy(ftable(j))
+  return(res)
+}))
+
+hhchar.mean <- lapply(hhchar.mean, rbindlist, idcol="panel", fill=T)
+hhchar.mean <- rbindlist(hhchar.mean, fill=T)
+setnames(hhchar.mean, c("Var2", "Var4", "Freq"), c("stat", "varCode", "value"))
+hhchar.mean[, varCode := str_replace(varCode, fixed("I(100 * "), "") %>%
+    str_replace(fixed("I(1000 * "), "") %>%
+    str_replace(fixed(")"), "")]
+
+hhchar.mean[variable=="DIV"]
+hhchar.mean[, V1 := NULL]
+hhchar.mean[lbl, on="varCode", label := paste0(varLabel, " (", unit, ")")]
+
+# Export
+fwrite(hhchar.mean, "./out/hh_char_mean.csv")
+
+# TODO check on input uses
+
+# Redo old quadrant tables, remove the cross-classification, combined with farm typology
+varsq <- list(
+  ~class5+seg_mkt100k,
+  ~class5+seg_suit_gaez,
+  ~class5+rural
+  #~class5+seg_suit_glues,
+  #~class5+seg_ndvi, ~class5+seg_popdens_2015
+)
+
+# Counts of SHF (`gha4` was not georeferenced so omit from tables)
+freqq <- lapply(varsq, function(i) lapply(svy.shf[-3], function(j) svytable(
+  as.formula(i), design=j, round=T)))
+freqq <- lapply(freqq, function(i) lapply(i, function(j) tidy(ftable(j))))
+freqq <- lapply(freqq, rbindlist, fill=T, idcol="panel")
+freqq <- lapply(freqq, dcast, formula=...~class5)
+file.remove("./out/hh_split_spatial_counts.csv")
+lapply(freqq, fwrite, file="./out/hh_split_spatial_counts.csv", append=T, row.names=F)
+
+```
+
+
+```{r xmaps, eval=FALSE}
+
+png("./out/map-ndvi.png", width=7, height=3.8,  units="in", res=220, pointsize=11)
+tm_shape(rndvi) + tm_raster(pal=pal.ndvi(255), n=19,
+  title="Long-term\nNDVI") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+dev.off()
+
+png("./out/map-popdens.png", width=7, height=3.8, units="in", res=220, pointsize=11)
+tm_shape(rpop) + tm_raster(pal="YlOrBr",
+  breaks=c(0,5,10,15,20,30,40,60,80,100,140000),
+  labels=c("0-5","5-10","10-15","15-20","20-30","30-40","40-60","60-80", "80-100", "> 100"),
+  title="WorldPop\nPopulation\nDensity\n(2015)") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+dev.off()
+
+```
+
+# Typology of Small Farm Households (farms below 4 ha)
+
+Sample charts showing the distribution and characteristics of small farm households across 5 farm types. These charts are weighted (they represent the entire small farm population in each country/year).
+Maps show other bioclimatic and infrastructure characteristics used in the spatial classification.
+
+## Distribution and Trends
+
+```{r legend, fig.height=2, fig.width=4}
+
+n <- c(1:3, 6:8, 4:5)
+
+plot(1, type="n", axes=FALSE, xlab="", ylab="")
+legend(0, 1, col=viridis(3), legend=levels(gha$class5), pch=18, bty="n", horiz=T)
+
+```
+
+```{r scatter, fig.height=3}
+
+# Scatter plots
+par(mfrow=c(1,3))
+for(i in 1:3) {
+  svyplot(I(100*naggross_sh)~I(100*cropsales_sh), svy.shf[[i]],
+    style="transparent", alpha=c(0.2, 1), pch=18, ylim=c(0, 100),
+    basecol=function(x) viridis(5)[as.numeric(x$class5)],
+    main=names(svy.shf)[i],
+    xlab="Commercialization", ylab="Non-Farm Income")
+}
+
+for(i in 6:8) {
+  svyplot(I(100*naggross_sh)~I(100*cropsales_sh), svy.shf[[i]],
+    style="transparent", alpha=c(0.2, 1), pch=18, ylim=c(0, 100),
+    basecol=function(x) viridis(5)[as.numeric(x$class5)],
+    main=names(svy.shf)[i],
+    xlab="Commercialization", ylab="Non-Farm Income")
+}
+
+for(i in 4:5) {
+  svyplot(I(100*naggross_sh)~I(100*shcropsold), svy.shf[[i]],
+    style="transparent", alpha=c(0.2, 1), pch=18, ylim=c(0, 100),
+    basecol=function(x) viridis(5)[as.numeric(x$class5)],
+    main=names(svy.shf)[i],
+    xlab="Commercialization", ylab="Non-Farm Income")
+}
+
+```
+
+## Frequencies
+
+```{r freq, results='asis'}
+
+panderOptions('knitr.auto.asis', FALSE)
+
+# Frequency tables
+for(i in n) {
+  p <- svytable(~croparea_3clas+class5, svy.shf[[i]], Ntotal=100)
+  p <- ftable(addmargins(p))
+  cat("####", names(svy.shf)[i])
+  pander(p, digits=0)
+}
+
+for(i in n[-3]) {
+  p <- svytable(~seg_quad+class5, svy.shf[[i]], Ntotal=100)
+  p <- ftable(addmargins(p))
+  cat("####", names(svy.shf)[i])
+  pander(p, digits=0)
+}
+
+for(i in n) {
+  p <- svytable(~naggross_3clas+cropsales_3clas, svy.shf[[i]], Ntotal=100)
+  p <- ftable(addmargins(p))
+  cat("####", names(svy.shf)[i])
+  pander(p, digits=0)
+}
+
+```
+
+## Household Characteristics
+
+```{r char, fig.height=7}
+
+f <- list(
+  `Commercialization` = I(100*cropsales_sh)~class5,
+  `Non-Farm Income` = I(100*naggross_sh)~class5,
+  `Time to 50K market` = tt50k_mean~class5
+)
+
+# Boxplots
+par(mfrow=c(3,3))
+for(j in seq_along(f)) for(i in 1:3) try(svyboxplot(as.formula(f[[j]]), svy.shf[[i]],
+    varwidth=T, alpha=0.8, ylim=if(j<3) c(0, 100) else c(0,8), col=viridis(5),
+    main=names(svy.shf)[i],
+    xlab=names(f)[j]))
+
+par(mfrow=c(3,3))
+for(j in seq_along(f)) for(i in 6:8) svyboxplot(as.formula(f[[j]]), svy.shf[[i]],
+  varwidth=T, alpha=0.8, ylim=if(j<3) c(0, 100) else c(0,8), col=viridis(5),
+  main=names(svy.shf)[i],
+  xlab=names(f)[j])
+
+par(mfrow=c(3,2))
+for(j in seq_along(f)) for(i in 4:5) svyboxplot(as.formula(f[[j]]), svy.shf[[i]],
+  varwidth=T, alpha=0.8, ylim=if(j<3) c(0, 100) else c(0,8), col=viridis(5),
+  main=names(svy.shf)[i],
+  xlab=names(f)[j])
+
+```
+
+```{r, eval=FALSE}
+
+# Weighted density plots
+dt <- list(Ghana=gha, Tanzania=tza, Ethiopia=eth)
+par(mfrow=c(1,3))
+for(i in seq_along(dt)) {
+  plot(0, 0, xlim=c(-1,100), ylim=c(0,0.08), pch=NA, xlab=NA, ylab=NA)
+  dt[[i]][!is.na(cropsales_sh), polygon(
+    density(100*cropsales_sh, weights=weight/sum(weight), from=0, to=100),
+    lwd=0.1, type="l", col=viridis(3)[.GRP], alpha=.4), by=survey]
+  legend("topright", levels(dt[[i]]$survey), col=viridis(3), lty=1, lwd=2, bty="n", cex=.8)
+  title(xlab=names(dt)[i])
+  if(i==1) {
+    title(main="Crop Commercialization", adj=0, font.main=1)
+    title(main="\n\n\nDensity across survey waves", adj=0, cex.main=.9)
+  }
+}
+
+```
+
+# Bioclimatic and Infrastructure Characteristics
+
+```{r maps-suit, fig.cap="Agricultural Suitability (FAO/GAEZ 2007)", out.width="99%"}
+
+include_graphics("../out/map-suit.png", dpi=220)
+
+```
+
+```{r maps-lc, fig.cap="ESA LLC Land Cover Classification (2017)", out.width="99%"}
+
+include_graphics("../out/esa-lc.png", dpi=220)
+
+```
+
+```{r maps-tt100k, fig.cap="Market Access (100K market size, IFPRI 2016)", out.width="99%"}
+
+include_graphics("../out/map-tt100k.png", dpi=220)
+
+```
+
+
+```{r maps-ndvi, fig.cap="Long Term NDVI - Mean of Dekadal Maxima", out.width="99%"}
+
+include_graphics("../out/map-ndvi.png", dpi=220)
+
+```
+
+
+```{r maps-wpop, fig.cap="WorldPop Population Density (2015)", out.width="99%"}
+
+include_graphics("../out/map-popdens.png", dpi=220)
+
+```
+
+```{r knit, eval=FALSE}
+
+svyplot(as.formula(f[[j]]), svy.shf[[i]],
+  style="bubble", alpha=c(0.8, 1),  basecol=function(x) viridis(5)[as.numeric(x$class5)],
+  xlab = "Age", ylab = "Left-Right Scale",
+  main = "Political Preferences and Age")
+
+# Logit regression
+m1 <- svyolr(class5~tt50k_mean+distroad+agehead+croparea_imp+TLU_total,
+    svy.farm[[1]], method="l")
+summary(m1)
+regTermTest(m1, ~distroad, method="LRT")
+
+rmarkdown::render("./R/08-paper.Rmd", "html_document", 
+  output_file="paper.html", output_dir="./docs") 
+
+```

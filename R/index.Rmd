@@ -44,9 +44,7 @@ opts_chunk$set(comment=NA, warning=F, message=F, echo=F, base.url="../docs",
 
 library(readstata13)
 library(foreign)
-library(raster)
 
-setwd("~/Projects/2017-ispc")
 load("./tmp/2017-ispc.RData")
 
 #####################################################################################
@@ -54,7 +52,7 @@ load("./tmp/2017-ispc.RData")
 prty <- function(...) prettyNum(..., digits=0, big.mark=",", scientific=FALSE)
 
 # Helper - ggplot defaults
-theme_wc <- function(...) theme_bw(base_size=7, base_family="Roboto Condensed", ...) + 
+theme_wc <- function(...) theme_bw(base_size=8, base_family="Roboto Condensed", ...) + 
   theme(panel.grid=element_line(linetype="dotted"))
 
 #####################################################################################
@@ -190,6 +188,143 @@ spplot(rquad, at=0:4, col.regions=viridis(4),
   colorkey=list(labels=list(labels=quad, at=0:4+.5)))
 
 
+# Load administrative region/district codes (developed for IFPRI)
+g2 <- shapefile("~//Data/_global_codes/out/r16.12/svyL2Maps_2016.12.shp")
+sort(unique(g2$svyCode))
+#  [1] "ago2008" "bdi2006" "bfa2003" "bfa2014" "civ2002" "cmr2007" "cod2012" "eth2010" "eth2012" "gha2005"
+# [11] "gha2012" "ken2005" "lso2003" "mdg2005" "mli2006" "mli2014" "moz2008" "mrt2000" "mwi2010" "ner2011"
+# [21] "nga2012" "rwa2005" "sen2011" "ssd2009" "tza2012" "uga2012" "uga2013" "zaf2011" "zmb2010"
+# => missing tza2010, tza2008, gha2008, do we have maps for these?
+# => are admin codes the same in all TZA NPS?
+# Keep only ETH and TZA survey maps (bring in GHA survey maps from AGRA-AASR work)
+g2 <- g2[g2$ISO3 %in% c("ETH", "TZA"),]
+tmp <- shapefile("~/Projects/2017-agra-aasr/maps/svyL2Maps_GHA.shp")
+tmp <- tmp[, names(g2)]
+g2 <- rbind(g2, tmp)
+g2.dt <- data.table(g2@data)
+g2.dt[, rn := row.names(g2)]
+g2.dt[, unique(svyCode)]
+# [1] "tza2012"   "eth2012"   "eth2010"   "gha-glss6" "gha-glss5"
+g2.dt[, svyCode := factor(svyCode, 
+  levels=c("tza2012",   "eth2012",   "eth2010",   "gha-glss6", "gha-glss5"), 
+  labels=c("tza-nps-2012",   "eth-ess-2013",   "eth-erss-2011",   "gha-glss6", "gha-glss5"))]
+g2 <- SpatialPolygonsDataFrame(g2, data.frame(g2.dt), match.ID="rn")
+
+# Load BMGF/SDI ag. potential (basd on NDVI)
+# Received from Todd on 2017.12.12
+# Includes WorldPop density at 1km, mean of dekadal max NDVI, ESA CCI land cover
+# ESA CCI might be a more recent version than 2015
+# They look very large, verify
+rndvi <- raster("./out/SDI/NDVI_1KM_ETH-GHA-TZA.tif")
+res(rndvi)
+proj4string(rndvi)
+# [1] 0.008332501 0.008332178
+rndvi <- crop(rndvi, g2, filename="./out/SDI/NDVI_MeanofDekadalMax_1km_cropped.tif")
+rndvi <- raster("./out/SDI/NDVI_MeanofDekadalMax_1km_cropped.tif")
+# => need to fix dekadal scale (I assume it's MODIS)
+# Nil NDVI invalid values: 201 - 255 (hopefully done by Joe)
+# pts.ndvi[var=="ndvi", value := (value-100)/100]
+maxValue(rndvi)
+# [1] 189
+minValue(rndvi)
+# [1] 96
+rndvi[] <- (rndvi[]-100)/100
+spplot(rndvi)
+writeRaster(rndvi, "./out/SDI/NDVI_MeanofDekadalMax_1km_cropped.tif", overwrite=TRUE)
+
+rpop <- raster("~/Maps/Worldpop/AFR_PPP_2015_adj_v2.tif")
+res(rpop)
+proj4string(rpop)
+# [1] 0.008333333 0.008333333
+rpop <- crop(rpop, g2, filename="./out/SDI/AFR_PPP_2015_adj_v2_1km_cropped.tif")
+rpop <- raster("./out/SDI/AFR_PPP_2015_adj_v2_1km_cropped.tif")
+spplot(rpop)
+
+rlc <- raster("~/Maps/ESA/ESACCI-LC-1km_ETH-GHA-TZA.tif")
+# Should be coded 0-220 (make sure mode was used)
+res(rlc)
+# [1] 0.0001851853 0.0001851854
+# wrong resolution, correct
+rlc <- raster("~/Maps/ESA/ESACCI-LC-L4-LCCS-Map-300m-P1Y-2015-v2.0.7.tif")
+res(rlc)
+# [1] 0.002777778 0.002777778
+rlc <- crop(rlc, g2)
+rlc[rlc==0] <- NA
+rlc <- aggregate(rlc, fact=res(rpop)/res(rlc)[1], fun=modal, na.rm=TRUE, filename="./out/SDI/ESACCI-LC-L4-LCCS-Map-1km-P1Y-2015-v2.0.7.tif")
+rlc <- raster("./out/SDI/ESACCI-LC-L4-LCCS-Map-1km-P1Y-2015-v2.0.7.tif")
+spplot(rlc)
+
+# NDVI 1km
+i <- c("eth-erss-2011", "gha-glss6", "tza-nps-2012")
+
+pal.ndvi <- fread("
+182	151	99	Barley corn
+209	189	139	Double colonial white
+230	233	187	Spring sun
+181	219	142	Reef
+133	201	97	Mantis
+78	157	38	Apple
+39	111	0	La palma
+40	97	0	Bilbao
+30	75	0	Chelsea cucumber
+  ")
+pal.ndvi <- rgb(pal.ndvi[, .(V1, V2, V3)], maxColorValue=255)
+pal.ndvi <- colorRampPalette(pal.ndvi)
+
+m <- tm_shape(rndvi) + 
+  tm_raster(pal=pal.ndvi(255), breaks=seq(0,1,0.1),
+  title="Long-term\nNDVI\nmean of \ndekadal\nmaxima\n(index)") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+save_tmap(m, "./docs/out/fews-ndvi.png", width=6, height=3.6)
+
+# ESA LLC 1km
+qd.lc.lbl <- fread("~/Maps/ESA/ESACCI-LC-Legend.csv")
+setnames(qd.lc.lbl, 1:2, c("code", "class"))
+qd.lc.lbl[, col := rgb(cbind(R,G,B), maxColorValue=255)]
+qd.lc.lbl[, cat := str_replace_all(str_replace_all(abbreviate(toupper(class), 5), fixed("("), ""), fixed("/"), "")]
+setkey(qd.lc.lbl, code)
+
+m <- tm_shape(rlc) + 
+  tm_raster(
+    pal=qd.lc.lbl[J(unique(rlc)), col], 
+    breaks=c(-1, unique(rlc)),
+    labels=qd.lc.lbl[J(unique(rlc)), cat],
+    title="ESA Land Cover\nClassification") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+save_tmap(m, "./docs/out/esa-lc.png", width=6, height=3.6)
+
+# WorldPop
+m <- tm_shape(rpop) + 
+  tm_raster(pal="YlOrRd", breaks=seq(0, 90, 10),
+  title="WorldPop\nPopulation\nDensity\n(pp/sq. km.)") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+save_tmap(m, "./docs/out/wpop-dens.png", width=6, height=3.6)
+
+###############################################
+# Import new quadrant classification vars from WorldBank
+# Received from <smurray@worldbank.org> on 2018.01.18
+# We decided to combine long-term NDVI and pop density at 1km instead of using GAEZ
+# Also using ESA land cover mask
+# Long-term max NDVI was prepared by IFPRI (from MODIS)
+
+# Load latest WorldBank spatial codes (NDVI, pop density, ESA land cover)
+f <- list.files("./out/WB/2018.01.19/", "*.csv", full.names=T)
+wb2 <- lapply(f, fread)
+wb2 <- lapply(wb2, setnames, c("hhid", "lc_esa_v207", "ndvi", "popdens_2015"))
+wb2 <- lapply(wb2, function(x) x[, hhid := as.character(hhid)])
+names(wb2) <- c("eth-erss-2011", "eth-ess-2013", "eth-ess-2015",
+  "tza-nps-2008", "tza-nps-2010", "tza-nps-2012")
+wb2 <- rbindlist(wb2, idcol="svyCode")
+
+# Add NDVI, ESA, and pop density across Ghana districts for all 3 waves
+
+
 ###############################################
 # Import poverty and farm management vars from IFPRI replication datasets (1.2GB)
 ifpri <- read.dta13("~/Data/_global_codes/temp/2017.06/Final_SSA_HH_POV_shock_26jun17.dta")
@@ -213,31 +348,6 @@ ifpri[, .N, by=farm]
 #    farm     N
 # 1:    1 24082
 # 2:    0 29939
-
-
-# Load administrative region/district codes (developed for IFPRI)
-g2 <- shapefile("~//Data/_global_codes/out/r16.12/svyL2Maps_2016.12.shp")
-sort(unique(g2$svyCode))
-#  [1] "ago2008" "bdi2006" "bfa2003" "bfa2014" "civ2002" "cmr2007" "cod2012" "eth2010" "eth2012" "gha2005"
-# [11] "gha2012" "ken2005" "lso2003" "mdg2005" "mli2006" "mli2014" "moz2008" "mrt2000" "mwi2010" "ner2011"
-# [21] "nga2012" "rwa2005" "sen2011" "ssd2009" "tza2012" "uga2012" "uga2013" "zaf2011" "zmb2010"
-# => missing tza2010, tza2008, gha2008, do we have maps for these?
-# => are admin codes the same in all TZA NPS?
-# Keep only ETH and TZA survey maps (bring in GHA survey maps from AGRA-AASR work)
-g2 <- g2[g2$ISO3 %in% c("ETH", "TZA"),]
-tmp <- shapefile("~/Projects/2017-agra-aasr/maps/svyL2Maps_GHA.shp")
-tmp <- tmp[, names(g2)]
-g2 <- rbind(g2, tmp)
-g2.dt <- data.table(g2@data)
-g2.dt[, rn := row.names(g2)]
-g2.dt[, unique(svyCode)]
-# [1] "tza2012"   "eth2012"   "eth2010"   "gha-glss6" "gha-glss5"
-g2.dt[, svyCode := factor(svyCode, 
-  levels=c("tza2012",   "eth2012",   "eth2010",   "gha-glss6", "gha-glss5"), 
-  labels=c("tza-nps-2012",   "eth-ess-2013",   "eth-erss-2011",   "gha-glss6", "gha-glss5"))]
-g2 <- SpatialPolygonsDataFrame(g2, data.frame(g2.dt), match.ID="rn")
-
-# TODO BMGF/SDI ag. potential quadrants
 
 
 # Required RIGA components
@@ -917,7 +1027,7 @@ eth[, summary(shcropsold), by=svyCode]
 
 
 # Verify
-par(mfrow=c(1,2))
+par(mfrow=c(1,3))
 pplot(cropsales_sh~svyCode, data=eth)
 pplot(shcropsold~svyCode, data=eth)
 pplot(shagprodsold~svyCode, data=eth)
@@ -1946,7 +2056,7 @@ eth.svy.shf <- lapply(eth.svy.farm, subset, croparea_4ha=="<= 4 ha")
 
 ```{r save, eval=FALSE}
 
-rm(tmp, tmp1, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, 
+rm(tmp, tmp1, x, y, i, j, tza.adm, tza.chr, tza.inc, tza.hh, m,
   eth.adm, eth.chr, eth.inc, eth.hh, tmp.cv, f, by, design, rn, res, res.cv)
 save.image("./tmp/2017-ispc.RData")
 
@@ -2089,6 +2199,35 @@ tm_shape(rtt100k) + tm_raster(breaks=c(0,.5,1,2,4,6,8,12,88),
 
 tm_shape(rquad) + tm_raster(pal=viridis(4), n=4, labels=quad,
   title="Agricultural\nPotential\nQuadrants") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+```
+
+In a second approach we revise the definition of agricultural potential quadrants and combine long-term NDVI (MODIS) with population density (both rasters are available at 1km spatial resolution).
+
+```{r maps-ndvi, fig.cap="Long Term NDVI - Mean of Dekadal Maxima", out.width="99%"}
+
+tm_shape(crop(rndvi, g2[g2$svyCode %in% i,])) + tm_raster(pal=pal.ndvi(19),
+  title="Long-term\nNDVI") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+```
+
+```{r maps-lc, fig.cap="ESA LLC Land Cover Classification (2017)", out.width="99%"}
+
+tm_shape(rlc) + tm_raster(
+  title="ESA LLC\nLand Cover\nClassification\n(2017)") +
+  tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
+  tm_facets("ISO3", ncol=3, free.coords=T)
+
+```
+
+```{r maps-wpop, fig.cap="WorldPop Population Density (2015)", out.width="99%"}
+
+tm_shape(rpop) + tm_raster(
+  title="WorldPop\nPopulation Density\n(2015)") +
   tm_shape(g2[g2$svyCode %in% i,], is.master=T) + tm_borders(alpha=.1) +
   tm_facets("ISO3", ncol=3, free.coords=T)
 
